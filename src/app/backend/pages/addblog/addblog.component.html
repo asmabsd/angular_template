@@ -1,0 +1,67 @@
+<div class="container mt-4">
+  <h2>Ajouter un blog</h2>
+  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="title" class="form-label">Titre</label>
+      <input id="title" type="text" class="form-control" formControlName="title" required>
+    </div>
+    <div class="form-group">
+      <label for="userId">Select User</label>
+      <select id="userId" formControlName="userId" class="form-control" required>
+        <option value="">-- Select User --</option>
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.email }} (ID: {{ user.id }})
+        </option>
+      </select>
+      <div *ngIf="blogForm.get('userId')?.invalid && 
+                (blogForm.get('userId')?.dirty || blogForm.get('userId')?.touched)"
+           class="error-message">
+        Please select a user
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">Contenu</label>
+      <textarea id="content" class="form-control" formControlName="content" rows="4" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="publication" class="form-label">Publication</label>
+      <input id="publication" type="text" class="form-control" formControlName="publication" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || blogForm.invalid">
+      {{ isSubmitting ? 'Ajout en cours...' : 'Ajouter' }}
+    </button>
+  </form>
+</div>
+
+<hr />
+
+<!-- État de chargement -->
+<div *ngIf="isLoading" class="alert alert-info mt-3">
+  Chargement des blogs...
+</div>
+
+<!-- Erreur -->
+<div *ngIf="!isLoading && errorMessage" class="alert alert-danger mt-3">
+  {{ errorMessage }}
+</div>
+
+<!-- Aucun blog -->
+<div *ngIf="!isLoading && !errorMessage && blogs.length === 0" class="alert alert-warning mt-3">
+  Aucun blog trouvé.
+</div>
+<!---->
+<!-- Liste des blogs -->
+<div *ngIf="!isLoading && blogs.length > 0" class="mt-4">
+  <h3>Liste des blogs</h3>
+  <div *ngFor="let blog of blogs" class="card my-2">
+    <div class="card-body">
+      <h5 class="card-title">{{ blog.title }}</h5>
+      <p class="card-text">{{ blog.content }}</p>
+      <p class="card-text">
+        <small class="text-muted">Publié le {{ blog.publication }}</small>
+      </p>
+    </div>
+  </div>
+</div>

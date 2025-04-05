@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ========== BASE STYLES ========== */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --sidebar-width: 250px;
+            --header-height: 60px;
+            --danger-color: #e74c3c;
+            --light-gray: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* ========== LAYOUT COMPONENTS ========== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #2c3e50;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+        }
+        
+        .header {
+            height: var(--header-height);
+            background: white;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        /* ========== SIDEBAR COMPONENTS ========== */
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #34495e;
+        }
+        
+        .user-panel {
+            padding: 20px;
+            border-bottom: 1px solid #34495e;
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-panel img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        
+        .user-role {
+            color: #bdc3c7;
+            font-size: 0.85rem;
+        }
+        
+        .sidebar-menu {
+            padding: 0;
+            list-style: none;
+        }
+        
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .sidebar-menu li a:hover,
+        .sidebar-menu li a.active {
+            background-color: #34495e;
+            color: #fff;
+        }
+        
+        /* ========== CONTENT COMPONENTS ========== */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .page-header h2 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-header h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .search-box input {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 250px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background-color: #f8f9fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+        
+        .table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .btn i {
+            margin-right: 5px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.85rem;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 5px;
+        }
+        
+        /* ========== RESPONSIVE STYLES ========== */
+        @media (max-width: 768px) {
+            .sidebar {
+                margin-left: -250px;
+                transition: margin-left 0.3s;
+            }
+            
+            .sidebar.active {
+                margin-left: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .main-content.active {
+                margin-left: var(--sidebar-width);
+            }
+            
+            .toggle-sidebar {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Admin Panel</h3>
+        </div>
+        
+        <div class="user-panel">
+            <img src="https://via.placeholder.com/150" alt="User Image">
+            <div class="user-info">
+                <span class="user-name">Admin User</span>
+                <span class="user-role">Administrator</span>
+            </div>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li>
+                <a href="/dashboard/back" class="active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/dashboard/user-list">
+                    <i class="fas fa-users"></i>
+                    <span>User Management</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/dashboard/listeguide">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>Guide Management</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/dashboard/accommodations">
+                    <i class="fas fa-hotel"></i>
+                    <span>Accommodations</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/dashboard/settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+    
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main-content">
+        <header class="header">
+            <div class="toggle-sidebar">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+        
+        <div class="content">
+            <!-- Router outlet for dynamic content -->
+            <router-outlet></router-outlet>
+            
+            <!-- Default dashboard content -->
+            <div *ngIf="!isUserManagementPage">
+                <div class="page-header">
+                    <h2>Dashboard Overview</h2>
+                </div>
+                
+                <div class="stats-grid">
+                    <!-- Your dashboard stats cards here -->
+                </div>
+            </div>
+            
+            <!-- User Management Content (example of what router-outlet would render) -->
+            <div *ngIf="isUserManagementPage">
+                <div class="page-header">
+                    <h2>User Management</h2>
+                    <a routerLink="/dashboard/add-user" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add New User
+                    </a>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>User List</h3>
+                        <div class="search-box">
+                            <input type="text" placeholder="Search users...">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of users">
+                                    <td>{{ user.id }}</td>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.role }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary btn-sm">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                            <button class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Toggle sidebar on mobile
+        document.querySelector('.toggle-sidebar').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('active');
+            document.querySelector('.main-content').classList.toggle('active');
+        });
+        
+        // Set active menu item
+        document.querySelectorAll('.sidebar-menu li a').forEach(link => {
+            if (link.getAttribute('href') === window.location.pathname) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

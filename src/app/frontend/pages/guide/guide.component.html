@@ -1,0 +1,30 @@
+<h2 class="text-center">Liste des Guides</h2>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover custom-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Note Moyenne</th>
+        <th>Contact</th>
+        <th>Expérience</th>
+        <th>Langue</th>
+        <th>Spécialité</th>
+        <th>Action</th> <!-- Colonne pour le bouton -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let guide of guides">
+        <td>{{ guide.id }}</td>
+        <td>{{ guide.averageRating }}</td>
+        <td>{{ guide.contact }}</td>
+        <td>{{ guide.experience }}</td>
+        <td>{{ guide.language }}</td>
+        <td>{{ guide.speciality }}</td>
+        <td>
+          <button class="btn btn-reserve" (click)="reserver(guide)">Réserver</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
