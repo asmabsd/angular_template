@@ -1,0 +1,34 @@
+<form [formGroup]="storeForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Store Name</label>
+      <input id="name" formControlName="name" type="text" />
+      <div *ngIf="storeForm.get('name')?.invalid && storeForm.get('name')?.touched" class="error">
+        <small *ngIf="storeForm.get('name')?.errors?.['required']">Store name is required.</small>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input id="address" formControlName="address" type="text" />
+      <div *ngIf="storeForm.get('address')?.invalid && storeForm.get('address')?.touched" class="error">
+        <small *ngIf="storeForm.get('address')?.errors?.['required']">Address is required.</small>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+    </div>
+  
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input id="phone" formControlName="phone" type="text" />
+      <div *ngIf="storeForm.get('phone')?.invalid && storeForm.get('phone')?.touched" class="error">
+        <small *ngIf="storeForm.get('phone')?.errors?.['required']">Phone number is required.</small>
+        <small *ngIf="storeForm.get('phone')?.errors?.['pattern']">Phone number must contain only numbers.</small>
+      </div>
+    </div>
+  
+    <button type="submit" [disabled]="storeForm.invalid">Update Store</button>
+  </form>
+  

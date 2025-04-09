@@ -1,0 +1,71 @@
+<h2 class="text-center mb-4">Nos Guides Experts</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="container">
+  <div class="row" *ngIf="guides.length > 0; else noGuides">
+    <div class="col-md-4 mb-4" *ngFor="let guide of guides">
+      <div class="card shadow-sm h-100 text-center p-3 d-flex flex-column">
+
+        <img [src]="guide.image ? 'data:image/png;base64,' + guide.image : '/assets/frontend/images/guide.jpg'"
+        class="guide-photo rounded-circle mx-auto mb-3"
+        alt="{{ guide.name || 'Photo Guide' }}"
+        style="width: 120px; height: 120px; object-fit: cover;">
+
+        <!-- Nom -->
+        <h4 class="guide-name mb-2" *ngIf="guide.name">{{ guide.name }}</h4>
+
+        <!-- Évaluation -->
+       <!-- Évaluation -->
+<<!-- Évaluation -->
+<div class="rating-stars mb-3" *ngIf="guide.averageRating !== undefined">
+  <strong>Note :</strong> 
+  <ng-container *ngFor="let i of ratingStars">
+    <i class="fas fa-star"
+       [ngClass]="{
+         'text-warning': i <= (+guide.averageRating),
+         'text-muted': i > (+guide.averageRating)
+       }">
+    </i>
+  </ng-container>
+  <small class="d-block text-muted mt-1">({{ guide.averageRating | number:'1.1-1' }}/5)</small>
+</div>
+
+
+        <!-- Langue -->
+        <p class="mb-2" *ngIf="guide.language">
+          <strong>Langues :</strong> {{ guide.language }}
+         
+        </p>
+
+        <!-- Spécialité -->
+        <p class="mb-2" *ngIf="guide.speciality">
+          <strong>Spécialité :</strong> {{ guide.speciality }}
+        </p>
+
+        <!-- Boutons -->
+        <div class="mt-auto w-100">
+          <a href="/resguide" class="btn btn-primary w-100 mb-2">
+            <i class="fas fa-calendar-check me-2"></i>Réserver
+          </a>
+          
+
+          <a [routerLink]="['/guidedetails', guide.id]" class="btn btn-outline-primary w-100">
+            <i class="fas fa-info-circle me-2"></i>Détails
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Message si aucun guide -->
+  <ng-template #noGuides>
+    <div class="text-center text-muted">
+      Aucun guide disponible pour le moment.
+    </div>
+  </ng-template>
+</div>
+
+
+
+

@@ -1,0 +1,80 @@
+<div class="container mt-4" style="font-family: 'Poppins', sans-serif;">
+  
+  <!-- Indicateur de chargement -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-gradient" role="status"
+         style="width: 3rem; height: 3rem; color: #f7941d;">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+    <p class="mt-3">Chargement des détails de la réservation...</p>
+  </div>
+
+  <!-- Message d'erreur -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Détails de la réservation -->
+  <div *ngIf="reservationguide && !isLoading" class="card shadow-lg rounded-4 overflow-hidden" style="max-width: 800px; margin: 0 auto;">
+    
+    <!-- Header with gradient -->
+    <div class="card-header text-white py-3 px-4"
+         style="background: linear-gradient(to right, #f7941d, #8e44ad);">
+      <h2 class="mb-0">Détails de la Réservation</h2>
+    </div>
+    
+    <!-- Card Body -->
+    <div class="card-body px-4 py-3">
+      <ul class="list-group list-group-flush">
+
+        <li class="list-group-item d-flex justify-content-between">
+          <strong>ID Réservation :</strong> <span>{{ reservationguide.idReservation }}</span>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between">
+          <strong>Date & Heure :</strong> <span>{{ reservationguide.dateHour | date:'dd/MM/yyyy HH:mm' }}</span>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between">
+          <strong>Durée :</strong> <span>{{ reservationguide.duration }}</span>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between">
+          <strong>Statut :</strong> <span>{{ reservationguide.status }}</span>
+        </li>
+
+        <li class="list-group-item d-flex justify-content-between">
+          <strong>Prix (€) :</strong> <span>{{ reservationguide.price | currency:'EUR' }}</span>
+        </li>
+
+        <li class="list-group-item">
+          <strong>Commentaire :</strong>
+          <p class="mb-0 mt-1 text-muted">{{ reservationguide.comment }}</p>
+        </li>
+
+      </ul>
+
+      <!-- Bouton Télécharger Contrat -->
+      <div *ngIf="reservationguide.status === 'confirmed'" class="text-end mt-4">
+        <button class="btn text-white px-4 py-2"
+                style="background: linear-gradient(to right, #f7941d, #8e44ad); border: none;">
+          <i class="fas fa-file-pdf me-2"></i> Télécharger le contrat
+        </button>
+
+       
+      </div>
+      <div class="text-start mt-4">
+        <button class="btn text-white px-4 py-2"
+                style="background: linear-gradient(to right, #8e44ad, #f7941d); border: none;"
+                (click)="navigateBack()">
+          <i class="fas fa-arrow-left me-2"></i> Retour
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

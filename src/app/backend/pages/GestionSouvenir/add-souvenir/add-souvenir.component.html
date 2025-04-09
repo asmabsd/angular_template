@@ -1,0 +1,82 @@
+<form [formGroup]="souvenirForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">Name :</label>
+    <input id="name" formControlName="name" type="text" />
+    <div
+      *ngIf="
+        souvenirForm.get('name')?.invalid && souvenirForm.get('name')?.touched
+      "
+      class="error"
+    >
+      <small *ngIf="souvenirForm.get('name')?.errors?.['required']"
+        >souvenir name is required.</small
+      >
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description :</label>
+    <textarea id="description" formControlName="description"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="price">Price :</label>
+    <input id="price" formControlName="price" type="text" />
+    <div
+      *ngIf="
+        souvenirForm.get('price')?.invalid && souvenirForm.get('price')?.touched
+      "
+      class="error"
+    >
+      <small *ngIf="souvenirForm.get('price')?.errors?.['required']"
+        >price is required.</small
+      >
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="quantity">Quantity :</label>
+    <input id="quantity" formControlName="quantity" type="text" />
+    <div
+      *ngIf="
+        souvenirForm.get('quantity')?.invalid &&
+        souvenirForm.get('quantity')?.touched
+      "
+      class="error"
+    >
+      <small *ngIf="souvenirForm.get('quantity')?.errors?.['required']"
+        >quantity number is required.</small
+      >
+      <small *ngIf="souvenirForm.get('quantity')?.errors?.['pattern']"
+        >quantity number must contain only numbers.</small
+      >
+    </div>
+  </div>
+
+  <label for="category">Category :</label>
+  <select id="category" formControlName="category" required>
+    <option value="" disabled selected>Sélectionner une expérience</option>
+    <option value="HANDICRAFTS">HandiCrafts</option>
+    <option value="JEWERLY">Jewerly</option>
+    <option value="TEXTILES">Textiles</option>
+  </select>
+
+  <div>
+    <label for="storeId">Store:</label>
+    <select id="storeId" formControlName="storeId">
+      <option value="">Sélectionnez un store</option>
+      <option *ngFor="let store of stores" [value]="store.id">
+        {{ store.name }}
+      </option>
+    </select>
+    <div
+      *ngIf="
+        souvenirForm.get('storeId')?.invalid &&
+        souvenirForm.get('storeId')?.touched
+      "
+    >
+      Store requis.
+    </div>
+  </div>
+  <button type="submit" [disabled]="souvenirForm.invalid">Add souvenir</button>
+</form>
