@@ -2,17 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FrontendModule } from './frontend/frontend.module';  // Import du module FrontendModule
+import { FrontendModule } from './frontend/frontend.module'; // Import du module FrontendModule
 import { HttpClientModule } from '@angular/common/http';
 import { BackendModule } from './backend/backend.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Ajout du ReactiveFormsModule
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PhoneFormatPipe } from './shared/phone-format.pipe';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  
-
-  ],
+  declarations: [AppComponent],
   imports: [
     FormsModule,
     BrowserModule,
@@ -21,10 +18,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Ajout du R
     BackendModule,
     HttpClientModule,
     ReactiveFormsModule,
-    
     // Importation du module Frontend
   ],
- 
-  bootstrap: [AppComponent]
+
+  bootstrap: [AppComponent],
+
 })
-export class AppModule { }
+export class AppModule {}

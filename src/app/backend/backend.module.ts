@@ -10,7 +10,7 @@ import { AddUserComponent } from '../backend/pages/adduser/adduser.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { BackComponent } from './pages/back/back.component';
 import { ListeguideComponent } from './pages/listeguide/listeguide.component';
-import { EditguideComponent  } from './pages/editguide/editguide.component';
+import { EditguideComponent } from './pages/editguide/editguide.component';
 import { AppComponent } from '../app.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -26,29 +26,32 @@ import { ViewStoreComponent } from './pages/GestionSouvenir/view-store/view-stor
 import { AddSouvenirComponent } from './pages/GestionSouvenir/add-souvenir/add-souvenir.component';
 import { SouvenirListComponent } from './pages/GestionSouvenir/souvenir-list/souvenir-list.component';
 import { EditSouvenirComponent } from './pages/GestionSouvenir/edit-souvenir/edit-souvenir.component';
+import { ViewSouvenirComponent } from './pages/GestionSouvenir/view-souvenir/view-souvenir.component';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
-  { path: 'dashboard', component: DashboardComponent, children: [
-    {path: 'editguide/:id', component: EditguideComponent },
-    {path: 'detailsbackguide/:id', component: DetailsbackguideComponent },
-
-    {path: 'back',component : BackComponent},
-    {path: 'listeguide',component : ListeguideComponent},
-
-    { path: 'addguide', component: AddguideComponent },
-    { path: 'adduser', component: AddUserComponent },
-    { path: 'user-list', component: UserListComponent },
-    { path: 'storeList', component: StoreListComponent },
-    { path: 'addStore', component: AddStoreComponent },
-    { path: 'addStore', component: AddStoreComponent },
-    { path: 'editStore/:id', component: EditStoreComponent},
-    { path: 'viewStore/:id', component: ViewStoreComponent},
-    { path: 'viewStore/:id', component: ViewStoreComponent},
-    { path: 'souvenirList', component: SouvenirListComponent},
-    { path: 'addSouvenir', component: AddSouvenirComponent },
-    { path: 'editSouvenir/:id', component: EditSouvenirComponent },
-  ]},
-  { path: 'guide', component: GuideComponent }
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    children: [
+      { path: 'editguide/:id', component: EditguideComponent },
+      { path: 'detailsbackguide/:id', component: DetailsbackguideComponent },
+      { path: 'back', component: BackComponent },
+      { path: 'listeguide', component: ListeguideComponent },
+      { path: 'addguide', component: AddguideComponent },
+      { path: 'adduser', component: AddUserComponent },
+      { path: 'user-list', component: UserListComponent },
+      { path: 'storeList', component: StoreListComponent },
+      { path: 'addStore', component: AddStoreComponent },
+      { path: 'editStore/:id', component: EditStoreComponent },
+      { path: 'viewStore/:id', component: ViewStoreComponent },
+      { path: 'viewSouvenir/:id', component: ViewSouvenirComponent },
+      { path: 'souvenirList', component: SouvenirListComponent },
+      { path: 'addSouvenir', component: AddSouvenirComponent },
+      { path: 'editSouvenir/:id', component: EditSouvenirComponent },
+    ],
+  },
+  { path: 'guide', component: GuideComponent },
 ];
 
 @NgModule({
@@ -74,15 +77,17 @@ const routes: Routes = [
     AddSouvenirComponent,
     SouvenirListComponent,
     EditSouvenirComponent,
-    
+    ViewSouvenirComponent,
   ],
+
   imports: [
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild(routes),
-    HttpClientModule
+    HttpClientModule,
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BackendModule { }
+export class BackendModule {}

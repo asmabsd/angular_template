@@ -4,7 +4,7 @@
     <!-- Loading indicator -->
     <div *ngIf="isLoading" class="text-center py-3">
       <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
-      <p class="mt-2 small text-muted">Loading Store details...</p>
+      <p class="mt-2 small text-muted">Loading Souvenir details...</p>
     </div>
   
     <!-- Error message -->
@@ -12,28 +12,40 @@
       {{ errorMessage }}
     </div>
   
-    <!-- Compact Store details card -->
-    <div *ngIf="Store && !isLoading" class="card shadow-sm border-0">
+    <!-- Compact Souvenir details card -->
+    <div *ngIf="Souvenir && !isLoading" class="card shadow-sm border-0">
       <div class="card-header bg-white py-2 px-3 border-bottom">
-        <h6 class="mb-0 text-primary">Store Details</h6>
+        <h6 class="mb-0 text-primary">Souvenir Details</h6>
       </div>
       <div class="card-body p-2">
         <ul class="list-group list-group-flush small">
           <li class="list-group-item px-2 py-1 d-flex justify-content-between">
             <span class="text-muted">Name:</span>
-            <span>{{ Store.name }}</span>
+            <span>{{ Souvenir.name }}</span>
           </li>
           <li class="list-group-item px-2 py-1 d-flex justify-content-between">
-            <span class="text-muted">Address:</span>
-            <span>{{ Store.address }}</span>
+            <span class="text-muted">Price:</span>
+            <span>{{ Souvenir.price | currency}} </span>
           </li>
           <li class="list-group-item px-2 py-1 d-flex justify-content-between">
             <span class="text-muted">Description:</span>
-            <span>{{ Store.description }}</span>
+            <span>{{ Souvenir.description }}</span>
           </li>
           <li class="list-group-item px-2 py-1 d-flex justify-content-between">
-            <span class="text-muted">Phone:</span>
-            <span>+216 {{ Store.phone| phoneFormat}}</span>
+            <span class="text-muted">Quantity:</span>
+            <span>{{ Souvenir.quantity }}</span>
+          </li>          
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <span class="text-muted">Staus:</span>
+            <span>{{ Souvenir.status }}</span>
+          </li>          
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <span class="text-muted">Category:</span>
+            <span>{{ Souvenir.category }}</span>
+          </li>          
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <span class="text-muted">Store Name:</span>
+            <span>{{ Souvenir.store?.name }}</span>
           </li>          
         </ul>  
         <!-- Compact action buttons -->

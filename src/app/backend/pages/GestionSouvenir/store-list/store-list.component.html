@@ -26,7 +26,7 @@
             <td>{{ store.name }}</td>
             <td>{{ store.address }}</td>
             <td>{{ store.description }}</td>
-            <td>{{ store.phone }}</td>
+            <td>+216 {{ store.phone | phoneFormat}}</td>
             <td>
               <button class="btn-action btn-edit" [routerLink]="['/dashboard/editStore', store.id]">
                 <i class="fas fa-edit"></i> Edit

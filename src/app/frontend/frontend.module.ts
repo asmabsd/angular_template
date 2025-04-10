@@ -15,38 +15,44 @@ import { AuthGuard } from '../auth.guard';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'src/app/interceptors/jwt.interceptor';
-import { ReservationGuideComponent} from './pages/reservationguide/reservationguide.component';
+import { ReservationGuideComponent } from './pages/reservationguide/reservationguide.component';
 import { ListGReservationComponent } from './pages/list-greservation/list-greservation.component';
 import { EditreservationComponent } from './pages/editreservation/editreservation.component';
 import { DetailsreservationComponent } from './pages/detailsreservation/detailsreservation.component';
 import { DetailsguideComponent } from './pages/detailsguide/detailsguide.component';
+import { StoreListComponent } from './pages/GestionSouvenir/store-list/store-list.component';
+import { SharedModule } from '../shared/shared.module';
+import { SouvenirsByStoreComponent } from './pages/GestionSouvenir/souvenirs-by-store/souvenirs-by-store.component';
 const routes: Routes = [
-  
-  
   {
-    path: '', component: HomeComponent, // Layout parent
+    path: '',
+    component: HomeComponent, // Layout parent
     children: [
-      
       { path: 'guide', component: GuideComponent },
-      {path: 'guidedetails/:id', component: DetailsguideComponent },
+      { path: 'guidedetails/:id', component: DetailsguideComponent },
 
-      { path: 'resguide', component:ReservationGuideComponent },
-      { path: 'reservationguidedetails/:id', component:DetailsreservationComponent },
+      { path: 'resguide', component: ReservationGuideComponent },
+      {
+        path: 'reservationguidedetails/:id',
+        component: DetailsreservationComponent,
+      },
 
-      { path: 'listereservationsguide', component:ListGReservationComponent },
-      { path: 'editreservation/:id', component:EditreservationComponent },
-
-    ]
+      { path: 'listereservationsguide', component: ListGReservationComponent },
+      { path: 'editreservation/:id', component: EditreservationComponent },
+      // { path: 'storeList', component: StoreListComponent },
+      { path: 'souvenir/store/:id', component: SouvenirsByStoreComponent },
+      // { path: 'storeList', component : StoreListComponent },
+    ],
   },
-  { path: 'about', component: AboutComponent } ,
- { path: 'offers', component: OffersComponent},
- { path: 'news', component: NewsComponent},
- { path: 'login', component: LoginComponent},
+  { path: 'about', component: AboutComponent },
+  { path: 'offers', component: OffersComponent },
+  { path: 'news', component: NewsComponent },
+  { path: 'login', component: LoginComponent },
 
- { path: 'register', component: RegisterComponent},
+  { path: 'register', component: RegisterComponent },
 
-  { path: 'contact', component: ContactComponent},
- 
+  { path: 'contact', component: ContactComponent },
+
   // À propos
 ];
 
@@ -65,20 +71,23 @@ const routes: Routes = [
     EditreservationComponent,
     DetailsreservationComponent,
     DetailsguideComponent,
+    StoreListComponent,
+    SouvenirsByStoreComponent,
   ],
+
   imports: [
     FormsModule,
     CommonModule,
-    
+    SharedModule,
     RouterModule.forChild(routes),
-    HttpClientModule ,
-    ReactiveFormsModule
-   // Enregistrer les routes pour le frontend
+    HttpClientModule,
+    ReactiveFormsModule,
+    // Enregistrer les routes pour le frontend
   ],
- /*  providers: [ {
+  /*  providers: [ {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
     }],*/
 })
-export class FrontendModule { }
+export class FrontendModule {}

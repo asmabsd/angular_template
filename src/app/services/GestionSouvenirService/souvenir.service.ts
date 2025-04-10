@@ -12,9 +12,13 @@ private apiUrlAdd = 'http://localhost:8089/pidev/souvenir/addSouvenir'
   private apiUrlRetrieve = 'http://localhost:8089/pidev/souvenir/retrieveSouvenir'
   private apiUrlRetrieveAll ='http://localhost:8089/pidev/souvenir/retrieveAllSouvenir'
   private apiUrlDelete ='http://localhost:8089/pidev/souvenir/deleteSouvenir'
+  private apiUrlretrieveSouvenirsByStore ='http://localhost:8089/pidev/souvenir/store'
   constructor(private http: HttpClient) {}
   getSouvenir(): Observable<Souvenir[]> {
     return this.http.get<Souvenir[]>(this.apiUrlRetrieveAll)
+  }
+  getSouvenirByStore(id :number): Observable<Souvenir[]> {
+    return this.http.get<Souvenir[]>(`${this.apiUrlretrieveSouvenirsByStore}/${id}`)
   }
   addSouvenir(Souvenir: Souvenir): Observable<Souvenir> {
     return this.http.post<Souvenir>(`${this.apiUrlAdd}`, Souvenir)

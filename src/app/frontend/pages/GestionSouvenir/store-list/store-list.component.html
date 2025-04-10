@@ -1,0 +1,34 @@
+<div class="store-section-header">
+  <h2 class="section-main-title">Our Stores</h2>
+  <div class="section-subtitle-wrapper">
+    <p class="section-subtitle">
+      <span class="subtitle-icon">🏺</span>
+      <span class="subtitle-text">
+        Discover Authentic Treasures
+        <span class="highlight-word">Across Tunisia</span>
+      </span>
+      <span class="subtitle-line"></span>
+    </p>
+  </div>
+</div>
+
+<!-- Ajoutez ceci avant votre grid/slider -->
+<div class="store-container-slider">
+  <!-- Ajoutez #slider ici -->
+  <div class="store-slider" #slider>
+    <div class="store-card" *ngFor="let store of stores">
+      <h2 class="store-title">{{ store.name }}</h2>
+      <div class="store-address">📍 {{ store.address }}</div>
+      <p class="store-description">{{ store.description }}</p>
+      <div class="store-phone">+216 {{ store.phone | phoneFormat }}</div>
+      <button (click)="selectStore(store.id)" class="view-products-btn">View Products</button>
+
+    </div>
+  </div>
+
+  <div class="slider-controls">
+    <!-- Passez la valeur numérique directe -->
+    <button class="slider-btn" (click)="scroll(-300)">❮</button>
+    <button class="slider-btn" (click)="scroll(300)">❯</button>
+  </div>
+</div>
