@@ -44,6 +44,12 @@ export class AuthService {
     return null;
   }
   
+  updateCurrentUser(updatedData: any): void {
+    const currentUser = this.getCurrentUser();
+    const updatedUser = { ...currentUser, ...updatedData };
+    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+  }
+
 
   login(email: string, password: string): Observable<boolean> {
     return this.http.post<LoginResponse>(this.loginUrl, { email, password }).pipe(
@@ -113,7 +119,31 @@ export class AuthService {
       })
     );
   }
+  getCurrentUser(): any {
+    const userString = localStorage.getItem('currentUser');
+    
+    if (userString) {
+      try {
+        return JSON.parse(userString);
+      } catch (e) {
+        console.error('Error parsing user data from localStorage', e);
+        return this.getDefaultUser(); // Retourne un utilisateur par défaut si nécessaire
+      }
+    }
+    
+    return this.getDefaultUser(); // Ou throw une erreur selon votre besoin
+  }
 
+  private getDefaultUser(): any {
+    return {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      nTel: '',
+      numPasseport: ''
+    };
+  }
   handleOAuth2Response(message: string): void {
     alert(message);
     this.router.navigate(['/login']);

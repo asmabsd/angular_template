@@ -17,6 +17,7 @@ import { JwtInterceptor } from 'src/app/interceptors/jwt.interceptor';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { BlogComponent } from './pages/blog/blog.component';
+import { ProfileUserComponent } from './pages/profile-user/profile-user.component';
 
 const routes: Routes = [
   
@@ -39,6 +40,10 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'blog', component: BlogComponent },
+  { path: 'profile', component: ProfileUserComponent },
+  { path: 'profile/:id', component: ProfileUserComponent },  // Route dynamique pour le profil
+
+
 
 
   // À propos
@@ -57,6 +62,7 @@ const routes: Routes = [
     ResetPasswordComponent,
     ForgotPasswordComponent,
     BlogComponent,
+    ProfileUserComponent,
   ],
   imports: [
     FormsModule,

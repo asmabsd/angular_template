@@ -37,7 +37,9 @@
               "src/assets/frontend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css",
               "src/assets/frontend/plugins/font-awesome-4.7.0/css/font-awesome.min.css",
               "src/assets/frontend/styles//bootstrap4/bootstrap.min.css",
-              "src/assets/frontend/styles/main_styles.css"
+              "src/assets/frontend/styles/main_styles.css",
+              "node_modules/ngx-toastr/toastr.css"
+
               
               
               
