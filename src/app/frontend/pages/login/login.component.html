@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Travelix</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/frontend/styles/bootstrap4/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/frontend/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/frontend/styles/custom_login.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top_bar">
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex flex-row">
+                <div class="phone">+45 345 3324 56789</div>
+                <div class="social">
+                    <ul class="social_list">
+                        <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                        <li class="social_list_item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li class="social_list_item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li class="social_list_item"><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                        <li class="social_list_item"><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
+                        <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <div class="user_box ml-auto">
+                
+                </div>
+            </div>
+        </div>
+    </div>        
+</div>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
+    <div class="logo_container">
+        <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+    </div>
+    
+    <form id="search_form" class="search_form bez_1">
+        <input type="search" class="search_content_input bez_1">
+    </form>
+
+    <div class="hamburger">
+        <i class="fa fa-bars trans_200"></i>
+    </div>
+</div>
+
+<!-- Full-Screen Background Login Section -->
+<div class="login-container">
+    <form (submit)="login()" class="login-form">
+        <h2>Welcome Back!</h2>
+        <p>Login to continue</p>
+
+        <div class="input-group">
+            <i class="fa fa-envelope"></i>
+            <input type="email" [(ngModel)]="email" name="email" placeholder="E-mail" required />
+        </div>
+        <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required />
+        </div>
+
+        <button type="submit" class="btn-login">Login</button>
+        <p class="register-link">Don't have an account? <a href="/register">Sign up</a></p>
+
+        <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </form>
+</div>
+
+<!-- Scripts -->
+<script src="/assets/frontend/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/frontend/styles/bootstrap4/popper.js"></script>
+<script src="/assets/frontend/styles/bootstrap4/bootstrap.min.js"></script>
+
+</body>
+</html>

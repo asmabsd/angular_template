@@ -1,0 +1,19 @@
+.hotel_type {
+    display: inline-block;
+    background-color: #007bff; /* Bleu élégant */
+    color: white; /* Texte en blanc */
+    font-size: 1.5rem; /* Taille du texte */
+    font-weight: bold;
+    padding: 10px 20px; /* Espacement interne */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* Effet d’ombre */
+    text-transform: uppercase; /* Texte en majuscules */
+    letter-spacing: 1px; /* Espacement des lettres */
+    transition: all 0.3s ease-in-out; /* Animation fluide */
+  }
+  
+  .hotel_type:hover {
+    background-color: #0056b3; /* Assombrir au survol */
+    transform: scale(1.1); /* Effet zoom au survol */
+  }
+  

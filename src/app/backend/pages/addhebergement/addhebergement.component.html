@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- ========== SIDEBAR ========== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-shield-alt"></i> Admin Panel</h3>
+            </div>
+            
+           
+
+            <div class="user-panel">
+                <img src="/assets/frontend/images/profile.png" alt="User Image"
+                class="user rounded-circle mx-auto mb-3"
+                alt="{{   'user' }}"
+                style="width: 120px; height: 120px; object-fit: cover;">
+               <div class="user-info">
+                <span class="user-name">SALAH </span>
+                <span class="user-role">SALAH HMIDEN</span>
+            </div>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li>
+                    <a routerLink="/dashboard/user-list" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Users Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/listeguide" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Guides Management</span>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a routerLink="/gethebback" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Accommodations Management</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Restaurants Management</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Blogs Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Transports Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Store Management</span>
+                    </a>
+                </li>
+              
+            </ul>
+        </aside>
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main class="main-content">
+
+            <router-outlet></router-outlet>
+<br>
+<br>
+<br>
+<div class="add-hebergement-container">
+    <h2>Ajouter un Hébergement</h2>
+    <form [formGroup]="hebergementForm" (ngSubmit)="ajouterHebergement()" class="styled-form">
+<!-- Nom de l'Hébergement -->
+<div class="form-group">
+  <label for="name">Nom de l'Hébergement:</label>
+  <input id="name" formControlName="name" type="text" class="form-control" />
+  <div *ngIf="hebergementForm.get('name')?.hasError('required') && hebergementForm.get('name')?.touched" class="error-message">
+    Ce champ est requis.
+  </div>
+  <div *ngIf="hebergementForm.get('name')?.hasError('nameTooShort') && hebergementForm.get('name')?.touched" class="error-message">
+    Le nom doit être supérieur à 3 caractères.
+  </div>
+  <div *ngIf="hebergementForm.get('name')?.hasError('nameNotCapitalized') && hebergementForm.get('name')?.touched" class="error-message">
+    Le nom doit commencer par une majuscule.
+  </div>
+</div>
+    
+      <div class="form-group">
+        <label for="type">Type d'Hébergement:</label>
+        <select id="type" formControlName="type" class="form-control">
+          <option *ngFor="let type of typeHebergementValues" [value]="type">{{ type }}</option>
+        </select>
+        <!-- Message d'erreur -->
+        <div *ngIf="hebergementForm.get('type')?.invalid && hebergementForm.get('type')?.touched" class="error-message">
+          Ce champ est requis.
+        </div>
+      </div>
+    
+<!-- Adresse -->
+<div class="form-group">
+  <label for="adresse">Adresse:</label>
+  <input id="adresse" formControlName="adresse" type="text" class="form-control" />
+  <div *ngIf="hebergementForm.get('adresse')?.hasError('required') && hebergementForm.get('adresse')?.touched" class="error-message">
+    Ce champ est requis.
+  </div>
+  <div *ngIf="hebergementForm.get('adresse')?.hasError('addressTooShort') && hebergementForm.get('adresse')?.touched" class="error-message">
+    L'adresse doit contenir plus de 7 caractères.
+  </div>
+  <div *ngIf="hebergementForm.get('adresse')?.hasError('addressInvalid') && hebergementForm.get('adresse')?.touched" class="error-message">
+    L'adresse doit contenir des lettres et des chiffres.
+  </div>
+</div>
+    
+<!-- Description -->
+<div class="form-group">
+  <label for="description">Description:</label>
+  <textarea id="description" formControlName="description" class="form-control"></textarea>
+  <div *ngIf="hebergementForm.get('description')?.hasError('required') && hebergementForm.get('description')?.touched" class="error-message">
+    Ce champ est requis.
+  </div>
+  <div *ngIf="hebergementForm.get('description')?.hasError('descriptionTooShort') && hebergementForm.get('description')?.touched" class="error-message">
+    La description doit contenir plus de 10 caractères.
+  </div>
+  <div *ngIf="hebergementForm.get('description')?.hasError('descriptionInvalid') && hebergementForm.get('description')?.touched" class="error-message">
+    La description ne doit pas contenir de caractères spéciaux.
+  </div>
+</div>
+    
+      <div class="form-group">
+        <label for="price">Prix par nuit:</label>
+        <input id="price" formControlName="price" type="number" class="form-control" min="0" />
+        <!-- Message d'erreur -->
+        <div *ngIf="hebergementForm.get('price')?.invalid && hebergementForm.get('price')?.touched" class="error-message">
+          Le prix doit être un nombre positif.
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <label for="image">Image de l’hébergement :</label>
+        <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" accept="image/*">
+        <!-- Message d'erreur -->
+        <div *ngIf="hebergementForm.get('imageUrl')?.invalid && hebergementForm.get('imageUrl')?.touched" class="error-message">
+          Ce champ est requis.
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <label for="availability">Disponibilité:</label>
+        <input id="availability" formControlName="availability" type="text" class="form-control" />
+        <!-- Message d'erreur -->
+        <div *ngIf="hebergementForm.get('availability')?.invalid && hebergementForm.get('availability')?.touched" class="error-message">
+          Ce champ est requis.
+        </div>
+      </div>
+    
+      <button type="submit" class="btn-primary" [disabled]="hebergementForm.invalid">Ajouter l'Hébergement</button>
+    </form>
+    
+  </div>
+  

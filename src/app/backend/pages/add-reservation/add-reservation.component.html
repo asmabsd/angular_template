@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- ========== SIDEBAR ========== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-shield-alt"></i> Admin Panel</h3>
+            </div>
+            
+           
+
+            <div class="user-panel">
+                <img src="/assets/frontend/images/profile.png" alt="User Image"
+                class="user rounded-circle mx-auto mb-3"
+                alt="{{   'user' }}"
+                style="width: 120px; height: 120px; object-fit: cover;">
+               <div class="user-info">
+                <span class="user-name">SALAH </span>
+                <span class="user-role">SALAH HMIDEN</span>
+            </div>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li>
+                    <a routerLink="/dashboard/user-list" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Users Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/listeguide" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Guides Management</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a routerLink="/gethebback" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Accommodations Management</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Restaurants Management</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Blogs Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Transports Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Store Management</span>
+                    </a>
+                </li>
+              
+            </ul>
+        </aside>
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main class="main-content">
+
+            <router-outlet></router-outlet>
+<br>
+<br>
+<br>
+<div class="reservation-container">
+    <div class="reservation-card">
+      <h2 class="reservation-title"><i class="fas fa-calendar-plus"></i> Nouvelle Réservation</h2>
+      
+      <form (ngSubmit)="onSubmit()" class="reservation-form">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="dateDebut" class="form-label">
+              <i class="far fa-calendar-alt"></i> Date d'arrivée
+            </label>
+            <input type="date" class="form-control" id="dateDebut" 
+                   [(ngModel)]="reservation.dateDebut" name="dateDebut" 
+                   [min]="today" (change)="calculerPrixTotal()" required>
+          </div>
+  
+          <div class="form-group col-md-6">
+            <label for="dateFin" class="form-label">
+              <i class="far fa-calendar-check"></i> Date de départ
+            </label>
+            <input type="date" class="form-control" id="dateFin" 
+                   [(ngModel)]="reservation.dateFin" name="dateFin" 
+                   [min]="today" (change)="calculerPrixTotal()" required>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="nombreadulte" class="form-label">
+              <i class="fas fa-user-friends"></i> Adultes
+            </label>
+            <input type="number" class="form-control" id="nombreadulte" 
+                   [(ngModel)]="reservation.nombreadulte" name="nombreadulte" 
+                   (input)="calculerPrixTotal()" min="1" required>
+          </div>
+  
+          <div class="form-group col-md-6">
+            <label for="nombrenfant" class="form-label">
+              <i class="fas fa-child"></i> Enfants
+            </label>
+            <input type="number" class="form-control" id="nombrenfant" 
+                   [(ngModel)]="reservation.nombrenfant" name="nombrenfant" 
+                   (input)="calculerPrixTotal()" min="0">
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="statut" class="form-label">
+            <i class="fas fa-user-tag"></i> Type de séjour
+          </label>
+          <select class="form-control custom-select" id="statut" name="statut" 
+                  [(ngModel)]="reservation.statut" required>
+            <option value="" disabled selected>Sélectionnez votre type de séjour</option>
+            <option value="marié">Couple</option>
+            <option value="célibataire">Célibataire</option>
+            <option value="famille">Famille</option>
+          </select>
+        </div>
+  
+        <div class="price-summary">
+          <div class="price-display">
+            <span class="price-label">Total :</span>
+            <span class="price-amount">{{ reservation.prixTotal || 0 }} DT</span>
+          </div>
+          <div class="price-notice">
+            <i class="fas fa-info-circle"></i> Supplément de 20% pour les nuits du week-end
+          </div>
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary submit-btn">
+            <i class="fas fa-check"></i> Confirmer la réservation
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

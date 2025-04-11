@@ -1,0 +1,84 @@
+<div *ngIf="reservation" class="reservation-container">
+    <div class="card">
+      <div class="card-content">
+        <h2 class="title">✏️ Modifier la réservation n°{{ reservation.id_reservation }}</h2>
+  
+        <form (ngSubmit)="modifierReservation()" #reservationForm="ngForm">
+          <div class="form-group">
+            <label for="dateDebut">📅 Date début :</label>
+            <input 
+              type="date" 
+              id="dateDebut" 
+              name="dateDebut" 
+              [(ngModel)]="reservation.dateDebut" 
+              [min]="today" 
+              (change)="calculerPrixTotal()" 
+              required />
+          </div>
+  
+          <div class="form-group">
+            <label for="dateFin">📅 Date fin :</label>
+            <input 
+              type="date" 
+              id="dateFin" 
+              name="dateFin" 
+              [(ngModel)]="reservation.dateFin" 
+              [min]="today" 
+              (change)="calculerPrixTotal()" 
+              required />
+          </div>
+  
+          <div class="form-group">
+            <label for="nombreadulte">🧑 Adultes :</label>
+            <input 
+              type="number" 
+              id="nombreadulte" 
+              name="nombreadulte" 
+              [(ngModel)]="reservation.nombreadulte" 
+              (input)="calculerPrixTotal()" 
+              min="0" 
+              required />
+          </div>
+  
+          <div class="form-group">
+            <label for="nombrenfant">🧒 Enfants :</label>
+            <input 
+              type="number" 
+              id="nombrenfant" 
+              name="nombrenfant" 
+              [(ngModel)]="reservation.nombrenfant" 
+              (input)="calculerPrixTotal()" 
+              min="0" 
+              required />
+          </div>
+  
+          <div class="form-group">
+            <label for="statut">👤 Statut :</label>
+            <select id="statut" name="statut" [(ngModel)]="reservation.statut" required>
+              <option value="marié">Couple</option>
+              <option value="célibataire">Célibataire</option>
+              <option value="famille">Famille</option>
+            </select>
+          </div>
+  
+          <p><span class="label">💰 Prix total :</span> {{ reservation.prixTotal || 0 }} €</p>
+          <p style="color: darkorange; font-style: italic;">
+            ⚠️ Un supplément de 20% est appliqué pour les nuits du week-end (vendredi, samedi, dimanche).
+          </p>
+  
+          <button 
+          type="submit" 
+          class="reserve-button" 
+          [disabled]="!reservationForm.form.valid" 
+          (click)="modifierReservation()"> 💾 Enregistrer les modifications
+        </button>
+        
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="!reservation" class="loading">
+    <p>⏳ Chargement des informations de la réservation...</p>
+  </div>
+  

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- ========== SIDEBAR ========== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-shield-alt"></i> Admin Panel</h3>
+            </div>
+            
+           
+
+            <div class="user-panel">
+                <img src="/assets/frontend/images/profile.png" alt="User Image"
+                class="user rounded-circle mx-auto mb-3"
+                alt="{{   'user' }}"
+                style="width: 120px; height: 120px; object-fit: cover;">
+               <div class="user-info">
+                <span class="user-name">SALAH </span>
+                <span class="user-role">SALAH HMIDEN</span>
+            </div>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li>
+                    <a routerLink="/dashboard/user-list" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Users Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard/listeguide" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Guides Management</span>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a routerLink="/gethebback" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Accommodations Management</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Restaurants Management</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Blogs Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Transports Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/dashboard" routerLinkActive="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Store Management</span>
+                    </a>
+                </li>
+              
+            </ul>
+        </aside>
+
+        <!-- ========== MAIN CONTENT ========== -->
+        <main class="main-content">
+
+            <router-outlet></router-outlet>
+<br>
+<br>
+<br>
+
+<div class="reservation-container">
+    <div class="reservation-card">
+      <div class="reservation-header">
+        <h2 class="reservation-title">
+          <i class="fas fa-calendar-plus"></i> {{ isEditMode ? 'Modifier la Réservation' : 'Nouvelle Réservation' }}
+        </h2>
+        <div class="header-divider"></div>
+      </div>
+  
+      <form [formGroup]="reservationForm" (ngSubmit)="saveReservation()" class="reservation-form">
+        <div class="form-row">
+          <!-- Date d'arrivée -->
+          <div class="form-group col-md-6">
+            <label for="dateDebut" class="form-label">
+              <i class="far fa-calendar-alt"></i> Date d'arrivée
+            </label>
+            <input type="date" id="dateDebut" class="form-control" 
+                   formControlName="dateDebut" [min]="today">
+            <div *ngIf="reservationForm.get('dateDebut')?.invalid && reservationForm.get('dateDebut')?.touched" 
+                 class="error-message">
+              <i class="fas fa-exclamation-circle"></i> La date d'arrivée est requise
+            </div>
+          </div>
+  
+          <!-- Date de départ -->
+          <div class="form-group col-md-6">
+            <label for="dateFin" class="form-label">
+              <i class="far fa-calendar-check"></i> Date de départ
+            </label>
+            <input type="date" id="dateFin" class="form-control" 
+                   formControlName="dateFin" [min]="reservationForm.get('dateDebut')?.value || today">
+            <div *ngIf="reservationForm.get('dateFin')?.invalid && reservationForm.get('dateFin')?.touched" 
+                 class="error-message">
+              <i class="fas fa-exclamation-circle"></i> La date de départ est requise
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <!-- Nombre d'adultes -->
+          <div class="form-group col-md-6">
+            <label for="nombreadulte" class="form-label">
+              <i class="fas fa-user-friends"></i> Adultes
+            </label>
+            <input type="number" id="nombreadulte" class="form-control" 
+                   formControlName="nombreadulte" min="1">
+            <div *ngIf="reservationForm.get('nombreadulte')?.invalid && reservationForm.get('nombreadulte')?.touched" 
+                 class="error-message">
+              <i class="fas fa-exclamation-circle"></i> Minimum 1 adulte requis
+            </div>
+          </div>
+  
+          <!-- Nombre d'enfants -->
+          <div class="form-group col-md-6">
+            <label for="nombrenfant" class="form-label">
+              <i class="fas fa-child"></i> Enfants
+            </label>
+            <input type="number" id="nombrenfant" class="form-control" 
+                   formControlName="nombrenfant" min="0">
+          </div>
+        </div>
+  
+        <!-- Statut -->
+        <div class="form-group">
+            <label for="statut" class="form-label">
+              <i class="fas fa-user-tag"></i> Type de séjour
+            </label>
+            <select id="statut" class="form-control custom-select custom-width" formControlName="statut">
+              <option value="" disabled selected>Sélectionnez un type</option>
+              <option value="Couple">Couple</option>
+              <option value="Célibataire">Célibataire</option>
+              <option value="Famille">Famille</option>
+            </select>
+            <div *ngIf="reservationForm.get('statut')?.invalid && reservationForm.get('statut')?.touched" 
+                 class="error-message">
+              <i class="fas fa-exclamation-circle"></i> Veuillez sélectionner un type
+            </div>
+          </div>
+          
+  
+        <!-- Prix Total -->
+        <div class="form-group price-group">
+          <label for="prixTotal" class="form-label">
+            <i class="fas fa-tag"></i> Prix total
+          </label>
+          <div class="input-group">
+            <input type="number" id="prixTotal" class="form-control price-input" 
+                   formControlName="prixTotal" min="0" step="0.01">
+            <span class="input-group-text">DT</span>
+          </div>
+          <div *ngIf="reservationForm.get('prixTotal')?.invalid && reservationForm.get('prixTotal')?.touched" 
+               class="error-message">
+            <i class="fas fa-exclamation-circle"></i> Prix invalide
+          </div>
+        </div>
+  
+        <!-- Boutons d'action -->
+        <div class="form-actions">
+            <div class="form-actions">
+                <button type="button" class="btn btn-outline-secondary" 
+                (click)="goToHebergementDetailsIfValid()">
+          <i class="fas fa-times"></i> Annuler
+        </button>
+        
+        
+              </div>
+          <button type="submit" class="btn btn-primary" [disabled]="reservationForm.invalid">
+            <i class="fas fa-save"></i> {{ isEditMode ? 'Mettre à jour' : 'Confirmer' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

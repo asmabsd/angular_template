@@ -1,0 +1,51 @@
+<div class="super_container">
+  <div class="offers">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <h2 class="section_title">Liste des Hôtels</h2>
+        </div>
+      </div>
+      <div class="row offers_items">
+        <div class="col-lg-6 offers_col" *ngFor="let hebergement of hebergements">
+          <div class="offers_item">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="offers_image_container">
+                  <div 
+                  class="offers_image_background" 
+                  [ngStyle]="{'background-image': 'url(assets/frontend/images/hotels/' + hebergement.imageUrl + ')'}">
+                </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="offers_content">
+
+                  <div class="offers_price">{{ hebergement.price }} €<span>/nuit</span></div>
+                  <div class="">
+                    <span class="hotel_type">{{ hebergement.type }}</span>
+                  </div>
+                  <div class="rating_r offers_rating">
+                  </div>
+                  <p class="offers_text">
+                    <strong>Adresse:</strong> {{ hebergement.adresse }}<br>
+                    <strong>Description:</strong> {{ hebergement.description }}<br>
+                    <strong>Disponibilité:</strong> 
+                    <span [class.text-success]="hebergement.availability" [class.text-danger]="!hebergement.availability">
+                      {{ hebergement.availability ? 'Disponible' : 'Complet' }}
+                    </span>
+                  </p>
+                  <div class="offers_link">
+                    <a [routerLink]="['/reservationchambre', hebergement.id_hebergement]" class="btn btn-primary w-100">
+                      Réserver
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>

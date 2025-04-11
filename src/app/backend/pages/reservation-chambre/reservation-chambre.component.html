@@ -1,0 +1,29 @@
+<div class="container mt-5">
+    <h2>Réserver une chambre - {{ hebergement?.name }}</h2>
+    <form [formGroup]="reservationForm" (ngSubmit)="submitReservation()">
+      <div class="mb-3">
+        <label>Date de début</label>
+        <input type="date" class="form-control" formControlName="dateDebut">
+      </div>
+  
+      <div class="mb-3">
+        <label>Date de fin</label>
+        <input type="date" class="form-control" formControlName="dateFin">
+      </div>
+  
+      <div class="mb-3">
+        <label>Nombre d'adultes</label>
+        <input type="number" class="form-control" formControlName="nombreadulte">
+      </div>
+  
+      <div class="mb-3">
+        <label>Nombre d'enfants</label>
+        <input type="number" class="form-control" formControlName="nombrenfant">
+      </div>
+  
+      <div class="text-end">
+        <button class="btn btn-success" type="submit" [disabled]="reservationForm.invalid">Confirmer la réservation</button>
+      </div>
+    </form>
+  </div>
+  

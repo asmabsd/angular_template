@@ -1,0 +1,24 @@
+/* src/app/backend/pages/users/user-list/user-list.component.css */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+  }
+  
+  .table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  .btn-group {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+  }

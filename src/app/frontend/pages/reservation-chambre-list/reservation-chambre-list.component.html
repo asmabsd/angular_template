@@ -1,0 +1,76 @@
+<div class="container mt-4">
+    <h2 class="mb-4 text-center fw-bold">Mes Réservations</h2>
+    
+    <div *ngIf="reservations.length > 0; else noData" class="row g-4">
+        <div *ngFor="let r of reservations" class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">{{ r.hebergement?.name || 'Hébergement non défini' }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Dates:</span>
+                        <span class="fw-semibold">
+                            {{ r.dateDebut | date: 'dd/MM/yyyy' }} - {{ r.dateFin | date: 'dd/MM/yyyy' }}
+                        </span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Durée:</span>
+                        <span class="fw-semibold">
+                            {{ calculateDuration(r.dateDebut, r.dateFin) }} nuit(s)
+                        </span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Statut:</span>
+                        <span [ngClass]="{
+                            'badge bg-success': r.statut === 'Confirmée',
+                            'badge bg-warning text-dark': r.statut === 'En attente',
+                            'badge bg-danger': r.statut === 'Annulée'
+                        }">
+                            {{ r.statut }}
+                        </span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Occupants:</span>
+                        <span class="fw-semibold">
+                            {{ r.nombreadulte }} adulte(s), {{ r.nombrenfant }} enfant(s)
+                        </span>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Prix total:</span>
+                        <span class="fs-5 fw-bold text-primary">
+                            {{ r.prixTotal | currency:'EUR':'symbol':'1.2-2' }}
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-top-0 text-end">
+                    <a [routerLink]="['/modifier-reservation', r.id_reservation]" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                        <i class="bi bi-pencil-square me-1"></i> Modifier
+                      </a>
+                    <button class="btn btn-danger btn-sm rounded-pill px-3" (click)="annulerReservation(r.id_reservation)">
+                        <i class="bi bi-x-circle me-1"></i> 
+                        Annuler
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #noData>
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-calendar-x fs-1 text-muted mb-3"></i>
+                <h4 class="text-muted">Aucune réservation trouvée</h4>
+                <p class="text-muted">Vous n'avez pas encore effectué de réservation.</p>
+                <button class="btn btn-primary mt-3">Réserver maintenant</button>
+            </div>
+        </div>
+    </ng-template>
+</div>
