@@ -167,7 +167,7 @@
 }
 
 .souvenir-card.out-of-stock::after {
-  content: "ÉPUISÉ";
+  content: "SOLD OUT";
   position: absolute;
   top: 10px;
   right: -30px;
