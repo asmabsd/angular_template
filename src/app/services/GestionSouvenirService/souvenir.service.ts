@@ -49,4 +49,19 @@ private apiUrlAdd = 'http://localhost:8089/pidev/souvenir/addSouvenir'
     const url = `${this.apiUrlDelete}?id=${SouvenirId}`
     return this.http.delete(url) // Use http.delete() for the DELETE request
   }
+
+
+  uploadImage(id: number, file: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    return this.http.post<string>(`http://localhost:8089/pidev/souvenir/${id}/uploadImage`, formData);
+  }
+  private apiUrl = 'http://localhost::8089/pidev/souvenir';
+// In your Angular GuideService, you will retrieve the image path from the backend
+getImage(imageName: string): Observable<Blob> {
+const imageUrl = `${this.apiUrl}/uploads/${imageName}`;
+return this.http.get(imageUrl, { responseType: 'blob' });
+}
+
 }

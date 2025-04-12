@@ -8,6 +8,10 @@
          [ngClass]="{'out-of-stock': souvenir.status === 'OUT OF STOCK'}">
       
       <div class="card-body">
+        <img [src]="souvenir.photo ? 'http://localhost:8089/pidev/souvenir/images/' + souvenir.photo : '/src/assets/frontend/images/souvenir.jpg'"
+        class="souvenir-photo"
+        alt="{{ souvenir.name || 'Photo souvenir' }}"
+        style="width: 120px; height: 120px; object-fit: cover;">
         <h3 class="souvenir-name">{{ souvenir.name }}</h3>
         <p class="souvenir-description">{{ souvenir.description }}</p>
         
@@ -38,3 +42,4 @@
     </div>
   </div>
 </div>
+

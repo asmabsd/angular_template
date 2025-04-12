@@ -9,6 +9,6 @@ export interface Souvenir {
   quantity: number;
   category: CategorySouvenir;
   status: string;
-  image: string;
+  photo: string;
   store?: Store;
 }

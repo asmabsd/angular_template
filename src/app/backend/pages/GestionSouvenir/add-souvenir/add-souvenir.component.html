@@ -35,6 +35,17 @@
   </div>
 
   <div class="form-group">
+    <label class="form-label">Photo du souvenir</label>
+    <div class="image-upload-container">
+      <div class="image-preview mb-2">
+        <img [src]="imgPreview" alt="Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+      </div>
+      <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+    </div>
+  </div>
+
+
+  <div class="form-group">
     <label for="quantity">Quantity :</label>
     <input id="quantity" formControlName="quantity" type="text" />
     <div
