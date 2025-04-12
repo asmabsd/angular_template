@@ -1,0 +1,42 @@
+<div *ngIf="isLoading" class="loading">Chargement...</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="!isLoading && !errorMessage">
+  <h2>Modifier le transport</h2>
+
+  <form [formGroup]="transportForm" (ngSubmit)="updateTransport()">
+    <div class="form-group">
+      <label for="type">Type</label>
+      <input id="type" class="form-control" formControlName="type" required />
+    </div>
+
+    <div class="form-group">
+      <label for="disponibilite">Disponibilité</label>
+      <input id="disponibilite" class="form-control" formControlName="disponibilite" required />
+    </div>
+
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input id="location" class="form-control" formControlName="location" required />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input id="description" class="form-control" formControlName="description" required />
+    </div>
+
+    <div class="form-group">
+      <label for="capacity">Capacité</label>
+      <input id="capacity" class="form-control" formControlName="capacity" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="transportForm.invalid">
+      Mettre à jour
+    </button>
+  </form>
+
+  <button class="btn btn-secondary mt-2" (click)="navigateToList()">Retour à la liste</button>
+</div>

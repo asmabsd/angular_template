@@ -21,6 +21,10 @@ export class DashboardComponent implements OnInit {
     return this.router.url.includes('/list-users') || 
            this.router.url.includes('/add-user');
   }
+  get isTransportManagementPage(): boolean {
+    return this.router.url.includes('/listetransport') || 
+           this.router.url.includes('/addtransport');
+  }
 
   logout() {
     this.authService.logout();

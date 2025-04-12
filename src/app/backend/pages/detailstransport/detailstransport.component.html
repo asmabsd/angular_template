@@ -1,0 +1,44 @@
+<div class="transport-card" *ngIf="transport && !isLoading">
+    <div class="transport-header">
+      <h2>Détails du Transport</h2>
+      <div class="transport-id">ID : #{{ transport.id }}</div>
+    </div>
+  
+    <div class="transport-content">
+      <div class="transport-row">
+        <span class="label"><i class="fas fa-car-side"></i> Type :</span>
+        <span class="value">{{ transport.type }}</span>
+      </div>
+  
+      <div class="transport-row">
+        <span class="label"><i class="fas fa-calendar-check"></i> Disponibilité :</span>
+        <span class="value" [ngClass]="{
+          'available': transport.disponibilite === 'Disponible',
+          'unavailable': transport.disponibilite === 'Indisponible'
+        }">{{ transport.disponibilite }}</span>
+      </div>
+  
+      <div class="transport-row">
+        <span class="label"><i class="fas fa-map-marker-alt"></i> Localisation :</span>
+        <span class="value">{{ transport.location }}</span>
+      </div>
+  
+      <div class="transport-row description-row">
+        <span class="label"><i class="fas fa-align-left"></i> Description :</span>
+        <div class="description-box">{{ transport.description }}</div>
+      </div>
+  
+      <div class="transport-row">
+        <span class="label"><i class="fas fa-users"></i> Capacité :</span>
+        <span class="value">{{ transport.capacity }}</span>
+      </div>
+    </div>
+  
+    <div class="transport-footer">
+      <button class="btn btn-primary" (click)="goBack()"><i class="fas fa-arrow-left"></i> Retour</button>
+    </div>
+  </div>
+  
+  <div *ngIf="isLoading" class="loading">Chargement des données...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  

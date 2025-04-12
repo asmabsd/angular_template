@@ -1,0 +1,92 @@
+.transport-card {
+    max-width: 650px;
+    margin: 2rem auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .transport-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .transport-header h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .transport-id {
+    font-size: 0.9rem;
+    color: #777;
+  }
+  
+  .transport-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .transport-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .label {
+    font-weight: 600;
+    color: #444;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  .value {
+    flex: 2;
+    color: #222;
+    word-wrap: break-word;
+  }
+  
+  .description-row {
+    flex-direction: column;
+  }
+  
+  .description-box {
+    margin-top: 0.5rem;
+    background-color: #f7f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    color: #333;
+  }
+  
+  .available {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .unavailable {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .transport-footer {
+    text-align: right;
+    margin-top: 2rem;
+  }
+  
+  .loading,
+  .error {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+  }
+  
+  .error {
+    color: red;
+  }
+  

@@ -1,0 +1,77 @@
+<div class="container">
+    <h2>Add New Planning</h2>
+    <form [formGroup]="PlanningForm" (ngSubmit)="onSubmit()">
+      
+      <!-- ID Field -->
+      <div class="form-group">
+        <label for="id">ID:</label>
+        <input
+          type="text"
+          id="id"
+          formControlName="id"
+          class="form-control"
+          placeholder="Enter planning ID"
+        />
+        <div *ngIf="PlanningForm.get('id')?.invalid && PlanningForm.get('id')?.touched" class="text-danger">
+          ID is required.
+        </div>
+      </div>
+  
+      <!-- Guide Selection -->
+      <div class="form-group">
+        <label for="guide">Guide:</label>
+        <select
+          id="guide"
+          formControlName="guideId"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': PlanningForm.get('guideId')?.invalid && PlanningForm.get('guideId')?.touched }"
+        >
+          <option value="">Select a Guide</option>
+          <option *ngFor="let guide of guides" [value]="guide.id">{{guide.id}} {{ guide.name }}</option>
+        </select>
+        <div *ngIf="PlanningForm.get('guideId')?.invalid && PlanningForm.get('guideId')?.touched" class="text-danger">
+          Guide is required.
+        </div>
+      </div>
+  
+      <!-- Date Field -->
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input
+          type="datetime-local"
+          id="date"
+          formControlName="date"
+          class="form-control"
+          placeholder="Select date"
+        />
+        <div *ngIf="PlanningForm.get('date')?.invalid && PlanningForm.get('date')?.touched" class="text-danger">
+          Date is required.
+        </div>
+      </div>
+  
+      <!-- Reserved Field (Checkbox) -->
+      <div class="form-group">
+        <label for="isReserved">Reserved:</label>
+        <input
+          type="checkbox"
+          id="isReserved"
+          formControlName="isReserved"
+          class="form-control"
+        />
+      </div>
+  
+      <!-- Submit Button -->
+      <div class="form-group">
+        <button type="submit" [disabled]="PlanningForm.invalid" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" (click)="navigateToList()">Cancel</button>
+      </div>
+  
+      <div class="form-group">
+        <button type="submit" [disabled]="PlanningForm.invalid" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-secondary" (click)="navigateToList()">consulter les planning</button>
+      </div>
+  
+
+    </form>
+  </div>
+  

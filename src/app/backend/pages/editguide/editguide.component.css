@@ -10,10 +10,6 @@ form {
   flex-direction: column;
   gap: 15px;
 }
-.select-wrapper select {
-  padding: 0.5rem;
-  font-size: 1rem;
-}
 
 label {
   font-weight: 600;
