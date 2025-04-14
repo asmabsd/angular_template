@@ -501,6 +501,42 @@ section
 {
 	margin-right: 0px;
 }
+.dropdown .arrow {
+	font-size: 10px;
+	margin-left: 5px;
+  }
+  
+  .dropdown-menu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	background-color: #3e1d5f;
+	min-width: 150px;
+	padding: 10px 0;
+	box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+	z-index: 999;
+  }
+  
+  .dropdown-menu li {
+	margin: 0;
+  }
+  
+  .dropdown-menu a {
+	padding: 10px 20px;
+	display: block;
+	color: white;
+	font-size: 13px;
+  }
+  
+  .dropdown-menu a:hover {
+	background-color: #5e2b80;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+	display: block;
+  }
+  
 .main_nav_item a
 {
 	font-family: 'Open Sans', sans-serif;

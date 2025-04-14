@@ -23,6 +23,9 @@ import { DetailsguideComponent } from './pages/detailsguide/detailsguide.compone
 import { StoreListComponent } from './pages/GestionSouvenir/store-list/store-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { SouvenirsByStoreComponent } from './pages/GestionSouvenir/souvenirs-by-store/souvenirs-by-store.component';
+import { AddStoreComponent } from './pages/GestionSouvenir/add-store/add-store.component';
+import { StoreListOfPartnerComponent } from './pages/GestionSouvenir/store-list-of-partner/store-list-of-partner.component';
+import { EditStoreComponent } from './pages/GestionSouvenir/edit-store/edit-store.component';
 const routes: Routes = [
   {
     path: '',
@@ -41,6 +44,9 @@ const routes: Routes = [
       { path: 'editreservation/:id', component: EditreservationComponent },
       // { path: 'storeList', component: StoreListComponent },
       { path: 'souvenir/store/:id', component: SouvenirsByStoreComponent },
+      { path:"addStore", component: AddStoreComponent },
+      { path:"editStore/:id", component: EditStoreComponent },
+      { path:"storeListOfPartner", component: StoreListOfPartnerComponent  },
       // { path: 'storeList', component : StoreListComponent },
     ],
   },
@@ -73,6 +79,9 @@ const routes: Routes = [
     DetailsguideComponent,
     StoreListComponent,
     SouvenirsByStoreComponent,
+    AddStoreComponent,
+    StoreListOfPartnerComponent,
+    EditStoreComponent,
   ],
 
   imports: [

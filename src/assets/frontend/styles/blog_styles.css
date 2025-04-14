@@ -500,6 +500,7 @@ section
 	padding-bottom: 10px;
 	padding-top: 10px;
 }
+
 .main_nav_item::after
 {
 	display: block;

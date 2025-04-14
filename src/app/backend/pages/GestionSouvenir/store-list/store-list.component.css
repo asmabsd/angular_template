@@ -4,6 +4,8 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 24px;
     margin-top: 20px;
+    border-bottom: 3px solid transparent; /* pour une base commune */
+
   }
   
   .custom-table th {
@@ -71,4 +73,84 @@
     transform: scale(1.05);
     cursor: pointer;
   }
+  .btn-validate {
+    background-color: #28a745; /* vert */
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    margin: 2px;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+  }
+  
+  .btn-validate:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  }
+  
+  .btn-invalidate {
+    background-color: #6c757d; /* gris foncé */
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    margin: 2px;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+  }
+  
+  .btn-invalidate:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  }
+/* Style général pour le h2 */
+h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-transform: capitalize;
+}
+
+/* Style pour les h2 dans les tableaux */
+h2 + .table-responsive {
+  margin-top: 15px;
+}
+
+/* Style spécifique pour les magasins non validés */
+.table-container .table-responsive:first-of-type h2 {
+  color: #dc3545;
+  border-bottom-color: #dc3545;
+  padding-bottom: 5px;
+}
+
+/* Style spécifique pour les magasins validés */
+.table-container .table-responsive:last-of-type h2 {
+  color: #28a745; /* vert pour les valides */
+  border-bottom: 3px solid #28a745;
+  padding-bottom: 5px;
+}
+
+/* Differencier les tables */
+.table-container .table-responsive:first-of-type .custom-table {
+  background-color: #f8d7da; /* fond léger rouge pour les non-valides */
+}
+
+.table-container .table-responsive:last-of-type .custom-table {
+  background-color: #d4edda; /* fond léger vert pour les valides */
+}
+
+/* Optionnel: ajouter une bordure douce entre les deux tables */
+.table-container .table-responsive {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
   

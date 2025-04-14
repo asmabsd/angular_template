@@ -10,11 +10,20 @@ export class StoreService {
   private apiUrlAdd = 'http://localhost:8089/pidev/store/addStore'
   private apiUrlUpdate = 'http://localhost:8089/pidev/store/updateStore'
   private apiUrlRetrieve = 'http://localhost:8089/pidev/store/retrieveStore'
+  private apiUrlUpdateStoreStatusById = 'http://localhost:8089/pidev/store/';
   private apiUrlRetrieveAll ='http://localhost:8089/pidev/store/retrieveAllStore'
+  private apiUrlRetrieveAllInvalide ='http://localhost:8089/pidev/store/retrieveAllStoreInvalide'
+  private apiUrlRetrieveAllValide ='http://localhost:8089/pidev/store/retrieveAllStoreValide'
   private apiUrlDelete ='http://localhost:8089/pidev/store/deleteStore'
   constructor(private http: HttpClient) {}
   getStore(): Observable<Store[]> {
     return this.http.get<Store[]>(this.apiUrlRetrieveAll)
+  }
+  getStoreInvalide(): Observable<Store[]> {
+    return this.http.get<Store[]>(this.apiUrlRetrieveAllInvalide)
+  }
+  getStoreValide(): Observable<Store[]> {
+    return this.http.get<Store[]>(this.apiUrlRetrieveAllValide)
   }
   addStore(Store: Store): Observable<Store> {
     return this.http.post<Store>(`${this.apiUrlAdd}`, Store)
@@ -23,6 +32,9 @@ export class StoreService {
   getStoreById(id: number): Observable<Store> {
     return this.http.get<Store>(`${this.apiUrlRetrieve}/${id}`)// Replace the path with the correct API
   }
+ updateStoreStatusById(id: number): Observable<Store> {
+  return this.http.put<Store>(`${this.apiUrlUpdateStoreStatusById}${id}/status`, null);
+}
 
   // Update the Store
 

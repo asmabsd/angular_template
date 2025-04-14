@@ -1,66 +1,66 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { StoreService } from 'src/app/services/GestionSouvenirService/store.service';
-import { Store } from 'src/app/models/GestionSouvenir/store';
+import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { Store } from 'src/app/models/GestionSouvenir/store';
+import { StoreService } from 'src/app/services/GestionSouvenirService/store.service';
 
 @Component({
-  selector: 'app-edit-store',
-  templateUrl: './edit-store.component.html',
-  styleUrls: ['./edit-store.component.css'],
+  selector: 'app-add-store',
+  templateUrl: './add-store.component.html',
+  styleUrls: ['./add-store.component.css'],
 })
-export class EditStoreComponent implements OnInit , OnDestroy{
-  storeForm: FormGroup; // Déclaration du FormGroup
-  storeId!: number; // Déclaration de la variable pour l'ID du store
+export class AddStoreComponent implements OnInit, OnDestroy {
+  storeForm!: FormGroup;
   private destroy$ = new Subject<void>();
   addressSuggestions: any[] = [];
   showSuggestions = false;
+
   @ViewChild('addressInput', { static: false }) addressInput!: ElementRef;
+
   // Remplacez par votre clé API LocationIQ
   private readonly LOCATION_IQ_API_KEY = 'pk.1c37fe75e8f460c4608ede78d77b611f';
   private readonly AUTOCOMPLETE_URL =
     'https://api.locationiq.com/v1/autocomplete';
+
   constructor(
-    private fb: FormBuilder,
     private storeService: StoreService,
-    private router: Router,
-    private route: ActivatedRoute
+    private fb: FormBuilder,
+    private router: Router
   ) {
-    // Initialisation du FormGroup
     this.storeForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]], // Correction ici      address: ['', Validators.required],
       status: ['LOADING', Validators.required],
       address: ['', [Validators.required]],
-      description: ['', [Validators.required, Validators.maxLength(150)]],
+      description: ['', [Validators.required, Validators.maxLength(70)]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{8}$')]],
     });
   }
 
-  ngOnInit(): void {
-    // Récupération de l'ID du store depuis les paramètres de la route
-    this.storeId = +this.route.snapshot.paramMap.get('id')!;
-
-    // Récupération des informations du store à partir de l'ID
-    this.storeService.getStoreById(this.storeId).subscribe((store) => {
-      // Prémplissage du formulaire avec les données du store
-      this.storeForm.patchValue(store);
-    });
+  ngOnInit() {
     this.setupAddressAutocomplete();
-
   }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
-private setupAddressAutocomplete() {
-    this.storeForm.get('address')?.valueChanges
-      .pipe(
+
+  private setupAddressAutocomplete() {
+    this.storeForm
+      .get('address')
+      ?.valueChanges.pipe(
         debounceTime(300),
         distinctUntilChanged(),
         takeUntil(this.destroy$)
       )
-      .subscribe(query => {
+      .subscribe((query) => {
         if (query && query.length > 2) {
           this.getAddressSuggestions(query);
         } else {
@@ -76,17 +76,17 @@ private setupAddressAutocomplete() {
       q: query,
       limit: '5',
       countrycodes: 'tn', // Filtre pour la Tunisie
-      format: 'json'
+      format: 'json',
     });
 
     fetch(`${this.AUTOCOMPLETE_URL}?${params}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         this.addressSuggestions = data;
         this.showSuggestions = data.length > 0;
       })
-      .catch(error => {
-        console.error('Erreur de l\'API LocationIQ:', error);
+      .catch((error) => {
+        console.error("Erreur de l'API LocationIQ:", error);
         this.addressSuggestions = [];
         this.showSuggestions = false;
       });
@@ -98,23 +98,23 @@ private setupAddressAutocomplete() {
     this.showSuggestions = false;
   }
 
-  onSubmit(): void {
+  onSubmit() {
     if (this.storeForm.valid) {
-      const updatedStore: Store = {
-        id: this.storeId,
-        ...this.storeForm.value, // Ajouter l'ID du store à l'objet mis à jour
-      };
-
-      // Appel au service pour modifier le store avec l'ID et les nouvelles données
-      this.storeService.editStore(updatedStore).subscribe(() => {
-        this.router.navigate(['/dashboard/storeList']); // Navigation après mise à jour
+      const newStore: Store = this.storeForm.value;
+      this.storeService.addStore(newStore).subscribe({
+        next: (response) => {
+          console.log('Store ajouté avec succès', response);
+          this.router.navigate(['/storeListOfPartner']);
+        },
+        error: (error) => {
+          console.error("Erreur lors de l'ajout du Store", error);
+        },
       });
     } else {
-      this.validateAllFormFields(this.storeForm); // Validation du formulaire si invalide
+      this.validateAllFormFields(this.storeForm);
     }
   }
 
-  // Méthode pour marquer tous les champs comme touchés afin de valider le formulaire
   private validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);

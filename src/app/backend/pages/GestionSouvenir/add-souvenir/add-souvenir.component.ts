@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Souvenir } from 'src/app/models/GestionSouvenir/souvenir';
 import { Store } from 'src/app/models/GestionSouvenir/store';
 import { PhotosServiceService } from 'src/app/services/GestionSouvenirService/photo-service.service';
@@ -15,53 +15,74 @@ import { StoreService } from 'src/app/services/GestionSouvenirService/store.serv
 export class AddSouvenirComponent {
   selectedFile: File | null = null;
   imgPreview: string | ArrayBuffer = 'assets/product.png';
-  souvenirForm!: FormGroup; // Changed souvenirFrom to souvenirForm
-  stores: Store[] = []; // Liste des stores
+  souvenirForm!: FormGroup;
+  stores: Store[] = [];
+  origin: string | null = null;
+  storeId: number | null = null;
 
   constructor(
     private souvenirService: SouvenirService,
     private fb: FormBuilder,
     private router: Router,
     private photoService: PhotosServiceService,
+    private route: ActivatedRoute,
     private storeService: StoreService
   ) {
     this.souvenirForm = this.fb.group({
       name: ['', [Validators.required]],
-      description: [''],
+      description: ['', [Validators.required, Validators.maxLength(150)]],
       price: [
         '',
         [
-          Validators.required, // Champ requis
-          Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$'), // Doit être un nombre avec jusqu'à deux décimales
-          Validators.min(0.01), // Doit être supérieur à 0
+          Validators.required,
+          Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$'),
+          Validators.min(0.01),
         ],
       ],
       quantity: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       category: ['', Validators.required],
-      storeId: ['', Validators.required], // Ajoutez un champ pour le store
+      storeId: ['', Validators.required],
     });
   }
+
   ngOnInit() {
-    this.loadStores(); // Chargez les stores lors de l'initialisation
+    this.route.queryParamMap.subscribe(params => {
+      this.origin = params.get('from');
+      const storeIdParam = params.get('storeId');
+      if (storeIdParam) {
+        this.storeId = +storeIdParam;
+        // Charger uniquement le store concerné
+        this.storeService.getStoreById(this.storeId).subscribe({
+          next: (store) => {
+            this.stores = [store]; // On met dans le tableau unique
+            this.souvenirForm.patchValue({ storeId: store.id });
+          },
+          error: (err) => {
+            console.error('Erreur lors du chargement du store unique', err);
+          }
+        });
+      } else {
+        this.loadStores(); // Si pas de storeId, on charge tous les stores valides
+      }
+    });
   }
 
   loadStores() {
-    this.storeService.getStore().subscribe({
+    this.storeService.getStoreValide().subscribe({
       next: (stores) => {
         this.stores = stores;
-        console.log(stores) // Assignez la liste des stores
+        console.log(stores);
       },
       error: (error) => {
         console.error('Erreur lors du chargement des stores', error);
       },
     });
   }
+
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      
-      // Create preview
       const reader = new FileReader();
       reader.onload = () => {
         this.imgPreview = reader.result as string;
@@ -69,30 +90,23 @@ export class AddSouvenirComponent {
       reader.readAsDataURL(file);
     }
   }
+
   onSubmit() {
     if (this.souvenirForm.valid) {
       const selectedStore = this.stores.find(store => store.id === +this.souvenirForm.value.storeId);
-  
+
       const newSouvenir: Souvenir = {
         ...this.souvenirForm.value,
-        store: selectedStore // maintenant un vrai Store complet
+        store: selectedStore
       };
-  
-      console.log('Objet Souvenir avant envoi:', newSouvenir);
-  
+
       this.souvenirService.addSouvenir(newSouvenir).subscribe({
         next: (response) => {
-
           if (this.selectedFile && response.id) {
             this.uploadImage(response.id);
-            this.router.navigate(['/dashboard/souenirList']);
           } else {
-            this.router.navigate(['/dashboard/souvenirList']);
+            this.redirectAfterAction();
           }
-        //  console.log('Souvenir ajouté avec succès', response);
-          //this.router.navigate(['/dashboard/souvenirList']);
-         
-          
         },
         error: (error) => {
           console.error("Erreur lors de l'ajout du souvenir", error);
@@ -102,20 +116,29 @@ export class AddSouvenirComponent {
       this.validateAllFormFields(this.souvenirForm);
     }
   }
+
   private uploadImage(souvenirId: number): void {
     if (!this.selectedFile) return;
 
     this.photoService.uploadsouvenirImage(souvenirId, this.selectedFile).subscribe({
-      next: (filename) => {
-        console.log('Image uploaded:', filename);
-        this.router.navigate(['/dashboard/souvenirList']);
+      next: () => {
+        this.redirectAfterAction();
       },
       error: (err) => {
         console.error('Image upload failed', err);
-        this.router.navigate(['/dashboard/souvenirList']);
+        this.redirectAfterAction();
       }
     });
   }
+
+  private redirectAfterAction(): void {
+    if (this.origin === 'viewStore' && this.storeId) {
+      this.router.navigate(['/dashboard/viewStore', this.storeId]);
+    } else {
+      this.router.navigate(['/dashboard/souvenirList']);
+    }
+  }
+
   private validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);

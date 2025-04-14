@@ -16,9 +16,26 @@
 
   <div class="form-group">
     <label for="description">Description :</label>
-    <textarea id="description" formControlName="description"></textarea>
+    <textarea
+      id="description"
+      formControlName="description"
+      class="large-textarea"
+    ></textarea>
+    <div
+      *ngIf="
+        souvenirForm.get('description')?.invalid &&
+        souvenirForm.get('description')?.touched
+      "
+      class="error"
+    >
+      <small *ngIf="souvenirForm.get('description')?.errors?.['required']">
+        Description is required.
+      </small>
+      <small *ngIf="souvenirForm.get('description')?.errors?.['maxlength']">
+        Description cannot exceed 150 characters.
+      </small>
+    </div>
   </div>
-
   <div class="form-group">
     <label for="price">Price :</label>
     <input id="price" formControlName="price" type="text" />
@@ -38,12 +55,21 @@
     <label class="form-label">Photo du souvenir</label>
     <div class="image-upload-container">
       <div class="image-preview mb-2">
-        <img [src]="imgPreview" alt="Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+        <img
+          [src]="imgPreview"
+          alt="Preview"
+          class="img-thumbnail"
+          style="max-width: 200px; max-height: 200px"
+        />
       </div>
-      <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+      <input
+        type="file"
+        class="form-control"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+      />
     </div>
   </div>
-
 
   <div class="form-group">
     <label for="quantity">Quantity :</label>
@@ -66,7 +92,7 @@
 
   <label for="category">Category :</label>
   <select id="category" formControlName="category" required>
-    <option value="" disabled selected>Sélectionner une expérience</option>
+    <option value="" disabled selected>Select a Status</option>
     <option value="HANDICRAFTS">HandiCrafts</option>
     <option value="JEWERLY">Jewerly</option>
     <option value="TEXTILES">Textiles</option>
@@ -75,7 +101,7 @@
   <div>
     <label for="storeId">Store:</label>
     <select id="storeId" formControlName="storeId">
-      <option value="">Sélectionnez un store</option>
+      <option value="">Select a Store</option>
       <option *ngFor="let store of stores" [value]="store.id">
         {{ store.name }}
       </option>

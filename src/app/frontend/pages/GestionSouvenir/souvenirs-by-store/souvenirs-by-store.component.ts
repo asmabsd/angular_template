@@ -21,7 +21,7 @@ export class SouvenirsByStoreComponent implements OnInit {
   constructor(
     private souvenirService: SouvenirService,
     private storeSelectionService: StoreSelectionService,
-    private photoServiceService: PhotosServiceService,
+    // private photoServiceService: PhotosServiceService,
     private sanitizer: DomSanitizer
   ) {}
 

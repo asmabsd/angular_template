@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; // Pour naviguer
+import { Router } from '@angular/router';
 import { Store } from 'src/app/models/GestionSouvenir/store';
 import { StoreService } from 'src/app/services/GestionSouvenirService/store.service';
 
 @Component({
-  selector: 'app-store-list',
-  templateUrl: './store-list.component.html',
-  styleUrls: ['./store-list.component.css']
+  selector: 'app-store-list-of-partner',
+  templateUrl: './store-list-of-partner.component.html',
+  styleUrls: ['./store-list-of-partner.component.css']
 })
-export class StoreListComponent {
-  storesValides: Store[] = [];
+export class StoreListOfPartnerComponent {
+storesValides: Store[] = [];
   storesInvalides: Store[] = [];
 
   constructor(private storeSerive: StoreService, private router: Router) {}
@@ -77,4 +77,5 @@ export class StoreListComponent {
         );
       }
     }
+    
 }

@@ -10,6 +10,7 @@
       rel="stylesheet"
       href="/assets/frontend/styles/bootstrap4/bootstrap.min.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="/src/assets/frontend/js/jquery-3.2.1.min.js"></script>
     <link
       href="/src/assets/frontend/plugins/font-awesome-4.7.0/css/font-awesome.min.css"
@@ -120,7 +121,7 @@
                       ><img
                         src="/src/assets/frontend/images/logo.png"
                         alt=""
-                      />travelix</a
+                      />MALLATRIP</a
                     >
                   </div>
                 </div>
@@ -129,12 +130,13 @@
                     <li class="main_nav_item"><a href="">home</a></li>
                     <li class="main_nav_item"><a href="/about">about us</a></li>
                     <li class="main_nav_item"><a href="/guide">guide</a></li>
-                    <li class="main_nav_item">
-                      <a
-                        href="#
-						stores"
-                        >stores</a
-                      >
+                    <li class="main_nav_item dropdown">
+                      <a href="#stores">Stores <span class="arrow">&#9662;</span></a>
+                      <ul class="dropdown-menu always-visible">
+                        <li><a href="/addStore">Add Store As a Partner</a></li>
+                        <li><a href="/storeListOfPartner">Your Stores </a></li>
+                        <li><a href="#">Store 3</a></li>
+                      </ul>
                     </li>
                     <li class="main_nav_item"><a href="/offers">offers</a></li>
                     <li class="main_nav_item"><a href="/news">news</a></li>

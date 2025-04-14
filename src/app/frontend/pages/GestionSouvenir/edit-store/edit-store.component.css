@@ -1,0 +1,96 @@
+form {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 30px auto;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 6px;
+    color: #512da8;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border 0.3s ease;
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #ff9800;
+    outline: none;
+  }
+  
+  .large-textarea {
+    height: 120px;
+    resize: vertical;
+  }
+  
+  button[type="submit"] {
+    background: linear-gradient(to right, #512da8, #ff9800);
+    border: none;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  button[disabled] {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .error {
+    color: #e53935;
+    font-size: 13px;
+    margin-top: 6px;
+  }
+  
+  .suggestions-dropdown {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 4px;
+    max-height: 150px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    position: absolute;
+    width: 100%;
+  }
+  
+  .suggestion-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .suggestion-item:hover {
+    background-color: #f3f3f3;
+  }
+  

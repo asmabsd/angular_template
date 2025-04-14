@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { sampleStores, Store } from 'src/app/models/GestionSouvenir/store';
+import { Store } from 'src/app/models/GestionSouvenir/store';
 import { StoreSelectionService } from 'src/app/services/GestionSouvenirService/store-selection.service';
 import { StoreService } from 'src/app/services/GestionSouvenirService/store.service';
 
@@ -23,7 +23,7 @@ export class StoreListComponent implements OnInit {
     this.storeSelectionService.setStoreId(id);
   }
   loadStores(): void {
-    this.storeService.getStore().subscribe({
+    this.storeService.getStoreValide().subscribe({
       next: (data) => {
         this.stores = data;
         this.isLoading = false;

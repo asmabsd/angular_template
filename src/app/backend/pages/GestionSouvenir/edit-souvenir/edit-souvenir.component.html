@@ -16,7 +16,25 @@
   
     <div class="form-group">
       <label for="description">Description :</label>
-      <textarea id="description" formControlName="description"></textarea>
+      <textarea
+        id="description"
+        formControlName="description"
+        class="large-textarea"
+      ></textarea>
+      <div
+        *ngIf="
+          souvenirForm.get('description')?.invalid &&
+          souvenirForm.get('description')?.touched
+        "
+        class="error"
+      >
+        <small *ngIf="souvenirForm.get('description')?.errors?.['required']">
+          Description is required.
+        </small>
+        <small *ngIf="souvenirForm.get('description')?.errors?.['maxlength']">
+          Description cannot exceed 150 characters.
+        </small>
+      </div>
     </div>
   
     <div class="form-group">
@@ -60,7 +78,17 @@
       <option value="JEWERLY">Jewerly</option>
       <option value="TEXTILES">Textiles</option>
     </select>
-  
+  <!-- Champ pour sélectionner l'image -->
+  <div>
+    <label for="image">Image du souvenir :</label>
+    <input type="file" id="image" (change)="onFileSelected($event)" />
+  </div>
+
+    <!-- Afficher l'image actuelle -->
+    <!-- <div class="form-group">
+      <label>Current Image</label>
+      <img [src]="currentImageUrl" alt="Souvenir Image" style="width: 200px; height: auto; border-radius: 10px;" />
+    </div> -->
     <div>
       <label for="storeId">Store:</label>
       <select id="storeId" formControlName="storeId">
@@ -78,6 +106,6 @@
         Store requis.
       </div>
     </div>
-    <button type="submit" [disabled]="souvenirForm.invalid">Add souvenir</button>
+    <button type="submit" [disabled]="souvenirForm.invalid">Update souvenir</button>
   </form>
   

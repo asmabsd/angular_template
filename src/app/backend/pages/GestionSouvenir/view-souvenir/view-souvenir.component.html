@@ -36,17 +36,24 @@
             <span>{{ Souvenir.quantity }}</span>
           </li>          
           <li class="list-group-item px-2 py-1 d-flex justify-content-between">
-            <span class="text-muted">Staus:</span>
+            <span class="text-muted">Status:</span>
             <span>{{ Souvenir.status }}</span>
           </li>          
           <li class="list-group-item px-2 py-1 d-flex justify-content-between">
             <span class="text-muted">Category:</span>
             <span>{{ Souvenir.category }}</span>
           </li>          
+       
           <li class="list-group-item px-2 py-1 d-flex justify-content-between">
             <span class="text-muted">Store Name:</span>
             <span>{{ Souvenir.store?.name }}</span>
-          </li>          
+          </li> 
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <!-- Affichage de l'image -->
+            <span class="text-muted">Image:</span>
+
+            <img [src]="getSafeImageUrl(Souvenir.photo)" alt="Image du souvenir" class="souvenir-image"/>
+          </li>         
         </ul>  
         <!-- Compact action buttons -->
         <div class="d-flex justify-content-between mt-2">
