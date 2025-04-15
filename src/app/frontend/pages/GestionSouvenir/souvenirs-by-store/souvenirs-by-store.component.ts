@@ -3,7 +3,6 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Souvenir } from 'src/app/models/GestionSouvenir/souvenir';
 import { SouvenirService } from 'src/app/services/GestionSouvenirService/souvenir.service';
 import { StoreSelectionService } from 'src/app/services/GestionSouvenirService/store-selection.service';
-import { PhotosServiceService } from 'src/app/services/GestionSouvenirService/photo-service.service';
 
 @Component({
   selector: 'app-souvenirs-by-store',

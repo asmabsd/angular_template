@@ -84,28 +84,12 @@
     <input type="file" id="image" (change)="onFileSelected($event)" />
   </div>
 
-    <!-- Afficher l'image actuelle -->
-    <!-- <div class="form-group">
-      <label>Current Image</label>
-      <img [src]="currentImageUrl" alt="Souvenir Image" style="width: 200px; height: auto; border-radius: 10px;" />
-    </div> -->
-    <div class="form-group">
-      <label for="storeId">Store</label>
-    
-      <!-- Si un store est déjà sélectionné (cas avec storeId dans l’URL), afficher juste son nom -->
-      <div *ngIf="storeId && selectedStoreName; else selectStore">
-        <input type="text" [value]="selectedStoreName" class="form-control" disabled />
-      </div>
-    
-      <!-- Sinon, afficher le <select> pour choisir le store -->
-      <ng-template #selectStore>
-        <select id="storeId" formControlName="storeId" class="form-control" required>
-          <option value="" disabled selected>Select a Store</option>
-          <option *ngFor="let store of stores" [value]="store.id">{{ store.name }}</option>
-        </select>
-      </ng-template>
-    </div>
-    
-    <button type="submit" [disabled]="souvenirForm.invalid">Update souvenir</button>
+
+  <div class="form-group">
+    <label for="storeName">Store</label>
+    <input type="text" class="form-control" [value]="selectedStoreName" disabled />
+  </div>
+  
+    <button type="submit" [disabled]="souvenirForm.invalid" style="margin-top: 15px;">Add souvenir</button>
   </form>
   

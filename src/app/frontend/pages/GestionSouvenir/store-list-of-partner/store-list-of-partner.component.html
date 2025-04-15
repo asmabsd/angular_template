@@ -62,7 +62,7 @@
      +216 {{ store.phone | phoneFormat }} <!-- Affichage de la description du store -->
         </div>
         <div class="brutalist-card__actions">
-            <button class="icon-btn" aria-label="Consult souvenirs">
+            <button class="icon-btn" aria-label="Consult souvenirs" [routerLink]="['/souvenirListOfPartnerByStore', store.id]">
               <i class="fas fa-tag"></i>
               <span class="tooltip">Consult Souvenirs</span>
             </button>
@@ -102,7 +102,7 @@
              +216  {{ store.phone | phoneFormat}} <!-- Affichage de la description du store -->
         </div>
         <div class="brutalist-card__actions">
-            <button class="icon-btn" aria-label="Consulter les souvenirs" >
+            <button class="icon-btn" aria-label="Consulter les souvenirs" [routerLink]="['/souvenirListOfPartnerByStore', store.id]">
               <i class="fas fa-tag"></i>
               <span class="tooltip">Consult Souvenirs</span>
             </button>

@@ -36,6 +36,7 @@
       </small>
     </div>
   </div>
+
   <div class="form-group">
     <label for="price">Price :</label>
     <input id="price" formControlName="price" type="text" />
@@ -48,26 +49,6 @@
       <small *ngIf="souvenirForm.get('price')?.errors?.['required']"
         >price is required.</small
       >
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="form-label">Photo du souvenir</label>
-    <div class="image-upload-container">
-      <div class="image-preview mb-2">
-        <img
-          [src]="imgPreview"
-          alt="Preview"
-          class="img-thumbnail"
-          style="max-width: 200px; max-height: 200px"
-        />
-      </div>
-      <input
-        type="file"
-        class="form-control"
-        (change)="onFileSelected($event)"
-        accept="image/*"
-      />
     </div>
   </div>
 
@@ -92,26 +73,35 @@
 
   <label for="category">Category :</label>
   <select id="category" formControlName="category" required>
-    <option value="" disabled selected>Select a Status</option>
+    <option value="" disabled selected>Sélectionner une expérience</option>
     <option value="HANDICRAFTS">HandiCrafts</option>
     <option value="JEWERLY">Jewerly</option>
     <option value="TEXTILES">Textiles</option>
   </select>
-  <div class="form-group">
-    <label for="storeId">Store</label>
-  
-    <!-- Si un store est déjà sélectionné (cas avec storeId dans l’URL), afficher juste son nom -->
-    <div *ngIf="storeId && selectedStoreName; else selectStore">
-      <input type="text" [value]="selectedStoreName" class="form-control" disabled />
-    </div>
-  
-    <!-- Sinon, afficher le <select> pour choisir le store -->
-    <ng-template #selectStore>
-      <select id="storeId" formControlName="storeId" class="form-control" required>
-        <option value="" disabled selected>Select a Store</option>
-        <option *ngFor="let store of stores" [value]="store.id">{{ store.name }}</option>
-      </select>
-    </ng-template>
+  <!-- Champ pour sélectionner l'image -->
+  <div>
+    <label for="image">Image du souvenir :</label>
+    <input type="file" id="image" (change)="onFileSelected($event)" />
   </div>
-  <button type="submit" [disabled]="souvenirForm.invalid">Add souvenir</button>
+
+  <div class="form-group">
+    <label>Magasin</label>
+    <input
+      type="text"
+      class="form-control"
+      [value]="selectedStoreName"
+      disabled
+    />
+  </div>
+
+  <!-- Facultatif : garder le storeId masqué -->
+  <input type="hidden" formControlName="storeId" />
+
+  <button
+    type="submit"
+    [disabled]="souvenirForm.invalid"
+    style="margin-top: 15px"
+  >
+    Update souvenir
+  </button>
 </form>

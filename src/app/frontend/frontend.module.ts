@@ -26,6 +26,10 @@ import { SouvenirsByStoreComponent } from './pages/GestionSouvenir/souvenirs-by-
 import { AddStoreComponent } from './pages/GestionSouvenir/add-store/add-store.component';
 import { StoreListOfPartnerComponent } from './pages/GestionSouvenir/store-list-of-partner/store-list-of-partner.component';
 import { EditStoreComponent } from './pages/GestionSouvenir/edit-store/edit-store.component';
+import { SouvenirListOfPartnerByStoreComponent } from './pages/GestionSouvenir/souvenir-list-of-partner-by-store/souvenir-list-of-partner-by-store.component';
+import { EditSouvenirComponent } from './pages/GestionSouvenir/edit-souvenir/edit-souvenir.component';
+import { AddSouvenirComponent } from './pages/GestionSouvenir/add-souvenir/add-souvenir.component';
+import { PanelCartComponent } from './pages/GestionSouvenir/panel-cart/panel-cart.component';
 const routes: Routes = [
   {
     path: '',
@@ -45,8 +49,12 @@ const routes: Routes = [
       // { path: 'storeList', component: StoreListComponent },
       { path: 'souvenir/store/:id', component: SouvenirsByStoreComponent },
       { path:"addStore", component: AddStoreComponent },
+      { path:"addSouvenir/:id", component: AddSouvenirComponent },
       { path:"editStore/:id", component: EditStoreComponent },
+      { path:"editSouvenir/:id", component: EditSouvenirComponent },
       { path:"storeListOfPartner", component: StoreListOfPartnerComponent  },
+      { path:"souvenirListOfPartnerByStore/:id", component: SouvenirListOfPartnerByStoreComponent},
+      { path:"panelCart", component: PanelCartComponent},
       // { path: 'storeList', component : StoreListComponent },
     ],
   },
@@ -82,6 +90,10 @@ const routes: Routes = [
     AddStoreComponent,
     StoreListOfPartnerComponent,
     EditStoreComponent,
+    SouvenirListOfPartnerByStoreComponent,
+    EditSouvenirComponent,
+    AddSouvenirComponent,
+    PanelCartComponent,
   ],
 
   imports: [

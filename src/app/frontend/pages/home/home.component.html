@@ -10,7 +10,10 @@
       rel="stylesheet"
       href="/assets/frontend/styles/bootstrap4/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <script src="/src/assets/frontend/js/jquery-3.2.1.min.js"></script>
     <link
       href="/src/assets/frontend/plugins/font-awesome-4.7.0/css/font-awesome.min.css"
@@ -45,6 +48,10 @@
       rel="stylesheet"
       type="text/css"
       href="/src/assets/frontend/styles/responsive.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
   </head>
 
@@ -131,7 +138,9 @@
                     <li class="main_nav_item"><a href="/about">about us</a></li>
                     <li class="main_nav_item"><a href="/guide">guide</a></li>
                     <li class="main_nav_item dropdown">
-                      <a href="#stores">Stores <span class="arrow">&#9662;</span></a>
+                      <a href="#stores"
+                        >Stores <span class="arrow">&#9662;</span></a
+                      >
                       <ul class="dropdown-menu always-visible">
                         <li><a href="/addStore">Add Store As a Partner</a></li>
                         <li><a href="/storeListOfPartner">Your Stores </a></li>
@@ -143,8 +152,12 @@
                     <li class="main_nav_item">
                       <a href="/contact">contact</a>
                     </li>
+                    <li class="main_nav_item">
+                      <app-panel-cart [cartCount]="0"></app-panel-cart>
+                    </li>
                   </ul>
                 </div>
+
                 <div class="content_search ml-lg-0 ml-auto">
                   <svg
                     version="1.1"
@@ -989,19 +1002,19 @@
       <!-- CTA -->
 
       <!-- <div class="cta"> -->
-        <!-- Image by https://unsplash.com/@thanni -->
-        <div
-          style="background-image: url(assets/frontend/images/sidibou.jpg)"
-        ></div>
-        <div id="stores" class="container">
-          <div class="row">
-            <div class="col">
-              <!-- CTA Slider -->
+      <!-- Image by https://unsplash.com/@thanni -->
+      <div
+        style="background-image: url(assets/frontend/images/sidibou.jpg)"
+      ></div>
+      <div id="stores" class="container">
+        <div class="row">
+          <div class="col">
+            <!-- CTA Slider -->
 
-              <app-store-list></app-store-list>
-            </div>
+            <app-store-list></app-store-list>
           </div>
         </div>
+      </div>
       <!-- </div> -->
       <!-- Offers -->
       <div>
