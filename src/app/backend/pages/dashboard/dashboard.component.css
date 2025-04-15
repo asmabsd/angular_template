@@ -434,4 +434,58 @@ body {
   cursor: pointer;
   margin-left: 10px;
 }
+.dashboard-container {
+  padding: 16px;
+}
+
+.stats-section {
+  margin-bottom: 20px;
+}
+
+.stats-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  flex: 1 1 200px;
+  padding: 12px;
+  text-align: center;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.pending-toggle {
+  margin-bottom: 20px;
+}
+
+.pending-users-card {
+  margin-top: 10px;
+}
+
+mat-list-item .actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.error-msg {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}
+
 }

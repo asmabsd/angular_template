@@ -17,6 +17,8 @@ import { AddplanningComponent } from './pages/addplanning/addplanning.component'
 import { AuthGuard } from '../auth.guard'; 
 import { ListeguideComponent } from './pages/listeguide/listeguide.component';
 import { AddguideComponent } from './pages/addguide/addguide.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 import { RouterModule, Routes } from '@angular/router';
 
@@ -73,6 +75,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),  // ✅ Correct usage of RouterModule
     ReactiveFormsModule,  // ✅ Ensure ReactiveFormsModule is added here
     HttpClientModule,
+    NgxChartsModule // ✅ Ajout ici
+
+    
   ],
   exports: [RouterModule]
 })

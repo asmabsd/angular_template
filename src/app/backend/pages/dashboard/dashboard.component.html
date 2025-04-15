@@ -20,9 +20,6 @@
             <div class="user-info" style="float: right; padding: 10px;">
                 Connecté en tant que : <strong>{{ email }}</strong>
                 <button (click)="logout()">Déconnexion</button>
-                <button (click)="togglePendingUsers()" class="pending-users-btn">
-                    {{ showPendingUsers ? 'Hide Pending Users' : 'Show Pending Users' }}
-                </button>
             </div>
         </div>
 
@@ -50,6 +47,14 @@
                         <span>Users Management</span>
                     </a>
                 </li>
+                
+                <!-- "Show Pending Users" button under User Management -->
+                <li>
+                    <button (click)="togglePendingUsers()" class="pending-users-btn">
+                        {{ showPendingUsers ? 'Hide Pending Users' : 'Show Pending Users' }}
+                    </button>
+                </li>
+
                 <li>
                     <a routerLink="/dashboard/listeguide" routerLinkActive="active">
                         <i class="fas fa-tachometer-alt"></i>
@@ -70,7 +75,6 @@
                         <span>Restaurants Management</span>
                     </a>
                 </li>
-                
                 <li>
                     <a routerLink="/dashboard" routerLinkActive="active">
                         <i class="fas fa-tachometer-alt"></i>
@@ -94,7 +98,56 @@
 
         <!-- ========== MAIN CONTENT ========== -->
         <main class="main-content">
-            <!-- Pending users section - placed at the top of main content -->
+            <!-- Stats Section -->
+            <div class="dashboard-stats">
+                <h3>Dashboard Statistics</h3>
+                <div *ngIf="statsLoading" class="loading-message">Loading statistics...</div>
+                <div *ngIf="statsError" class="error-message">{{ statsError }}</div>
+                
+                <div *ngIf="stats && !statsLoading">
+                    <div class="stats-summary">
+                        <div class="stat-item">
+                            <h4>Total Users</h4>
+                            <p>{{ stats.userCounts.total }}</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>New This Month</h4>
+                            <p>{{ stats.userCounts.newThisMonth }}</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>Guides</h4>
+                            <p>{{ stats.userCounts.guides }}</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>Travelers</h4>
+                            <p>{{ stats.userCounts.travelers }}</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>Partners</h4>
+                            <p>{{ stats.userCounts.partners }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trend Chart -->
+                <div class="trend-chart">
+                    <h4>Registration Trend</h4>
+                    <ngx-charts-line-chart
+                        [view]="view"
+                        [scheme]="colorScheme"
+                       
+                        [gradient]="gradient"
+                        [xAxis]="showXAxis"
+                        [yAxis]="showYAxis"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [xAxisLabel]="xAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [yAxisLabel]="yAxisLabel">
+                    </ngx-charts-line-chart>
+                </div>
+            </div>
+
+            <!-- Pending users section - placed below the button -->
             <div *ngIf="showPendingUsers" class="pending-users-section">
                 <h3><i class="fas fa-user-clock"></i> Pending User Approvals</h3>
                 <div *ngIf="pendingUsers.length === 0" class="no-pending-users">
@@ -118,120 +171,6 @@
             </div>
 
             <router-outlet></router-outlet>
-
-            <header class="main-header">
-                <div class="header-left">
-                    <h1>Dashboard Overview</h1>
-                </div>
-                <div class="header-right">
-                    <div class="search-box">
-                        <input type="text" placeholder="Search...">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="notifications">
-                        <i class="fas fa-bell"></i>
-                        <span class="badge">3</span>
-                    </div>
-                </div>
-            </header>
-
-            <div class="stats-cards">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: #4e73df;">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>1,254</h3>
-                        <p>Total Users</p>
-                    </div>
-                    <div class="stat-progress">
-                        <div class="progress-bar" style="width: 75%; background-color: #4e73df;"></div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: #1cc88a;">
-                        <i class="fas fa-hotel"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>342</h3>
-                        <p>Accommodations</p>
-                    </div>
-                    <div class="stat-progress">
-                        <div class="progress-bar" style="width: 60%; background-color: #1cc88a;"></div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: #36b9cc;">
-                        <i class="fas fa-map-marked-alt"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>89</h3>
-                        <p>Guides</p>
-                    </div>
-                    <div class="stat-progress">
-                        <div class="progress-bar" style="width: 45%; background-color: #36b9cc;"></div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: #f6c23e;">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>$24,500</h3>
-                        <p>Revenue</p>
-                    </div>
-                    <div class="stat-progress">
-                        <div class="progress-bar" style="width: 85%; background-color: #f6c23e;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="charts-row">
-                <div class="chart-container">
-                    <h3>User Growth</h3>
-                    <canvas id="userChart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <h3>Revenue Sources</h3>
-                    <canvas id="revenueChart"></canvas>
-                </div>
-            </div>
-
-            <div class="recent-activity">
-                <h3>Recent Activity</h3>
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="activity-icon" style="background-color: #4e73df;">
-                            <i class="fas fa-user-plus"></i>
-                        </div>
-                        <div class="activity-details">
-                            <p><strong>5 new users</strong> registered today</p>
-                            <span class="activity-time">2 hours ago</span>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon" style="background-color: #1cc88a;">
-                            <i class="fas fa-hotel"></i>
-                        </div>
-                        <div class="activity-details">
-                            <p><strong>3 new accommodations</strong> added</p>
-                            <span class="activity-time">5 hours ago</span>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon" style="background-color: #f6c23e;">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
-                        <div class="activity-details">
-                            <p><strong>$2,500</strong> in new bookings</p>
-                            <span class="activity-time">1 day ago</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
     </div>
 
