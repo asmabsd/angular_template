@@ -1,31 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Souvenir } from 'src/app/models/GestionSouvenir/souvenir';
+import { PanelCountService } from 'src/app/services/GestionSouvenirService/panel-count.service';
+import { PanelService } from 'src/app/services/GestionSouvenirService/panel.service';
 import { SouvenirService } from 'src/app/services/GestionSouvenirService/souvenir.service';
 import { StoreSelectionService } from 'src/app/services/GestionSouvenirService/store-selection.service';
 
 @Component({
   selector: 'app-souvenirs-by-store',
   templateUrl: './souvenirs-by-store.component.html',
-  styleUrls: ['./souvenirs-by-store.component.css']
+  styleUrls: ['./souvenirs-by-store.component.css'],
 })
 export class SouvenirsByStoreComponent implements OnInit {
-
   storeId!: number;
   souvenirs: Souvenir[] = [];
   imagePathPreview: string | ArrayBuffer | null = null;
 
   apiUrl: string = 'http://localhost:8089/pidev/souvenir/images'; // Ajout du http
+  apiUrl2: string = 'http://localhost:8089/pidev/panel'; // Ajout du http
 
   constructor(
     private souvenirService: SouvenirService,
     private storeSelectionService: StoreSelectionService,
-    // private photoServiceService: PhotosServiceService,
+    private panelCountService: PanelCountService,
+    private panelService: PanelService,
     private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
-    this.storeSelectionService.selectedStoreId$.subscribe(storeId => {
+    this.storeSelectionService.selectedStoreId$.subscribe((storeId) => {
       if (storeId !== null) {
         this.loadSouvenirs(storeId);
       }
@@ -35,16 +38,20 @@ export class SouvenirsByStoreComponent implements OnInit {
   loadSouvenirs(storeId: number): void {
     this.souvenirService.getSouvenirByStore(storeId).subscribe({
       next: (data) => {
-        this.souvenirs = data.map(souvenir => ({
+        this.souvenirs = data.map((souvenir) => ({
           ...souvenir,
-          safeImageUrl: this.getSafeImageUrl(souvenir.photo)
+          safeImageUrl: this.getSafeImageUrl(souvenir.photo),
         }));
       },
-      error: (err) => console.error('Erreur chargement souvenirs', err)
+      error: (err) => console.error('Erreur chargement souvenirs', err),
     });
   }
   convertPhotoToBase64(souvenir: Souvenir): void {
-    if (souvenir.photo && typeof souvenir.photo === 'string' && souvenir.photo.startsWith('http')) {
+    if (
+      souvenir.photo &&
+      typeof souvenir.photo === 'string' &&
+      souvenir.photo.startsWith('http')
+    ) {
       const img = new Image();
       img.crossOrigin = 'Anonymous';
       img.onload = () => {
@@ -58,7 +65,7 @@ export class SouvenirsByStoreComponent implements OnInit {
       img.src = souvenir.photo;
     }
   }
-  
+
   getSafeImageUrl(photo: string | undefined): SafeUrl {
     if (!photo) {
       return this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -78,17 +85,29 @@ export class SouvenirsByStoreComponent implements OnInit {
     if (!imageName) {
       return 'assets/frontend/images/sidibou.jpg';
     }
-  
+
     // Si c'est déjà une URL complète ou base64
     if (imageName.startsWith('http') || imageName.startsWith('data:image')) {
       return imageName;
     }
-  
+
     // Construction de l'URL selon votre configuration backend
     return `http://localhost:8089/pidev/souvenir/images/${imageName}`;
   }
   getImageUrl(photo: string | undefined): string {
     if (!photo) return 'assets/images/default-souvenir.jpg';
     return `${this.apiUrl}/${photo}?t=${new Date().getTime()}`;
+  }
+ 
+  addToPanel(souvenir: Souvenir) {
+    this.panelService.addToPanel(souvenir.id, 1).subscribe({
+      next: (res) => {
+        console.log('Ajout réussi au panel :', res);
+        this.panelCountService.increment();
+      },
+      error: (err) => {
+        console.error('Erreur lors de l’ajout au panel:', err);
+      }
+    });
   }
 }

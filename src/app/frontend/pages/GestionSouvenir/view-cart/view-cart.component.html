@@ -1,0 +1,65 @@
+<div class="cart-container">
+  <h2>🛍️ Mon Panier</h2>
+
+  <div *ngIf="isLoading" class="loading-spinner">Chargement du panier...</div>
+
+  <table *ngIf="!isLoading" class="cart-table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Nom</th>
+        <th>Catégorie</th>
+        <th>Description</th>
+        <th>Prix Unitaire</th>
+        <th>Quantité</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let line of commandLines; let i = index">
+        <td>
+          <img
+            class="product-image"
+            [src]="
+              line.souvenir.photo
+                ? 'http://localhost:8089/pidev/souvenir/images/' +
+                  line.souvenir.photo
+                : 'assets/images/souvenir.jpg'
+            "
+            [alt]="line.souvenir.name"
+          />
+        </td>
+        <td>{{ line.souvenir.name }}</td>
+        <td>{{ line.souvenir.category }}</td>
+        <td class="description-cell">{{ line.souvenir.description }}</td>
+        <td>{{ line.unitPrice | currency : "USD" }}</td>
+        <td>
+          <input
+            type="number"
+            [(ngModel)]="line.quantity"
+            min="1"
+            [max]="line.souvenir.quantity"
+            name="quantity-{{ i }}"
+          />
+        </td>
+        <td>{{ line.unitPrice * line.quantity | currency : "USD" }}</td>
+
+        <td>
+          <button class="delete-btn" (click)="deleteLine(i)">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!isLoading" class="cart-footer">
+    <button class="update-btn" (click)="updateCart()" [disabled]="isUpdating">
+      {{ isUpdating ? "Mise à jour..." : "Mettre à jour le panier" }}
+    </button>
+
+    <div class="total-section">
+      <p class="total-label">Total Général:</p>
+      <p class="total-amount">{{ totalPrice | currency : "USD" }}</p>
+    </div>
+  </div>
+</div>

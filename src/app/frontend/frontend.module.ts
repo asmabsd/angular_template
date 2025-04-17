@@ -30,6 +30,7 @@ import { SouvenirListOfPartnerByStoreComponent } from './pages/GestionSouvenir/s
 import { EditSouvenirComponent } from './pages/GestionSouvenir/edit-souvenir/edit-souvenir.component';
 import { AddSouvenirComponent } from './pages/GestionSouvenir/add-souvenir/add-souvenir.component';
 import { PanelCartComponent } from './pages/GestionSouvenir/panel-cart/panel-cart.component';
+import { ViewCartComponent } from './pages/GestionSouvenir/view-cart/view-cart.component';
 const routes: Routes = [
   {
     path: '',
@@ -55,6 +56,7 @@ const routes: Routes = [
       { path:"storeListOfPartner", component: StoreListOfPartnerComponent  },
       { path:"souvenirListOfPartnerByStore/:id", component: SouvenirListOfPartnerByStoreComponent},
       { path:"panelCart", component: PanelCartComponent},
+      { path:"viewCart", component: ViewCartComponent},
       // { path: 'storeList', component : StoreListComponent },
     ],
   },
@@ -94,6 +96,7 @@ const routes: Routes = [
     EditSouvenirComponent,
     AddSouvenirComponent,
     PanelCartComponent,
+    ViewCartComponent,
   ],
 
   imports: [

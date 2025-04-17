@@ -1,232 +1,150 @@
-/* Ajoutez ces styles dans votre fichier CSS */
 .cards-container {
   padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.header-section {
-  margin-bottom: 2rem;
-  padding: 0 1rem;
 }
 
 .header-section h2 {
-  color: #2c3e50;
-  font-size: 2.2rem;
-  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  color: #333;
   text-align: center;
-  position: relative;
-  padding-bottom: 0.5rem;
-}
 
-.header-section h2::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: #27ae60;
 }
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  justify-content: center; /* Centre horizontalement */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product-card {
+  background: #fff5f5;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  max-width: 360px; /* Empêche une seule card de s'étirer trop */
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff4d6d;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border-radius: 50%;
+  padding: 0.4rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.card-body {
   padding: 1rem;
 }
 
-.souvenir-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.souvenir-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-}
-
- /* === souvenir Image === */
- .souvenir-photo {
-  width: 220px; /* Taille fixe */
-  height: 220px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 12px;
-  border: 3px solid #e0e0e0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  margin: 0 auto 1rem; /* ✅ Centre horizontalement */
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-
-.card-body:hover .souvenir-photo {
-  transform: scale(1.03);
-}
-
-
-.card-body {
-  padding: 1.5rem;
-  flex-grow: 1;
+.category {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #54376C;
+  text-transform: uppercase;
 }
 
 .souvenir-name {
-  color: #2c3e50;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
+  margin: 0.5rem 0;
+  color: #222;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: #666;
   margin-bottom: 0.8rem;
 }
 
-.souvenir-description {
-  color: #7f8c8d;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-bottom: 1.2rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.details-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.detail-item {
+.features {
   display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.6rem;
-  background: #f8f9fa;
-  border-radius: 8px;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
-.detail-item i {
-  color: #3498db;
-  width: 20px;
-  text-align: center;
-  font-size: 1.1rem;
-}
-
-.detail-item span {
-  font-size: 0.95rem;
-  color: #2c3e50;
-}
-
-/* Style spécifique pour le statut */
-.detail-item:last-child {
-  grid-column: span 2;
-  justify-content: center;
-  background: #27ae6020;
-  color: #27ae60;
+.price-tag, .stock-status {
+  background: #f0f0ff;
+  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
   font-weight: 500;
 }
 
-.card-actions {
-  padding: 0 1.5rem 1.5rem;
+.stock-status.in-stock {
+  background-color: #e0ffe0;
+  color: #3a7a3a;
 }
 
-.cart-btn {
+.stock-status.out-stock {
+  background-color: #ffe0e0;
+  color: #b33a3a;
+}
+
+.card-footer {
+  padding: 1rem;
+  border-top: 1px solid #f0f0f0;
+  text-align: center;
+}
+
+.add-to-cart {
   width: 100%;
-  padding: 0.8rem;
-  background: #27ae60;
+  background: #54376C;
   color: white;
   border: none;
+  padding: 0.75rem 1rem;
   border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
+  transition: background 0.3s ease;
+}
+.add-to-cart:hover{
+  background: #41314a;
 }
 
-.cart-btn:hover {
-  background: #2727ed;
-  transform: translateY(-2px);
-}
-
-.cart-btn i {
-  font-size: 1.1rem;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .cards-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .souvenir-card {
-    margin: 0 0.5rem;
-  }
-}
-/* Ajoutez ces styles supplémentaires */
-.souvenir-card.out-of-stock {
-  position: relative;
-  opacity: 0.8;
-  background: #f8f9fa;
-}
-
-.souvenir-card.out-of-stock::after {
-  content: "SOLD OUT";
-  position: absolute;
-  top: 10px;
-  right: -30px;
-  background: #e74c3c;
-  color: white;
-  padding: 0.3rem 2rem;
-  transform: rotate(45deg);
-  font-size: 0.8rem;
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.detail-item.status-indicator {
-  grid-column: span 2;
-  justify-content: center;
-  font-weight: 500;
-}
-
-.detail-item.stock-out {
-  background: #e74c3c20 !important;
-  color: #e74c3c !important;
-  animation: pulseWarning 1.5s infinite;
-}
-
-/* Désactivation du bouton panier */
-.cart-btn:disabled {
-  background: #95a5a6 !important;
+.add-to-cart:disabled {
+  background: #ccc;
   cursor: not-allowed;
-  opacity: 0.7;
-  transform: none !important;
 }
-
-/* Animation pour le statut "OUT OF STOCK" */
-@keyframes pulseWarning {
-  0% { opacity: 0.8; }
-  50% { opacity: 1; }
-  100% { opacity: 0.8; }
-}
-
-/* Style de la carte en rupture de stock */
-.souvenir-card.out-of-stock .souvenir-name,
-.souvenir-card.out-of-stock .souvenir-description {
-  color: #95a5a6 !important;
-}
-
-.souvenir-card.out-of-stock .detail-item:not(.status-indicator) {
-  opacity: 0.6;
-}
-
