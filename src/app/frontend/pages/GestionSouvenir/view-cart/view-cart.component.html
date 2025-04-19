@@ -1,8 +1,13 @@
 <div class="cart-container">
   <h2>🛍️ Mon Panier</h2>
 
-  <div *ngIf="isLoading" class="loading-spinner">Chargement du panier...</div>
+  <!-- Chargement -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Chargement en cours...</p>
+  </div>
 
+  <!-- Liste des articles -->
   <table *ngIf="!isLoading" class="cart-table">
     <thead>
       <tr>
@@ -25,7 +30,7 @@
               line.souvenir.photo
                 ? 'http://localhost:8089/pidev/souvenir/images/' +
                   line.souvenir.photo
-                : 'assets/images/souvenir.jpg'
+                : 'assets/images/default-product.jpg'
             "
             [alt]="line.souvenir.name"
           />
@@ -33,18 +38,17 @@
         <td>{{ line.souvenir.name }}</td>
         <td>{{ line.souvenir.category }}</td>
         <td class="description-cell">{{ line.souvenir.description }}</td>
-        <td>{{ line.unitPrice | currency : "USD" }}</td>
+        <td>{{ line.unitPrice | currency : "EUR" }}</td>
         <td>
           <input
             type="number"
             [(ngModel)]="line.quantity"
             min="1"
             [max]="line.souvenir.quantity"
-            name="quantity-{{ i }}"
+            (change)="updateCart()"
           />
         </td>
-        <td>{{ line.unitPrice * line.quantity | currency : "USD" }}</td>
-
+        <td>{{ line.unitPrice * line.quantity | currency : "EUR" }}</td>
         <td>
           <button class="delete-btn" (click)="deleteLine(i)">🗑️</button>
         </td>
@@ -52,14 +56,91 @@
     </tbody>
   </table>
 
-  <div *ngIf="!isLoading" class="cart-footer">
-    <button class="update-btn" (click)="updateCart()" [disabled]="isUpdating">
-      {{ isUpdating ? "Mise à jour..." : "Mettre à jour le panier" }}
+  <!-- Promotions -->
+  <div *ngIf="availableDiscounts.length > 0" class="discounts-section">
+    <h3>Promotions actives</h3>
+    <div class="discount-cards">
+      <div *ngFor="let d of availableDiscounts" class="discount-card">
+        <div class="discount-header">
+          <span class="code">{{ d.code }}</span>
+          <span class="value">
+            <ng-container [ngSwitch]="d.type">
+              <span *ngSwitchCase="'PERCENTAGE'">{{ d.value }}%</span>
+              <span *ngSwitchCase="'FIXED'">{{
+                d.value | currency : "EUR"
+              }}</span>
+              <span *ngSwitchCase="'BUNDLE'">{{ d.value }}€/lot</span>
+            </ng-container>
+          </span>
+        </div>
+        <div class="conditions">
+          <div *ngIf="d.minAmount">
+            <i class="fas fa-euro-sign"></i> Min.
+            {{ d.minAmount | currency : "EUR" }}
+          </div>
+          <div *ngIf="d.minItems">
+            <i class="fas fa-box-open"></i> Min. {{ d.minItems }} articles
+          </div>
+          <div *ngIf="d.applicableCategory">
+            <i class="fas fa-tag"></i> {{ d.applicableCategory }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application réduction -->
+  <div class="discount-section">
+    <!-- Affichage réduction active -->
+    <div *ngIf="appliedDiscount" class="active-discount">
+      <span class="discount-code">{{ appliedDiscount.code }}</span>
+      <span class="discount-value">
+        -{{ appliedDiscount.value | currency : "EUR" }}
+        <span *ngIf="appliedDiscount.type === 'percentage'">%</span>
+      </span>
+      <button (click)="removeDiscount()">Supprimer</button>
+    </div>
+
+    <!-- Champ de saisie -->
+    <input
+      [(ngModel)]="discountCode"
+      [disabled]="!!appliedDiscount"
+      placeholder="Entrez votre code promo"
+      (ngModelChange)="onDiscountCodeChange()"
+    />
+
+    <!-- Bouton d'application -->
+    <button
+      (click)="applyDiscount()"
+      [disabled]="!discountCode || !!appliedDiscount"
+    >
+      {{ appliedDiscount ? "Réduction active" : "Appliquer" }}
     </button>
 
-    <div class="total-section">
-      <p class="total-label">Total Général:</p>
-      <p class="total-amount">{{ totalPrice | currency : "USD" }}</p>
+    <!-- Affichage des erreurs -->
+    <div *ngIf="discountError" class="error-message">
+      {{ discountError }}
+    </div>
+  </div>
+
+  <!-- Totaux -->
+  <div class="totals">
+    <div class="total-line">
+      <span>Total articles :</span>
+      <span>{{ originalTotal | currency : "EUR" }}</span>
+    </div>
+    <!-- Ligne 131 : Vérification complète de l'objet -->
+    <div
+      *ngIf="appliedDiscount && appliedDiscount.value > 0"
+      class="total-line discount"
+    >
+      <span>Réduction :</span>
+      <!-- Ligne 133 : Utilisation du safe navigation operator -->
+      <span>-{{ appliedDiscount?.value | currency : "EUR" }}</span>
+    </div>
+    <div class="total-line final">
+      <span>Total à payer :</span>
+      <span>{{ finalTotal | currency : "EUR" }}</span>
     </div>
   </div>
 </div>

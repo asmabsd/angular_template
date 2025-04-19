@@ -14,7 +14,6 @@ import { CommandLineDTO } from 'src/app/models/GestionSouvenir/CommandLineDTO';
 })
 export class PanelService {
   private apiUrl = 'http://localhost:8089/pidev/panel'; // Base URL pour le panel
-  //http://localhost:8089/pidev/panel/update/{{index}}?
   constructor(private http: HttpClient) {}
 
   // Ajouter un article au panel
@@ -34,21 +33,21 @@ export class PanelService {
     );
   }
 
-  // Mettre à jour la quantité d'un article dans le panel
-  /* updatePanelQuantity(index: number, quantity: number): Observable<Panel> {
-    return this.http.patch<Panel>(
-      `${this.apiUrl}/update/${index}?quantity=${quantity}`,
-      null, // Body vide
-      { withCredentials: true ,
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        })
-        
-      }
+  applyDiscount(code: string): Observable<Panel> {
+    return this.http.post<Panel>(
+      `${this.apiUrl}/apply-discount`, 
+      { code }, 
+      { withCredentials: true }
     );
-  }*/
+  }
 
+  removeDiscount(): Observable<Panel> {
+    return this.http.post<Panel>(
+      `${this.apiUrl}/remove-discount`, 
+      {}, 
+      { withCredentials: true }
+    );
+  }
   updatePanelQuantity(index: number, quantity: number): Observable<Panel> {
     return this.http
       .patch<Panel>(`${this.apiUrl}/update/${index}/${quantity}`, {
@@ -73,14 +72,15 @@ export class PanelService {
   //     withCredentials: true,
   //   });
   // }
- // Modifier l'interface des paramètres
-updateEntireCart(updates: { souvenirId: number; quantity: number }[]): Observable<Panel> {
-  return this.http.put<Panel>(`${this.apiUrl}/update`, updates, {
-    withCredentials: true, // pour la gestion de session
-  })  
-}
-  
-  
+  // Modifier l'interface des paramètres
+  updateEntireCart(
+    updates: { souvenirId: number; quantity: number }[]
+  ): Observable<Panel> {
+    return this.http.put<Panel>(`${this.apiUrl}/update`, updates, {
+      withCredentials: true, // pour la gestion de session
+    });
+  }
+
   // Visualiser le panel
   viewPanel(): Observable<Panel> {
     return this.http.get<Panel>(`${this.apiUrl}`, {
@@ -100,5 +100,9 @@ updateEntireCart(updates: { souvenirId: number; quantity: number }[]): Observabl
     return this.http.delete<void>(`${this.apiUrl}/clear`, {
       withCredentials: true, // pour la gestion de session
     });
+  }
+
+  getActiveDiscounts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/discounts`);
   }
 }

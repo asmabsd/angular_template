@@ -1,4 +1,5 @@
-import { CommandLineDTO } from "./CommandLineDTO";
+import { CommandLineDTO } from './CommandLineDTO';
+import { Discount } from './discount';
 
 export interface Panel {
   creationDate: string; // Vous pouvez également utiliser Date si vous gérez les dates
@@ -7,4 +8,9 @@ export interface Panel {
   discount?: number;
   appliedDiscountCode?: string;
   totalItems: number;
+  appliedDiscount?: {
+    code: string;
+    value: number;
+    type: 'percentage' | 'fixed' | 'bundle';
+  };
 }
