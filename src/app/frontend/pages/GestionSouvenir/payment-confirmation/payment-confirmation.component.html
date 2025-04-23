@@ -1,0 +1,32 @@
+Here’s the translation of the content within the tags into English:
+
+```html
+<div class="payment-container">
+  <!-- Structure modified to ensure the permanent presence of the element -->
+  <div class="loading-overlay" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <div class="payment-content" [class.hidden]="isLoading">
+    <div class="amount-display">
+      Total: {{ amount / 100 | currency:'EUR':'symbol':'1.2-2' }}
+    </div>
+
+    <!-- Stripe element ALWAYS present -->
+    <div id="card-element-container">
+      <div id="card-element" class="stripe-card-element"></div>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <button class="confirm-button" 
+            (click)="confirmPayment()"
+            [disabled]="isLoading">
+      {{ isLoading ? 'Processing...' : 'Confirm Payment' }}
+    </button>
+  </div>
+</div>
+```

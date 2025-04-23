@@ -31,6 +31,8 @@ import { EditSouvenirComponent } from './pages/GestionSouvenir/edit-souvenir/edi
 import { AddSouvenirComponent } from './pages/GestionSouvenir/add-souvenir/add-souvenir.component';
 import { PanelCartComponent } from './pages/GestionSouvenir/panel-cart/panel-cart.component';
 import { ViewCartComponent } from './pages/GestionSouvenir/view-cart/view-cart.component';
+import { PaymentSuccessComponent } from './pages/GestionSouvenir/payment-success/payment-success.component';
+import { PaymentConfirmationComponent } from './pages/GestionSouvenir/payment-confirmation/payment-confirmation.component';
 const routes: Routes = [
   {
     path: '',
@@ -49,14 +51,22 @@ const routes: Routes = [
       { path: 'editreservation/:id', component: EditreservationComponent },
       // { path: 'storeList', component: StoreListComponent },
       { path: 'souvenir/store/:id', component: SouvenirsByStoreComponent },
-      { path:"addStore", component: AddStoreComponent },
-      { path:"addSouvenir/:id", component: AddSouvenirComponent },
-      { path:"editStore/:id", component: EditStoreComponent },
-      { path:"editSouvenir/:id", component: EditSouvenirComponent },
-      { path:"storeListOfPartner", component: StoreListOfPartnerComponent  },
-      { path:"souvenirListOfPartnerByStore/:id", component: SouvenirListOfPartnerByStoreComponent},
-      { path:"panelCart", component: PanelCartComponent},
-      { path:"viewCart", component: ViewCartComponent},
+      { path: 'addStore', component: AddStoreComponent },
+      { path: 'addSouvenir/:id', component: AddSouvenirComponent },
+      { path: 'editStore/:id', component: EditStoreComponent },
+      { path: 'editSouvenir/:id', component: EditSouvenirComponent },
+      { path: 'storeListOfPartner', component: StoreListOfPartnerComponent },
+      {
+        path: 'souvenirListOfPartnerByStore/:id',
+        component: SouvenirListOfPartnerByStoreComponent,
+      },
+      { path: 'panelCart', component: PanelCartComponent },
+      { path: 'viewCart', component: ViewCartComponent },
+      { path: 'payment-success/:commandId', component: PaymentSuccessComponent },
+      {
+        path: 'payment/:commandId',
+        component: PaymentConfirmationComponent,
+      },
       // { path: 'storeList', component : StoreListComponent },
     ],
   },
@@ -97,6 +107,8 @@ const routes: Routes = [
     AddSouvenirComponent,
     PanelCartComponent,
     ViewCartComponent,
+    PaymentSuccessComponent,
+    PaymentConfirmationComponent,
   ],
 
   imports: [

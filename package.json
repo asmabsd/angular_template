@@ -20,6 +20,7 @@
     "@angular/router": "^16.2.0",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@popperjs/core": "^2.11.8",
+    "@stripe/stripe-js": "^7.1.0",
     "@types/google.maps": "^3.58.1",
     "@types/googlemaps": "^3.43.3",
     "crypto-js": "^4.2.0",

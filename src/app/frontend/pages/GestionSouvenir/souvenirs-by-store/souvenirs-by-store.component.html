@@ -1,6 +1,6 @@
 <div class="cards-container">
   <div class="header-section">
-    <h2>🛍️ Store Products</h2>
+    <h2>🛍️ {{storeName}} Products</h2>
   </div>
 
   <div class="cards-grid">
@@ -25,7 +25,7 @@
         </p>
 
         <div class="features">
-          <span class="price-tag">💰 {{ souvenir.price | currency }}</span>
+          <span class="price-tag">💰 {{ souvenir.price | currency : "EUR" }}</span>
           <span class="stock-status" 
                 [ngClass]="{'in-stock': souvenir.status === 'IN STOCK', 'out-stock': souvenir.status === 'OUT OF STOCK'}">
             📦 {{ souvenir.status }}

@@ -20,6 +20,7 @@
         id="description"
         formControlName="description"
         class="large-textarea"
+        placeholder="Automatically generated description or manually entered description"
       ></textarea>
       <div
         *ngIf="
@@ -35,6 +36,9 @@
           Description cannot exceed 150 characters.
         </small>
       </div>
+      <button type="button" (click)="generateAutoDescription()" class="btn btn-secondary mt-2">
+        Generate via IA
+      </button>
     </div>
   
     <div class="form-group">
@@ -73,7 +77,7 @@
   
     <label for="category">Category :</label>
     <select id="category" formControlName="category" required>
-      <option value="" disabled selected>Sélectionner une expérience</option>
+      <option value="" disabled selected>Select a category</option>
       <option value="HANDICRAFTS">HandiCrafts</option>
       <option value="JEWERLY">Jewerly</option>
       <option value="TEXTILES">Textiles</option>

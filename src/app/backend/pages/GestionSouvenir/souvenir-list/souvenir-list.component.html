@@ -27,7 +27,7 @@
           <tr *ngFor="let souvenir of souvenirs">
             <td>{{ souvenir.name }}</td>
             <td>{{ souvenir.description }}</td>
-            <td>{{ souvenir.price | currency }}</td>
+            <td>{{ souvenir.price | currency : "EUR" }}</td>
             <td>{{ souvenir.quantity }}</td>
             <td>{{ souvenir.status }}</td>
             <td>{{ souvenir.category }}</td>

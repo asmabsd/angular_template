@@ -5,6 +5,7 @@ export interface Panel {
   creationDate: string; // Vous pouvez également utiliser Date si vous gérez les dates
   commandLines: CommandLineDTO[]; // Tableau d'objets CommandLine
   total: number;
+  subtotal: number; // <-- Ajouté
   discount?: number;
   appliedDiscountCode?: string;
   totalItems: number;

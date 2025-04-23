@@ -1,10 +1,10 @@
 <div class="cart-container">
-  <h2>🛍️ Mon Panier</h2>
+  <h2>🛍️ My Panel</h2>
 
   <!-- Chargement -->
   <div *ngIf="isLoading" class="loading-spinner">
     <div class="spinner"></div>
-    <p>Chargement en cours...</p>
+    <p>Loading...</p>
   </div>
 
   <!-- Liste des articles -->
@@ -12,11 +12,11 @@
     <thead>
       <tr>
         <th>Image</th>
-        <th>Nom</th>
-        <th>Catégorie</th>
+        <th>Name</th>
+        <th>Category</th>
         <th>Description</th>
-        <th>Prix Unitaire</th>
-        <th>Quantité</th>
+        <th>Unitaire Price</th>
+        <th>Quantity</th>
         <th>Total</th>
         <th>Actions</th>
       </tr>
@@ -55,10 +55,9 @@
       </tr>
     </tbody>
   </table>
-
   <!-- Promotions -->
   <div *ngIf="availableDiscounts.length > 0" class="discounts-section">
-    <h3>Promotions actives</h3>
+    <h3>Actives Promotions</h3>
     <div class="discount-cards">
       <div *ngFor="let d of availableDiscounts" class="discount-card">
         <div class="discount-header">
@@ -88,59 +87,91 @@
       </div>
     </div>
   </div>
+  <div class="checkout-container">
+    <!-- Application réduction -->
+    <div class="discount-section">
+      <!-- Affichage réduction active -->
+      <div *ngIf="appliedDiscount" class="active-discount">
+        <span class="discount-code">{{ appliedDiscount.code }}</span>
+        <span class="discount-value">
+          <ng-container [ngSwitch]="appliedDiscount.type">
+            <span *ngSwitchCase="'PERCENTAGE'"
+              >-{{ appliedDiscount.value }}%</span
+            >
+            <span *ngSwitchDefault
+              >-{{ appliedDiscount.value | currency : "EUR" }}</span
+            >
+          </ng-container>
+        </span>
+        <button (click)="removeDiscount()">Delete</button>
+      </div>
 
-  <!-- Application réduction -->
-  <div class="discount-section">
-    <!-- Affichage réduction active -->
-    <div *ngIf="appliedDiscount" class="active-discount">
-      <span class="discount-code">{{ appliedDiscount.code }}</span>
-      <span class="discount-value">
-        -{{ appliedDiscount.value | currency : "EUR" }}
-        <span *ngIf="appliedDiscount.type === 'percentage'">%</span>
-      </span>
-      <button (click)="removeDiscount()">Supprimer</button>
+      <!-- Champ de saisie -->
+      <input
+        [(ngModel)]="discountCode"
+        [disabled]="!!appliedDiscount"
+        placeholder="Enter your code promo"
+        (ngModelChange)="onDiscountCodeChange()"
+      />
+
+      <!-- Bouton d'application -->
+      <button
+        (click)="applyDiscount()"
+        [disabled]="!discountCode || !!appliedDiscount"
+      >
+        {{ appliedDiscount ? "Réduction active" : "Apply" }}
+      </button>
+
+      <!-- Affichage des erreurs -->
+      <div *ngIf="discountError" class="error-message">
+        {{ discountError }}
+      </div>
     </div>
 
-    <!-- Champ de saisie -->
-    <input
-      [(ngModel)]="discountCode"
-      [disabled]="!!appliedDiscount"
-      placeholder="Entrez votre code promo"
-      (ngModelChange)="onDiscountCodeChange()"
-    />
+    <!-- Totaux -->
+    <div class="totals">
+      <div class="total-line">
+        <span>Total Products :</span>
+        <span>{{ originalTotal | currency : "EUR" }}</span>
+      </div>
+      <!-- Ligne 131 : Vérification complète de l'objet -->
+      <div
+        *ngIf="appliedDiscount && appliedDiscount.value > 0"
+        class="total-line discount"
+      >
+        <span>Discount:</span>
+        <span>
+          <ng-container [ngSwitch]="appliedDiscount.type">
+            <span *ngSwitchCase="'PERCENTAGE'"
+              >-{{ appliedDiscount.value }}%</span
+            >
+            <span *ngSwitchDefault
+              >-{{ appliedDiscount.value | currency : "EUR" }}</span
+            >
+          </ng-container>
+        </span>
+      </div>
+      <div class="total-line final">
+        <span>Total To Pay :</span>
+        <span>{{ finalTotal | currency : "EUR" }}</span>
+      </div>
+      <!-- Ajouter ce bouton dans la section Totaux -->
+      <div class="payment-section">
+        <button
+          (click)="handlePayment()"
+          [disabled]="finalTotal <= 0 || isProcessingPayment"
+          class="stripe-pay-button"
+        >
+          <span *ngIf="!isProcessingPayment"
+            >Payer avec Stripe ({{ finalTotal | currency : "EUR" }})</span
+          >
+          <span *ngIf="isProcessingPayment">Traitement en cours...</span>
+        </button>
 
-    <!-- Bouton d'application -->
-    <button
-      (click)="applyDiscount()"
-      [disabled]="!discountCode || !!appliedDiscount"
-    >
-      {{ appliedDiscount ? "Réduction active" : "Appliquer" }}
-    </button>
-
-    <!-- Affichage des erreurs -->
-    <div *ngIf="discountError" class="error-message">
-      {{ discountError }}
-    </div>
-  </div>
-
-  <!-- Totaux -->
-  <div class="totals">
-    <div class="total-line">
-      <span>Total articles :</span>
-      <span>{{ originalTotal | currency : "EUR" }}</span>
-    </div>
-    <!-- Ligne 131 : Vérification complète de l'objet -->
-    <div
-      *ngIf="appliedDiscount && appliedDiscount.value > 0"
-      class="total-line discount"
-    >
-      <span>Réduction :</span>
-      <!-- Ligne 133 : Utilisation du safe navigation operator -->
-      <span>-{{ appliedDiscount?.value | currency : "EUR" }}</span>
-    </div>
-    <div class="total-line final">
-      <span>Total à payer :</span>
-      <span>{{ finalTotal | currency : "EUR" }}</span>
+        <div *ngIf="discountError" class="payment-error">
+          {{ discountError }}
+        </div>
+      </div>
     </div>
   </div>
 </div>

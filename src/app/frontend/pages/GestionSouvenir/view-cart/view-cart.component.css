@@ -131,3 +131,265 @@
   background: #6c757d;
   cursor: not-allowed;
 }
+.stripe-pay-button {
+  background: #635bff;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  margin-top: 20px;
+}
+
+.stripe-pay-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.payment-error {
+  color: #dc3545;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.payment-section {
+  margin-top: 30px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+.stripe-card {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.stripe-pay-button {
+  background: #5469d4;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}
+
+.stripe-pay-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+/* Container principal */
+.discounts-section {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+}
+
+/* Titre */
+.discounts-section h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* Grille des cartes promo */
+.discount-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+/* Une carte promo */
+.discount-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.discount-card:hover {
+  transform: translateY(-3px);
+}
+
+/* En-tête promo */
+.discount-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.discount-header .code {
+  background-color: #e0d3f6;
+  color: #4b2c7a;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.discount-header .value {
+  font-size: 1rem;
+  color: #2e7d32;
+}
+
+/* Conditions */
+.conditions {
+  font-size: 0.85rem;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.conditions i {
+  margin-right: 5px;
+  color: #6c63ff;
+}
+.discount-section {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #fefefe;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-width: 500px;
+}
+
+/* Réduction active */
+.active-discount {
+  background-color: #e0f2f1;
+  border: 1px solid #b2dfdb;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: #00796b;
+}
+
+.active-discount .discount-code {
+  background-color: #c8e6c9;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  color: #2e7d32;
+  margin-right: 0.5rem;
+}
+
+.active-discount .discount-value {
+  margin-left: auto;
+  margin-right: 1rem;
+  font-size: 1rem;
+  color: #388e3c;
+}
+
+.active-discount button {
+  background: none;
+  border: none;
+  color: #d32f2f;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Champ de saisie */
+.discount-section input {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* Bouton d'application */
+.discount-section button {
+  padding: 0.6rem 1.2rem;
+  background-color: #6c63ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.discount-section button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Message d'erreur */
+.error-message {
+  color: #d32f2f;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding-left: 0.2rem;
+}
+
+.totals {
+  background-color: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 30px;
+  max-width: 500px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.total-line:last-child {
+  border-bottom: none;
+}
+
+.total-line.discount {
+  color: #d9534f; /* rouge doux pour bien montrer la remise */
+  font-weight: 500;
+}
+
+.total-line.final {
+  font-size: 18px;
+  font-weight: bold;
+  color: #2e7d32; /* vert foncé pour le total final */
+}
+
+.total-line span:first-child {
+  font-weight: 500;
+}
+
+.total-line span:last-child {
+  font-weight: 600;
+}
+.checkout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  gap: 20px;
+}
+
+/* Optional: Adjust width of internal sections for consistent look */
+
+.discount-section,
+.totals {
+  width: 100%;
+  max-width: 600px;
+}
+

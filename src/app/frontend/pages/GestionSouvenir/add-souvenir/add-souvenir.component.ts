@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Souvenir } from 'src/app/models/GestionSouvenir/souvenir';
 import { Store } from 'src/app/models/GestionSouvenir/store';
 import { storeStatus } from 'src/app/models/GestionSouvenir/store-status';
+import { IaService } from 'src/app/services/GestionSouvenirService/ia.service';
 import { PhotosServiceService } from 'src/app/services/GestionSouvenirService/photo-service.service';
 import { SouvenirService } from 'src/app/services/GestionSouvenirService/souvenir.service';
 import { StoreService } from 'src/app/services/GestionSouvenirService/store.service';
@@ -28,11 +29,12 @@ selectedStoreName: string | null = null;
     private router: Router,
     private photoService: PhotosServiceService,
     private route: ActivatedRoute,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private iaService: IaService
   ) {
     this.souvenirForm = this.fb.group({
       name: ['', [Validators.required]],
-      description: ['', [Validators.required, Validators.maxLength(150)]],
+      description: ['', [Validators.required, Validators.maxLength(1000)]],
       price: [
         '',
         [
@@ -103,7 +105,7 @@ selectedStoreName: string | null = null;
         next: (store) => {
           // 1. Modifier le status du store
           store.status = storeStatus.LOADING; // ou utiliser l'enum storeStatus.LOADING si tu l'importes
-  
+          
           // 2. Mettre à jour le store dans la base
           this.storeService.editStore(store).subscribe({
             next: (updatedStore) => {
@@ -114,6 +116,7 @@ selectedStoreName: string | null = null;
               };
   
               // 4. Ajouter le souvenir
+              console.log(newSouvenir.description);
               this.souvenirService.addSouvenir(newSouvenir).subscribe({
                 next: (response) => {
                   if (this.selectedFile && response.id) {
@@ -163,6 +166,26 @@ selectedStoreName: string | null = null;
         this.validateAllFormFields(control);
       } else {
         control?.markAsTouched({ onlySelf: true });
+      }
+    });
+  }
+
+  generateAutoDescription(): void {
+    const { name, category, price } = this.souvenirForm.value;
+  
+    if (!name || !category || !price) {
+      alert('Veuillez remplir les champs nom, catégorie et prix avant de générer une description.');
+      return;
+    }
+  
+    const request = { name, category, price: parseFloat(price) };
+  
+    this.iaService.generateDescription(request).subscribe({
+      next: (desc) => {
+        this.souvenirForm.patchValue({ description: desc });
+      },
+      error: (err) => {
+        console.error('Erreur génération IA', err);
       }
     });
   }

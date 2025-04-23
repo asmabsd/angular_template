@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Souvenir } from 'src/app/models/GestionSouvenir/souvenir';
+import { Store } from 'src/app/models/GestionSouvenir/store';
 import { PanelCountService } from 'src/app/services/GestionSouvenirService/panel-count.service';
 import { PanelService } from 'src/app/services/GestionSouvenirService/panel.service';
 import { SouvenirService } from 'src/app/services/GestionSouvenirService/souvenir.service';
 import { StoreSelectionService } from 'src/app/services/GestionSouvenirService/store-selection.service';
+import { StoreService } from 'src/app/services/GestionSouvenirService/store.service';
 
 @Component({
   selector: 'app-souvenirs-by-store',
@@ -15,7 +17,7 @@ export class SouvenirsByStoreComponent implements OnInit {
   storeId!: number;
   souvenirs: Souvenir[] = [];
   imagePathPreview: string | ArrayBuffer | null = null;
-
+  storeName: String="";
   apiUrl: string = 'http://localhost:8089/pidev/souvenir/images'; // Ajout du http
   apiUrl2: string = 'http://localhost:8089/pidev/panel'; // Ajout du http
 
@@ -24,13 +26,22 @@ export class SouvenirsByStoreComponent implements OnInit {
     private storeSelectionService: StoreSelectionService,
     private panelCountService: PanelCountService,
     private panelService: PanelService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private storeService : StoreService
   ) {}
 
   ngOnInit(): void {
     this.storeSelectionService.selectedStoreId$.subscribe((storeId) => {
       if (storeId !== null) {
         this.loadSouvenirs(storeId);
+        this.storeService.getStoreById(storeId).subscribe({
+              next: (data: Store) => {
+                this.storeName = data.name;
+              },
+              error: (error) => {
+                console.error('Erreur :', error);
+              }
+            });
       }
     });
   }
