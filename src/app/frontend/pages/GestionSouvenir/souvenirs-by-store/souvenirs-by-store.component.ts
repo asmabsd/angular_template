@@ -113,8 +113,8 @@ export class SouvenirsByStoreComponent implements OnInit {
   addToPanel(souvenir: Souvenir) {
     this.panelService.addToPanel(souvenir.id, 1).subscribe({
       next: (res) => {
-        console.log('Ajout réussi au panel :', res);
-        this.panelCountService.increment();
+        // Synchronisation avec la valeur exacte du backend
+        this.panelCountService.loadInitialCount(); // Recharge le vrai compteur
       },
       error: (err) => {
         console.error('Erreur lors de l’ajout au panel:', err);

@@ -33,6 +33,7 @@ import { PanelCartComponent } from './pages/GestionSouvenir/panel-cart/panel-car
 import { ViewCartComponent } from './pages/GestionSouvenir/view-cart/view-cart.component';
 import { PaymentSuccessComponent } from './pages/GestionSouvenir/payment-success/payment-success.component';
 import { PaymentConfirmationComponent } from './pages/GestionSouvenir/payment-confirmation/payment-confirmation.component';
+import { StoreSalesComponent } from './pages/GestionSouvenir/store-sales/store-sales.component';
 const routes: Routes = [
   {
     path: '',
@@ -62,6 +63,7 @@ const routes: Routes = [
       },
       { path: 'panelCart', component: PanelCartComponent },
       { path: 'viewCart', component: ViewCartComponent },
+      { path: 'store-sales/:id', component: StoreSalesComponent },
       { path: 'payment-success/:commandId', component: PaymentSuccessComponent },
       {
         path: 'payment/:commandId',
@@ -109,6 +111,7 @@ const routes: Routes = [
     ViewCartComponent,
     PaymentSuccessComponent,
     PaymentConfirmationComponent,
+    StoreSalesComponent,
   ],
 
   imports: [

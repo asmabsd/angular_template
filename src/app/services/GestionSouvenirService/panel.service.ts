@@ -5,7 +5,7 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Panel } from 'src/app/models/GestionSouvenir/panel';
 import { catchError, throwError } from 'rxjs'; // Add these imports
 import { CommandLineDTO } from 'src/app/models/GestionSouvenir/CommandLineDTO';
@@ -35,16 +35,16 @@ export class PanelService {
 
   applyDiscount(code: string): Observable<Panel> {
     return this.http.post<Panel>(
-      `${this.apiUrl}/apply-discount`, 
-      { code }, 
+      `${this.apiUrl}/apply-discount`,
+      { code },
       { withCredentials: true }
     );
   }
 
   removeDiscount(): Observable<Panel> {
     return this.http.post<Panel>(
-      `${this.apiUrl}/remove-discount`, 
-      {}, 
+      `${this.apiUrl}/remove-discount`,
+      {},
       { withCredentials: true }
     );
   }

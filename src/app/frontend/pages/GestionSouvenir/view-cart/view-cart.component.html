@@ -34,11 +34,11 @@
             "
             [alt]="line.souvenir.name"
           />
-        </td>
+        </td> 
         <td>{{ line.souvenir.name }}</td>
         <td>{{ line.souvenir.category }}</td>
         <td class="description-cell">{{ line.souvenir.description }}</td>
-        <td>{{ line.unitPrice | currency : "EUR" }}</td>
+        <td>{{ (line.unitPrice || 0) | currency : "EUR" }}</td>
         <td>
           <input
             type="number"
@@ -48,7 +48,7 @@
             (change)="updateCart()"
           />
         </td>
-        <td>{{ line.unitPrice * line.quantity | currency : "EUR" }}</td>
+        <td>{{ (line.unitPrice || 0) * (line.quantity || 0) | currency : "EUR" }}</td>
         <td>
           <button class="delete-btn" (click)="deleteLine(i)">🗑️</button>
         </td>
@@ -132,7 +132,7 @@
     <div class="totals">
       <div class="total-line">
         <span>Total Products :</span>
-        <span>{{ originalTotal | currency : "EUR" }}</span>
+        <span>{{ originalTotal || 0 | currency : "EUR" }}</span>
       </div>
       <!-- Ligne 131 : Vérification complète de l'objet -->
       <div
@@ -153,7 +153,7 @@
       </div>
       <div class="total-line final">
         <span>Total To Pay :</span>
-        <span>{{ finalTotal | currency : "EUR" }}</span>
+        <span>{{ finalTotal || 0 | currency : "EUR" }}</span>
       </div>
       <!-- Ajouter ce bouton dans la section Totaux -->
       <div class="payment-section">
@@ -163,7 +163,7 @@
           class="stripe-pay-button"
         >
           <span *ngIf="!isProcessingPayment"
-            >Payer avec Stripe ({{ finalTotal | currency : "EUR" }})</span
+            >Pay Via Stripe ({{ finalTotal || 0 | currency : "EUR" }})</span
           >
           <span *ngIf="isProcessingPayment">Traitement en cours...</span>
         </button>

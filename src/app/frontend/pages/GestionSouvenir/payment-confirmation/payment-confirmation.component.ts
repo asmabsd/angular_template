@@ -1,9 +1,10 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js';
 import { PaymentService } from 'src/app/services/GestionSouvenirService/payment.service';
 import { environment } from '../../../../environments/environment';
 import { PanelService } from 'src/app/services/GestionSouvenirService/panel.service';
+import { PanelCountService } from 'src/app/services/GestionSouvenirService/panel-count.service';
 
 @Component({
   selector: 'app-payment-confirmation',
@@ -22,8 +23,10 @@ export class PaymentConfirmationComponent implements AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private paymentService: PaymentService,
-    private panelService: PanelService
-
+    private panelService: PanelService,
+    private panelCountService: PanelCountService,
+    private cdRef: ChangeDetectorRef,
+    
   ) { }
 
   async ngAfterViewInit() {
@@ -133,22 +136,28 @@ export class PaymentConfirmationComponent implements AfterViewInit {
       if (paymentIntent?.status === 'succeeded') {
         this.panelService.clearPanel().subscribe({
           next: () => {
-            console.log('Panier nettoyé avec succès');
-            // Forcer le rafraîchissement du panier dans le service
-            this.panelService.viewPanel().subscribe(); 
+            // Forcer la mise à jour synchrone
+            this.panelCountService.loadInitialCount();
+            this.panelService.viewPanel().subscribe(() => {
+              this.cdRef.detectChanges(); // <-- Ajouter cette ligne
+            });
           },
-          error: (err) => console.error('Erreur nettoyage panier', err)
-        });
-        this.router.navigate(['/payment-success', this.commandId], {
-          queryParams: { payment_intent: paymentIntent.id }
+          error: (err) => {
+            console.error('Erreur nettoyage panier', err);
+            this.router.navigate(['/payment-success', this.commandId]);
+            this.cdRef.detectChanges(); // <-- Mise à jour forcée
+
+          }
         });
       }
     } catch (error: any) {
       this.errorMessage = error.message || 'Échec de l\'authentification 3D Secure';
+      this.cdRef.detectChanges(); // <-- Mise à jour forcée
+
     }
   }
-
   private handlePaymentError(err: any) {
+
     this.errorMessage = err.error?.error || 'Erreur serveur';
     this.isLoading = false;
   }
