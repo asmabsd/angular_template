@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BackendModule } from './backend/backend.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PhoneFormatPipe } from './shared/phone-format.pipe';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { PhoneFormatPipe } from './shared/phone-format.pipe';
     FrontendModule, // Importation du module Frontend
     BackendModule,
     HttpClientModule,
+    NgChartsModule,
     ReactiveFormsModule,
     // Importation du module Frontend
   ],

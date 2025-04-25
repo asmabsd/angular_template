@@ -1,1 +1,71 @@
-<p>store-sales works!</p>
+<div class="sales-dashboard">
+  <h2>Store Sales Dashboard</h2>
+
+  <div class="charts-container">
+    <!-- Monthly Sales Chart -->
+    <div class="chart-card">
+      <h3>Monthly Sales</h3>
+      <div *ngIf="monthlySalesData.length === 0" class="no-data">
+        No monthly sales data available.
+      </div>
+      <canvas
+        *ngIf="monthlySalesData.length > 0"
+        baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [type]="barChartType"
+      >
+      </canvas>
+    </div>
+
+    <!-- Top Selling Souvenirs -->
+    <div class="chart-card">
+      <h3>Top Selling Souvenirs</h3>
+      <div *ngIf="topSellingData.length === 0" class="no-data">
+        No top-selling souvenirs data available.
+      </div>
+      <canvas
+        *ngIf="topSellingData.length > 0"
+        baseChart
+        #pieChart
+        [data]="pieChartData"
+        [options]="pieChartOptions"
+        [legend]="pieChartLegend"
+        [type]="pieChartType"
+      >
+      </canvas>
+    </div>
+  </div>
+
+  <!-- Sales Table -->
+  <div class="sales-table">
+    <h3>Detailed Sales</h3>
+    <div *ngIf="detailedSales.length === 0" class="no-data">
+      No sales data available for this store.
+    </div>
+    <table *ngIf="detailedSales.length > 0">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Souvenir</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sale of detailedSales">
+          <td data-label="Date">{{ sale.createdAt | date }}</td>
+          <td data-label="Souvenir">{{ sale.souvenir?.name || "Unknown" }}</td>
+          <td data-label="Quantity">{{ sale.quantity }}</td>
+          <td data-label="Unit Price">{{ sale.unitPrice | currency }}</td>
+          <td data-label="Total">
+            {{ sale.unitPrice * sale.quantity | currency }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,262 @@
+/* General Dashboard Styling */
+.sales-dashboard {
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #1e1e2f 0%, #2c2c44 100%);
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  color: #e0e0e0;
+  border-radius: 20px;
+}
+
+/* Header */
+.sales-dashboard h2 {
+  text-align: center;
+  font-size: 3rem; /* Increased for prominence */
+  font-weight: 800; /* Bolder for emphasis */
+  background: linear-gradient(90deg, #7b68ee, #00ddeb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+  line-height: 1.2;
+}
+
+/* Charts Container */
+.charts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  margin-bottom: 3.5rem;
+}
+
+/* Chart Card */
+.chart-card {
+  background: #2a2a3d;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #7b68ee, #00ddeb);
+  opacity: 0.7;
+}
+
+.chart-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.chart-card h3 {
+  font-size: 1.8rem; /* Larger for visibility */
+  font-weight: 700; /* Bolder */
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.8px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); /* Shadow for contrast */
+  line-height: 1.3;
+}
+
+/* No Data Message */
+.no-data {
+  text-align: center;
+  color: #d0d0f0; /* Brighter for readability */
+  font-size: 1.2rem; /* Slightly larger */
+  font-weight: 500;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  font-style: normal; /* Remove italic for clarity */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  line-height: 1.4;
+}
+
+/* Sales Table */
+.sales-table {
+  background: #2a2a3d;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+
+.sales-table:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.sales-table h3 {
+  font-size: 1.8rem; /* Larger for visibility */
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.8px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  line-height: 1.3;
+  text-align: center;
+  padding-bottom: 10px; /* Space between title and table */
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 1rem; /* Increased for readability */
+}
+
+th, td {
+  padding: 1.3rem; /* More padding for spacing */
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+th {
+  background: linear-gradient(90deg, #7b68ee, #00ddeb);
+  color: #ffffff;
+  font-weight: 700; /* Bolder */
+  text-transform: uppercase;
+  font-size: 0.95rem; /* Slightly larger */
+  letter-spacing: 1.2px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+td {
+  color: #f0f0f5; /* Brighter for contrast */
+  font-weight: 500; /* Medium weight for clarity */
+  transition: background 0.2s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+}
+
+tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sales-dashboard {
+    padding: 1.5rem;
+  }
+
+  .sales-dashboard h2 {
+    font-size: 2.2rem; /* Adjusted for tablet */
+    margin-bottom: 2rem;
+  }
+
+  .charts-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .chart-card {
+    padding: 1.5rem;
+  }
+
+  .chart-card h3 {
+    font-size: 1.5rem;
+  }
+
+  .sales-table {
+    padding: 1.5rem;
+  }
+
+  .sales-table h3 {
+    font-size: 1.5rem;
+  }
+
+  .no-data {
+    font-size: 1.1rem;
+  }
+
+  table {
+    font-size: 0.95rem;
+  }
+
+  th, td {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sales-dashboard {
+    padding: 1rem;
+  }
+
+  .sales-dashboard h2 {
+    font-size: 1.8rem;
+  }
+
+  .chart-card h3,
+  .sales-table h3 {
+    font-size: 1.3rem;
+  }
+
+  .chart-card {
+    padding: 1rem;
+  }
+
+  .no-data {
+    font-size: 1rem;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 0.8rem;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    display: block;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  }
+
+  td {
+    display: block;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+    border: none;
+    font-size: 0.95rem; /* Slightly larger for mobile */
+  }
+
+  td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-left: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+}

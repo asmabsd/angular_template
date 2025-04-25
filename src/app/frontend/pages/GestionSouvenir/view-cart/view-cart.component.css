@@ -1,216 +1,156 @@
+/* Global container */
 .cart-container {
   max-width: 1200px;
-  margin: 2rem auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.cart-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1rem 0;
-}
-
-.cart-table th {
-  background-color: #54376c;
-  color: white;
-  padding: 12px;
-  text-align: left;
-}
-
-.cart-table td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-}
-
-.product-image {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
-.quantity-input {
-  width: 70px;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  text-align: center;
-}
-
-.delete-btn {
-  background: none;
-  border: none;
-  color: #ff4444;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
-
-.cart-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 2px solid #eee;
-}
-
-.total-section {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-}
-
-.total-label {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.total-amount {
-  font-size: 1.5rem;
-  color: #54376c;
-  font-weight: bold;
-}
-
-.update-btn {
-  background-color: #54376c;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: opacity 0.3s;
-}
-
-.update-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.description-cell {
-  max-width: 250px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.discount-section {
-  margin: 20px 0;
-  padding: 15px;
-  background: #f8f9fa;
-  border-radius: 8px;
-}
-
-.discount-btn {
-  background: #28a745;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.discount-info {
-  margin-top: 10px;
-  color: #228b22;
-  font-weight: bold;
-}
-/* Ajouter ces styles */
-.remove-discount-btn {
-  background: #dc3545;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  margin-top: 5px;
-  cursor: pointer;
-}
-
-.discount-btn:disabled {
-  background: #6c757d;
-  cursor: not-allowed;
-}
-.stripe-pay-button {
-  background: #635bff;
-  color: white;
-  padding: 15px 30px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: opacity 0.3s;
-  margin-top: 20px;
-}
-
-.stripe-pay-button:disabled {
-  background: #cccccc;
-  cursor: not-allowed;
-}
-
-.payment-error {
-  color: #dc3545;
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.payment-section {
-  margin-top: 30px;
-  border-top: 1px solid #eee;
-  padding-top: 20px;
-}
-.stripe-card {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin: 20px 0;
-}
-
-.stripe-pay-button {
-  background: #5469d4;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 100%;
-  font-size: 16px;
-}
-
-.stripe-pay-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-/* Container principal */
-.discounts-section {
-  margin-top: 2rem;
-  padding: 1rem;
-  background-color: #fafafa;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-}
-
-/* Titre */
-.discounts-section h3 {
-  font-size: 1.3rem;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', sans-serif;
   color: #333;
+}
+
+/* Header */
+.cart-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #4a3f7a;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.spinner {
+  border: 6px solid #eee;
+  border-top: 6px solid #6c63ff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
   margin-bottom: 1rem;
 }
 
-/* Grille des cartes promo */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Cart table */
+/* Table de panier */
+.cart-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* En-têtes */
+.cart-table th {
+  background-color: #877199;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 14px;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+/* Lignes */
+.cart-table td {
+  padding: 14px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+.cart-table tbody tr:nth-child(even) {
+  background-color: #f9f7fc;
+}
+
+/* Images */
+.cart-table td img.product-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Responsive wrapper pour petit écran */
+@media (max-width: 768px) {
+  .cart-table {
+    font-size: 0.85rem;
+    min-width: 600px;
+  }
+
+  .cart-table th,
+  .cart-table td {
+    padding: 10px;
+  }
+
+  .cart-table td img.product-image {
+    width: 50px;
+    height: 50px;
+  }
+}
+.description-cell {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Input quantity */
+input[type='number'] {
+  width: 70px;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Delete button */
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: #ff5f5f;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.delete-btn:hover {
+  color: #d32f2f;
+}
+
+/* Discounts section */
+.discounts-section {
+  margin-top: 2.5rem;
+  background-color: #faf9ff;
+  border: 1px solid #dedcec;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
 .discount-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
 }
 
-/* Une carte promo */
 .discount-card {
-  background-color: white;
+  background-color: #fff;
   border: 1px solid #ddd;
-  border-radius: 10px;
   padding: 1rem;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
   transition: transform 0.2s ease;
 }
 
@@ -218,105 +158,56 @@
   transform: translateY(-3px);
 }
 
-/* En-tête promo */
 .discount-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
-  margin-bottom: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 .discount-header .code {
-  background-color: #e0d3f6;
-  color: #4b2c7a;
-  padding: 0.3rem 0.6rem;
+  background-color: #eee9ff;
+  padding: 4px 8px;
   border-radius: 8px;
-  font-size: 0.9rem;
+  color: #6c63ff;
 }
 
 .discount-header .value {
-  font-size: 1rem;
-  color: #2e7d32;
+  color: #388e3c;
 }
 
-/* Conditions */
 .conditions {
   font-size: 0.85rem;
-  color: #555;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+  color: #666;
+  margin-top: 0.5rem;
 }
 
-.conditions i {
-  margin-right: 5px;
-  color: #6c63ff;
-}
+/* Discount input section */
 .discount-section {
   margin-top: 2rem;
   padding: 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  background-color: #fefefe;
+  background-color: #f4f3ff;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   max-width: 500px;
 }
 
-/* Réduction active */
-.active-discount {
-  background-color: #e0f2f1;
-  border: 1px solid #b2dfdb;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
-  color: #00796b;
-}
-
-.active-discount .discount-code {
-  background-color: #c8e6c9;
-  padding: 0.2rem 0.5rem;
-  border-radius: 6px;
-  color: #2e7d32;
-  margin-right: 0.5rem;
-}
-
-.active-discount .discount-value {
-  margin-left: auto;
-  margin-right: 1rem;
-  font-size: 1rem;
-  color: #388e3c;
-}
-
-.active-discount button {
-  background: none;
-  border: none;
-  color: #d32f2f;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-/* Champ de saisie */
 .discount-section input {
-  padding: 0.6rem 1rem;
-  border: 1px solid #ccc;
+  padding: 10px;
   border-radius: 8px;
+  border: 1px solid #ccc;
   font-size: 1rem;
 }
 
-/* Bouton d'application */
 .discount-section button {
-  padding: 0.6rem 1.2rem;
+  padding: 10px;
   background-color: #6c63ff;
   color: white;
   border: none;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -326,70 +217,79 @@
   cursor: not-allowed;
 }
 
-/* Message d'erreur */
 .error-message {
   color: #d32f2f;
-  font-size: 0.9rem;
   font-weight: 500;
-  padding-left: 0.2rem;
 }
 
+/* Applied discount */
+.active-discount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #e7f7f6;
+  border: 1px solid #b2dfdb;
+  padding: 10px;
+  border-radius: 8px;
+  color: #00796b;
+  font-weight: 600;
+}
+
+.active-discount button {
+  background: none;
+  border: none;
+  color: #d32f2f;
+  cursor: pointer;
+}
+
+/* Totals */
 .totals {
-  background-color: #fdfdfd;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 30px;
-  max-width: 500px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 2rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
 }
 
 .total-line {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  font-size: 16px;
-  color: #333;
-  border-bottom: 1px solid #eee;
-}
-
-.total-line:last-child {
-  border-bottom: none;
+  margin: 0.8rem 0;
+  font-size: 1.1rem;
 }
 
 .total-line.discount {
-  color: #d9534f; /* rouge doux pour bien montrer la remise */
-  font-weight: 500;
+  color: #d32f2f;
+  font-weight: bold;
 }
 
 .total-line.final {
-  font-size: 18px;
+  font-size: 1.4rem;
   font-weight: bold;
-  color: #2e7d32; /* vert foncé pour le total final */
+  color: #4a3f7a;
 }
 
-.total-line span:first-child {
-  font-weight: 500;
-}
-
-.total-line span:last-child {
+/* Stripe button */
+.stripe-pay-button {
+  margin-top: 1.5rem;
+  padding: 1rem 2rem;
+  background-color: #635bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
   font-weight: 600;
-}
-.checkout-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 40px;
-  gap: 20px;
-}
-
-/* Optional: Adjust width of internal sections for consistent look */
-
-.discount-section,
-.totals {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
   width: 100%;
-  max-width: 600px;
 }
 
+.stripe-pay-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.payment-error {
+  color: #d32f2f;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  text-align: center;
+}

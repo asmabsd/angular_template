@@ -1,239 +1,352 @@
+/* General Container Styling */
 .store-container {
-    padding: 40px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f8f9fa;
+  padding: 3rem;
+  background: #FFFFFF; /* White background for clean look */
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  color: #340B4E; /* Deep purple for default text */
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  margin: 0.5rem auto;
+  border-radius: 2px;
+}
+
+.valid-title {
+  color: #9956E8; /* Vibrant purple for valid stores */
+}
+
+.valid-title::after {
+  background: #9956E8;
+}
+
+.pending-title {
+  color: #C27790; /* Pinkish-red for invalid stores */
+}
+
+.pending-title::after {
+  background: #C27790;
+}
+
+/* Store Grid */
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+/* Card Styling */
+.brutalist-card {
+  background: #FFFFFF; /* White card background */
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid;
+  position: relative;
+}
+
+.brutalist-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Valid Stores */
+.brutalist-card.valid {
+  border-color: #9956E8; /* Vibrant purple border */
+  background: linear-gradient(180deg, #FFFFFF 0%, #F3E8FF 100%); /* Subtle purple tint */
+}
+
+.brutalist-card.valid::before {
+  content: '✅';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.2rem;
+}
+
+/* Invalid Stores */
+.brutalist-card.invalid {
+  border-color: #C27790; /* Pinkish-red border */
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFE6EA 100%); /* Subtle pink tint */
+}
+
+.brutalist-card.invalid::before {
+  content: '🕐';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.2rem;
+}
+
+/* Card Header */
+.brutalist-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid;
+}
+
+.brutalist-card.valid .brutalist-card__header {
+  border-bottom-color: #9956E8;
+}
+
+.brutalist-card.invalid .brutalist-card__header {
+  border-bottom-color: #C27790;
+}
+
+.brutalist-card__icon {
+  background: #340B4E; /* Deep purple */
+  border-radius: 8px;
+  padding: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brutalist-card.valid .brutalist-card__icon {
+  background: #9956E8; /* Vibrant purple for valid */
+}
+
+.brutalist-card.invalid .brutalist-card__icon {
+  background: #C27790; /* Pinkish-red for invalid */
+}
+
+.brutalist-card__icon svg {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.brutalist-card__icon svg path {
+  fill: #FFFFFF; /* White icon fill */
+}
+
+.brutalist-card__alert {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #340B4E;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Message */
+.brutalist-card__message {
+  font-size: 0.95rem;
+  color: #340B4E;
+  margin: 0.6rem 0;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.info-label {
+  color: #FB9E1A; /* Orange for labels */
+  font-weight: 600;
+  display: inline-block;
+  min-width: 90px;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+/* Card Actions */
+.brutalist-card__actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: flex-end;
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid;
+}
+
+.brutalist-card.valid .brutalist-card__actions {
+  border-top-color: #9956E8;
+}
+
+.brutalist-card.invalid .brutalist-card__actions {
+  border-top-color: #C27790;
+}
+
+.icon-btn {
+  background: #340B4E; /* Deep purple */
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brutalist-card.valid .icon-btn {
+  background: #9956E8; /* Vibrant purple for valid */
+}
+
+.brutalist-card.invalid .icon-btn {
+  background: #C27790; /* Pinkish-red for invalid */
+}
+
+.icon-btn i {
+  font-size: 1.3rem;
+  color: #FFFFFF;
+  transition: transform 0.3s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.icon-btn:hover i {
+  transform: rotate(10deg);
+}
+
+.icon-btn.delete:hover i {
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Tooltips */
+.tooltip {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #340B4E;
+  color: #FFFFFF;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.icon-btn:hover .tooltip {
+  opacity: 1;
+  top: -40px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .store-container {
+    padding: 2rem;
   }
-  
+
   .section-title {
-    font-size: 26px;
-    font-weight: 700;
-    margin: 40px 0 20px;
-    padding-left: 10px;
-    border-left: 5px solid;
-    transition: all 0.3s ease;
+    font-size: 2rem;
+    margin: 2rem 0 1.2rem;
   }
-  
-  .valid-title {
-    border-color: #878C8F;
-    color: #878C8F;
-  }
-  
-  .pending-title {
-    border-color: #DB5461;
-    color: #DB5461;
-  }
-  
+
   .store-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-  
-  /* Styles communs */
+
   .brutalist-card {
-    width: 320px;
-    border: 4px solid;
-    background-color: #fff;
-    padding: 1.5rem;
-    box-shadow: 10px 10px 0;
-    position: relative;
+    padding: 1.2rem;
   }
-  
-  /* Stores VALIDES */
-  .brutalist-card.valid {
-    border-color: #878C8F;
-    box-shadow: 10px 10px 0 #878C8F;
+
+  .brutalist-card__alert {
+    font-size: 1.3rem;
   }
-  
-  .brutalist-card.valid .brutalist-card__header {
-    border-bottom-color: #878C8F;
+
+  .brutalist-card__message {
+    font-size: 0.9rem;
   }
-  
-  .brutalist-card.valid .brutalist-card__icon {
-    background-color: #878C8F;
+
+  .info-label {
+    font-size: 0.9rem;
+    min-width: 80px;
   }
-  
-  .brutalist-card.valid .brutalist-card__message {
-    border-bottom-color: #878C8F;
-  }
-  
-  .brutalist-card.valid .brutalist-card__button--mark:hover {
-    background-color: #878C8F;
-    border-color: #878C8F;
-    box-shadow: 7px 7px 0 #018044;
-  }
-  
-  /* Stores INVALIDES */
-  .brutalist-card.invalid {
-    border-color: #DB5461;
-    box-shadow: 10px 10px 0 #DB5461;
-  }
-  
-  .brutalist-card.invalid .brutalist-card__header {
-    border-bottom-color: #DB5461;
-  }
-  
-  .brutalist-card.invalid .brutalist-card__icon {
-    background-color: #DB5461;
-  }
-  
-  .brutalist-card.invalid .brutalist-card__message {
-    border-bottom-color: #DB5461;
-  }
-  
-  .brutalist-card.invalid .brutalist-card__button--mark:hover {
-    background-color: #DB5461;
-    border-color: #DB5461;
-    box-shadow: 7px 7px 0 #8B3D00;
-  }
-  
-  /* Éléments communs */
-  .brutalist-card__header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-  }
-  
-  .brutalist-card__icon {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  .icon-btn {
     padding: 0.5rem;
   }
-  
-  .brutalist-card__icon svg {
-    height: 1.5rem;
-    width: 1.5rem;
-  }
-  
-  .brutalist-card__icon svg path {
-    fill: white;
-  }
-  
-  .brutalist-card__alert {
-    font-weight: 900;
-    color: #000;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-  }
-  
-  .brutalist-card__message {
-    margin-top: 1rem;
-    color: #000;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    padding-bottom: 1rem;
-    font-weight: 600;
-  }
-  
-  /* Nouveaux styles pour les icônes */
-  .brutalist-card__actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 2px solid;
-  }
-  
-  /* Adaptation des bordures selon le type */
-  .brutalist-card.valid .brutalist-card__actions {
-    border-top-color: #878C8F;
-  }
-  
-  .brutalist-card.invalid .brutalist-card__actions {
-    border-top-color: #DB5461;
-  }
-  
-  .icon-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 6px;
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    align-items: center;
-  }
-  
+
   .icon-btn i {
-    font-size: 1.4rem;
-    transition: all 0.3s ease;
-    background-color: #f0f0f0;
-    border-radius: 6px;
-    padding: 8px;
-    box-shadow: 3px 3px 0 #53346D;
+    font-size: 1.2rem;
   }
-  
-  /* États hover */
-  .icon-btn:hover i {
-    transform: translate(-2px, -2px);
-    box-shadow: 5px 5px 0 #836E97;
+}
+
+@media (max-width: 480px) {
+  .store-container {
+    padding: 1.5rem;
   }
-  
-  /* Couleurs spécifiques */
-  .brutalist-card.valid .icon-btn i {
-    color: #878C8F;
-    background-color: #e8faf0;
+
+  .section-title {
+    font-size: 1.8rem;
   }
-  
-  .brutalist-card.invalid .icon-btn i {
-    color: #DB5461;
-    background-color: #fff0e6;
+
+  .brutalist-card {
+    padding: 1rem;
   }
-  
-  /* Tooltips ajustés */
-  .tooltip {
-    position: absolute;
-    top: -38px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #000;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.2s ease;
-    font-weight: 500;
-    white-space: nowrap;
+
+  .brutalist-card__header {
+    gap: 0.8rem;
   }
-  
-  .icon-btn:hover .tooltip {
-    opacity: 1;
-    top: -42px;
+
+  .brutalist-card__icon {
+    padding: 0.5rem;
   }
-  
-  /* Animation suppression */
-  .delete-btn:hover i {
-    animation: pulse 0.5s ease;
+
+  .brutalist-card__icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
   }
-  
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+
+  .brutalist-card__alert {
+    font-size: 1.2rem;
   }
+
+  .brutalist-card__message {
+    font-size: 0.85rem;
+  }
+
   .info-label {
-    font-weight: 600;
-    color: #666;
-    min-width: 85px;
-    display: inline-block;
-    font-size: 0.9em;
-    text-decoration: underline;
+    font-size: 0.85rem;
+    min-width: 70px;
   }
-  
-  .info-content {
-    color: #333;
-    font-weight: 500;
-    flex-grow: 1;
+
+  .brutalist-card__actions {
+    gap: 0.6rem;
   }
-  
-  .phone .info-content {
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.5px;
+
+  .icon-btn {
+    padding: 0.4rem;
   }
+
+  .icon-btn i {
+    font-size: 1.1rem;
+  }
+
+  .tooltip {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+}

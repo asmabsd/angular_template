@@ -34,6 +34,7 @@ import { ViewCartComponent } from './pages/GestionSouvenir/view-cart/view-cart.c
 import { PaymentSuccessComponent } from './pages/GestionSouvenir/payment-success/payment-success.component';
 import { PaymentConfirmationComponent } from './pages/GestionSouvenir/payment-confirmation/payment-confirmation.component';
 import { StoreSalesComponent } from './pages/GestionSouvenir/store-sales/store-sales.component';
+import { NgChartsModule } from 'ng2-charts';
 const routes: Routes = [
   {
     path: '',
@@ -121,6 +122,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HttpClientModule,
     ReactiveFormsModule,
+    NgChartsModule, // Ensure this is included
     // Enregistrer les routes pour le frontend
   ],
   /*  providers: [ {

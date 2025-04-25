@@ -11,6 +11,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.2.0",
+    "@angular/cdk": "^16.2.14",
     "@angular/common": "^16.2.0",
     "@angular/compiler": "^16.2.0",
     "@angular/core": "^16.2.0",
@@ -23,8 +24,10 @@
     "@stripe/stripe-js": "^7.1.0",
     "@types/google.maps": "^3.58.1",
     "@types/googlemaps": "^3.43.3",
+    "chart.js": "^4.4.4",
     "crypto-js": "^4.2.0",
     "flag-icon-css": "^4.1.7",
+    "ng2-charts": "^4.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
