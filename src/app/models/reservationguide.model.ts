@@ -13,9 +13,5 @@ export interface ReservationGuide {
   
 }
 
-// Implement the toString method
-
-  // ... other properties
-  
 
   

@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BackendModule } from './backend/backend.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Ajout du ReactiveFormsModule
 import { RecaptchaModule } from 'ng-recaptcha'; // Importation du module reCAPTCHA
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Importer les animations
 
 
 @NgModule({
@@ -23,8 +25,10 @@ import { RecaptchaModule } from 'ng-recaptcha'; // Importation du module reCAPTC
     BackendModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,  // Add this line
     RecaptchaModule, // Importation du module reCAPTCHA
-    
+    ToastrModule.forRoot()     // Configuration de base de ngx-toastr
+
     // Importation du module Frontend
   ],
  

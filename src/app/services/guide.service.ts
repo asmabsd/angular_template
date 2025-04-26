@@ -1,7 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders , HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Guide } from '../models/guide.model';
+import { EmailRequest } from '../models/emailrequest';
+
+
+export interface GuideStatsResponse {
+  totalGuides: number;
+  guidesByLanguage: { [key: string]: number };
+  guidesBySpeciality: { [key: string]: number };
+  averageRatingsByGuide: { [key: string]: number };
+  reservationsByGuide: { [key: string]: number };
+}
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +89,44 @@ export class GuideService {
   return this.http.get(imageUrl, { responseType: 'blob' });
 }
 
+
+
+
+private apiUrl9 = 'http://localhost:8089/tourisme/Guide/searchGuides';  // Remplacez par l'URL de votre API
+
+
+// Méthode pour récupérer les guides filtrés
+getGuides(searchParams: any): Observable<any[]> {
+  let params = new HttpParams();
+
+  // Ajout des paramètres de recherche
+  if (searchParams.name) params = params.set('name', searchParams.name);
+  if (searchParams.language) params = params.set('language', searchParams.language);
+  if (searchParams.experience) params = params.set('experience', searchParams.experience);
+  if (searchParams.speciality) params = params.set('speciality', searchParams.speciality);
+  if (searchParams.averageRating) params = params.set('averageRating', searchParams.averageRating.toString());
+  if (searchParams.availability) params = params.set('availability', searchParams.availability);
+  if (searchParams.contact) params = params.set('contact', searchParams.contact);
+
+  return this.http.get<any[]>(this.apiUrl, { params });
+}
+getGuideByContact(contact: string): Observable<Guide> {
+  return this.http.get<Guide>(`${this.url11}/${encodeURIComponent(contact)}`);
+}
+
+url11 ='http://localhost:8089/tourisme/Guide/contact';
+/*getGuideByContact(email: string): Observable<Guide> {
+  return this.http.get<Guide>(`${this.url11}/${email}`);
+}*/
+url18='http://localhost:8089/tourisme/Guide/language'
+
+
+getLanguageByGuide(id: number): Observable<string> {
+  return this.http.get(`${this.url18}/${id}`, { responseType: 'text' });
 }
 
 
+
+
+
+}

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of as observableOf } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { BehaviorSubject, Observable, of as observableOf, throwError } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 
@@ -15,6 +15,7 @@ export interface LoginResponse {
     role: string;
   };
   message?: string; // Optional message property
+  using2FA?: boolean; // Optional property to indicate 2FA usage
 }
 
 @Injectable({
@@ -23,11 +24,11 @@ export interface LoginResponse {
 export class AuthService {
   private loginUrl = 'http://localhost:8089/tourisme/auth/login';
   private registerUrl = 'http://localhost:8089/tourisme/auth/signup';
-  private Reset = 'http://localhost:8089/tourisme/api/users';
+  private resetUrl = 'http://localhost:8089/tourisme/api/users';
 
-  private tokenKey = 'authToken';
-  private userSubject = new BehaviorSubject<string | null>(this.getToken());
-  user$ = this.userSubject.asObservable();
+  private tokenKey = 'authToken'; // The key for the stored JWT token
+  private userSubject = new BehaviorSubject<any>(this.getUserFromLocalStorage()); // Holds the current user data
+  user$ = this.userSubject.asObservable(); // Observable to expose the current user
 
   errorMessage: string = '';
 
@@ -36,6 +37,8 @@ export class AuthService {
     private router: Router,
     private messageService: MessageService
   ) {}
+
+  // Get the currently logged-in user's email
   getCurrentUserEmail(): string | null {
     const user = localStorage.getItem('user');
     if (user) {
@@ -44,36 +47,37 @@ export class AuthService {
     }
     return null;
   }
-  
-  getUserIdByEmail(email: string): Observable<number> {
-    return this.http.get<number>(`http://localhost:8089/tourisme/auth/user-id`, {
-      params: { email }
-    });
-  }
-  
 
+  // Get user ID based on the email
+  getUserIdByEmail(email: string): Observable<number> {
+    const params = new HttpParams().set('email', email);
+    return this.http.get<number>('http://localhost:8089/tourisme/auth/user-id', { params });
+  }
+
+  // Login method
   login(email: string, password: string, recaptchaResponse: string): Observable<boolean> {
     return this.http.post<LoginResponse>(this.loginUrl, {
       email,
       password,
-      recaptchaResponse // ✅ on l’ajoute ici
+      recaptchaResponse
     }).pipe(
       map(response => {
         if (response.message) {
           this.errorMessage = response.message;
           console.warn('Login message:', response.message);
+
+          if (response.using2FA) {
+            localStorage.setItem('tempEmail', email); // Temporarily store the email for 2FA
+          }
+
           return false;
         }
-  
+
         if (response.token && response.user) {
-          localStorage.setItem(this.tokenKey, response.token);
-          localStorage.setItem('role', response.user.role);
-          localStorage.setItem('user', JSON.stringify(response.user));
-  
-          this.userSubject.next(response.token);
+          this.saveTokenAndUser(response.token, response.user);
           return true;
         }
-  
+
         return false;
       }),
       catchError(err => {
@@ -83,36 +87,56 @@ export class AuthService {
       })
     );
   }
-  
-  requestPasswordReset(email: string): Observable<any> {
-    return this.http.post(`${this.Reset}/forgot-password`, null, {
-      params: { email }
+
+  // OTP verification
+  verifyOtp(email: string, otpCode: string): Observable<any> {
+    return this.http.post<LoginResponse>('http://localhost:8089/tourisme/auth/verify-otp', {
+      email,
+      otpCode
     }).pipe(
-      catchError(error => {
-        console.error('API Error:', error);
-        throw error;
+      tap(response => {
+        if (response.token && response.user) {
+          // Store the JWT token and user data in local storage
+          this.saveTokenAndUser(response.token, response.user);
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        // Handle the error properly
+        console.error('OTP verification failed', error);
+        this.errorMessage = 'Erreur de vérification du code OTP.';
+        return throwError(() => error); // Propagate error
       })
     );
   }
 
+  // Request password reset
+  requestPasswordReset(email: string): Observable<any> {
+    const params = new HttpParams().set('email', email);
+    return this.http.post(`${this.resetUrl}/forgot-password`, null, { params }).pipe(
+      catchError(error => {
+        console.error('API Error:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  // Validate the reset token
   validateResetToken(token: string): Observable<any> {
-    return this.http.get(`${this.Reset}/validate-token`, {
-      params: { token }
-    });
+    const params = new HttpParams().set('token', token);
+    return this.http.get(`${this.resetUrl}/validate-token`, { params });
   }
 
+  // Reset password
   resetPassword(token: string, newPassword: string): Observable<any> {
-    return this.http.post(`${this.Reset}/reset-password`, {
-      token,
-      newPassword
-    });
+    return this.http.post(`${this.resetUrl}/reset-password`, { token, newPassword });
   }
 
+  // OAuth2 registration (Google)
   registerWithOAuth2(): Observable<any> {
     return this.http.get<any>('http://localhost:8089/tourisme/oauth2/authorization/google', { observe: 'response' }).pipe(
       map(response => {
         console.log('Réponse du serveur : ', response);
-        if (response.body && response.body.message) {
+        if (response.body?.message) {
           alert(response.body.message);
         } else {
           alert('Compte créé avec succès !');
@@ -132,28 +156,32 @@ export class AuthService {
     );
   }
 
+  // Handle the response after OAuth2 login
   handleOAuth2Response(message: string): void {
     alert(message);
     this.router.navigate(['/login']);
   }
 
+  // Logout method
   logout(): void {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem(this.tokenKey);
     localStorage.removeItem('role');
-    localStorage.removeItem('user'); // si tu stockes les infos de l’utilisateur
-    this.userSubject.next(null);
+    localStorage.removeItem('user');
+    this.userSubject.next(null); // Reset the user state
     this.router.navigate(['/login']);
   }
-  
 
+  // Get the token from localStorage
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
+  // Check if the user is authenticated (based on token presence)
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
 
+  // Register a new user
   register(userData: any): Observable<any> {
     return this.http.post<any>(this.registerUrl, userData).pipe(
       catchError(err => {
@@ -162,5 +190,20 @@ export class AuthService {
         return observableOf(null);
       })
     );
+  }
+
+  // Save the token and user data to localStorage and update user state
+  private saveTokenAndUser(token: string, user: any): void {
+    localStorage.setItem(this.tokenKey, token); // Store token
+    localStorage.setItem('role', user.role); // Store user role
+    localStorage.setItem('user', JSON.stringify(user)); // Store user data
+
+    this.userSubject.next(user); // Update the user subject to notify other parts of the app
+  }
+
+  // Helper function to get user data from localStorage on initial load
+  private getUserFromLocalStorage(): any {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
   }
 }

@@ -1,0 +1,352 @@
+.add-activity-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+  
+  .card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .card-header {
+    background-color: #4e73df;
+    color: white;
+    padding: 20px;
+    border-bottom: 1px solid #e3e6f0;
+  
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+  
+  .card-body {
+    padding: 25px;
+  }
+  
+  .alert {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    i {
+      font-size: 1.2rem;
+    }
+  }
+  
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+    gap: 20px;
+  }
+  
+  .form-column {
+    flex: 1;
+    min-width: 300px;
+    padding: 0 15px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #5a5c69;
+  }
+  
+  .form-control {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #d1d3e2;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.15s ease-in-out;
+    
+    &:focus {
+      border-color: #bac8f3;
+      outline: none;
+      box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+    }
+    
+    &.is-invalid {
+      border-color: #e74a3b;
+      
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(231, 74, 59, 0.25);
+      }
+    }
+  }
+  
+  .invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 0.8rem;
+    color: #e74a3b;
+  }
+  
+  .image-column {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .image-upload-container {
+    border: 2px dashed #d1d3e2;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 15px;
+    background-color: #f8f9fc;
+    transition: all 0.3s;
+    
+    &:hover {
+      border-color: #4e73df;
+      background-color: #eaecf4;
+    }
+  }
+  
+  .upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #858796;
+    
+    i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #4e73df;
+    }
+    
+    p {
+      margin-bottom: 15px;
+    }
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  .browse-btn {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: #2e59d9;
+    }
+  }
+  
+  .image-preview-container {
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    position: relative;
+  }
+  
+  .image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 5px;
+    max-height: 300px;
+  }
+  
+  .remove-image-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    
+    &:hover {
+      background-color: #e74a3b;
+      color: white;
+    }
+    
+    i {
+      font-size: 1rem;
+    }
+  }
+  
+  .image-format-info {
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: #858796;
+    
+    p {
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e3e6f0;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .btn-primary {
+    background-color: #4e73df;
+    color: white;
+    
+    &:hover, &:focus {
+      background-color: #2e59d9;
+    }
+    
+    &:disabled {
+      background-color: #b7b9cc;
+      cursor: not-allowed;
+    }
+  }
+  
+  .btn-secondary {
+    background-color: #858796;
+    color: white;
+    
+    &:hover, &:focus {
+      background-color: #717384;
+    }
+  }
+  
+  .form-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    
+    .form-check-input {
+      margin-top: 0;
+    }
+    
+    .form-check-label {
+      margin-bottom: 0;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .form-row {
+      flex-direction: column;
+    }
+    
+    .form-column {
+      width: 100%;
+    }
+    
+    .image-column {
+      order: -1;
+    }
+
+
+  /* Dans add-activity.component.scss */
+#map {
+  height: 400px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* Ajuster la disposition des colonnes si nécessaire */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.form-column {
+  flex: 1;
+  min-width: 300px;
+}
+
+.image-column {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Assurer que la carte est bien visible */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+.map-container {
+  width: 100%;
+  height: 400px;
+  /* ou height: 100%; si tu veux que ça remplisse tout son parent */
+}
+/* Correction des conflits CSS */
+#map {
+  z-index: 1;
+  background-color: #f8f9fa !important;
+  
+  /* Style de debug */
+  &.leaflet-container {
+    border: 2px dashed #dc3545 !important;
+  }
+}
+
+
+    
+  }

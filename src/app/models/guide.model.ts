@@ -9,6 +9,7 @@ export interface Guide {
   contact: string;
   photo?: string; // base64 string
   toString(): string;
+  phone: string;
 }
 
 // Implement the toString method

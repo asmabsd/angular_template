@@ -1,6 +1,6 @@
-// src/app/services/currency.service.ts
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,5 +17,16 @@ export class CurrencyService {
 
   getTaux(): number {
     return this.tauxChange;
+  }
+
+
+  constructor(private http: HttpClient) {}
+  private apiKey = 'de9a15176285f12944884665'; // Remplace par ta clé API
+  private apiUrl = 'https://v6.exchangerate-api.com/v6';
+
+
+  convert(from: string, to: string): Observable<any> {
+    const url = `${this.apiUrl}/${this.apiKey}/pair/${from}/${to}`;
+    return this.http.get(url);
   }
 }

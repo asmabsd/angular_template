@@ -1,0 +1,142 @@
+
+<div *ngIf="hebergement" class="container my-5">
+  <div class="card shadow-lg border-0 rounded-4 overflow-hidden position-relative animate__animated animate__fadeIn">
+
+    <!-- Hotel name at the top -->
+    <div class="position-absolute top-0 start-0 bg-primary text-white px-4 py-2 rounded-bottom-end-4 z-3">
+      <h2 class="m-0 fs-4">
+        <i class="bi bi-house-door-fill me-2"></i>{{ hebergement.name }}
+      </h2>
+    </div>
+
+    <!-- Hotel image -->
+    <div class="image-wrapper">
+      <img 
+        [src]="'assets/frontend/images/hotels/' + hebergement.imageUrl " 
+        alt="Accommodation Image" 
+        class="w-100 object-fit-cover" 
+        style="max-height: 350px;">
+    </div>
+
+    <!-- Content -->
+    <div class="p-4">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <p class="fs-5"><i class="bi bi-tag-fill text-info me-2"></i><strong>Type :</strong> {{ hebergement.type }}</p>
+          <p class="fs-5"><i class="bi bi-geo-alt-fill text-danger me-2"></i><strong>Address :</strong> {{ hebergement.adresse }}</p>
+          <p class="fs-5"><i class="bi bi-cash-coin text-success me-2"></i><strong>Price :</strong> {{ hebergement.price }} DT / night</p>
+          <p class="fs-5">
+            <i class="bi bi-person text-primary me-2"></i>
+            <strong>totalSingleChambres :</strong> {{ hebergement.totalSingleChambres }}
+          </p>
+          <p class="fs-5">
+            <i class="bi bi-people text-primary me-2"></i>
+            <strong>totalDoubleChambres :</strong> {{ hebergement.totalDoubleChambres }} 
+          </p>
+          <p class="fs-5">
+            <i class="bi bi-star-fill text-warning me-2"></i>
+            <strong>totalDelexueChambres :</strong> {{ hebergement.totalDelexueChambres }} 
+          </p>
+          
+
+        </div>
+        <div class="col-md-6 mb-3">
+          <p class="fs-5"><i class="bi bi-file-earmark-text-fill text-secondary me-2"></i><strong>Description :</strong> {{ hebergement.description }}</p>
+          <p class="fs-5">
+            <i class="bi bi-calendar-check-fill me-2" [ngClass]="hebergement.availability ? 'text-success' : 'text-danger'"></i>
+            <strong>Availability :</strong>
+            <span [ngClass]="isHebergementAvailable(hebergement) ? 'text-success' : 'text-danger'">
+              <i class="fa" [ngClass]="isHebergementAvailable(hebergement) ? 'fa-check-circle' : 'fa-times-circle'"></i>
+              {{ isHebergementAvailable(hebergement) ? 'available' : 'not available' }}
+            </span>
+          </p>
+          <p class="fs-5"><i class="bi bi-file-earmark-text-fill text-secondary me-2"></i><strong>Region :</strong> {{ hebergement.region }}</p>
+          <p class="fs-5"><i class="bi bi-telephone-fill text-primary me-2"></i><strong>Phone :</strong> {{ hebergement.telephone }}</p>
+          <p class="fs-5">
+            <i class="bi bi-door-open text-primary me-2"></i>
+            <strong>totalSuiteChambres :</strong> {{ hebergement.totalSuiteChambres }} 
+
+
+        </div>
+      </div>
+
+      <!-- Reserve Button -->
+      <div class="text-end mt-4">
+        <button class="btn btn-primary btn-lg rounded-pill shadow-sm px-4"
+        [routerLink]="['/dashboard/addreserver', hebergement.id_hebergement]">
+
+          <i class="bi bi-calendar-plus me-2"></i>Book Now
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="reservations-container">
+  <h2 class="section-title">Reservations List</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-header">
+        <tr>
+          <th class="text-center">Arrival Date</th>
+          <th class="text-center">Departure Date</th>
+          <th class="text-center">Adults</th>
+          <th class="text-center">Children</th>
+          <th class="text-center">Total Price</th> <!-- New column for total price -->
+          <th class="text-center">Client Email</th>
+          <th class="text-center">Status</th>
+          <th class="text-center">Number of Rooms</th>
+          <th class="text-center">Room Type</th>
+          <th class="text-center">Actions</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reservation of reservations" class="reservation-row">
+          <td class="text-center">{{ reservation.dateDebut | date:'dd/MM/yyyy' }}</td>
+          <td class="text-center">{{ reservation.dateFin | date:'dd/MM/yyyy' }}</td>
+          <td class="text-center">{{ reservation.nombreadulte }}</td>
+          <td class="text-center">{{ reservation.nombrenfant }}</td>
+          <td class="text-center">{{ reservation.prixTotal }} DT</td> <!-- Display total price -->
+
+          <td class="text-center">{{ reservation.clientEmail }} </td> <!-- Display total price -->
+
+          <td class="text-center">
+            <span class="status-badge" [ngClass]="{
+              'status-couple': reservation.statut === 'Couple',
+              'status-single': reservation.statut === 'Single',
+              'status-family': reservation.statut === 'Family'
+            }">
+              <i class="fas" [ngClass]="{
+                'fa-heart': reservation.statut === 'Couple',
+                'fa-user': reservation.statut === 'Single',
+                'fa-users': reservation.statut === 'Family'
+              }"></i>
+              {{ reservation.statut }}
+            </span>
+          </td>
+          <td class="text-center">{{ reservation.nombreChambres }} </td> <!-- Display total price -->
+          <td class="text-center">{{ reservation.typeChambre }}</td> <!-- Display total price -->
+          <td class="text-center">
+  
+            <button class="btn btn-sm btn-info mr-2" title="Edit Reservation">
+              <a [routerLink]="['/dashboard/modifierr-reservation', reservation.id_reservation]" class="btn btn-sm btn-info mr-2">
+                <i class="fas fa-edit"></i>
+              </a>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteReservation(reservation.id_reservation)" title="Delete Reservation">
+              <i class="fas fa-trash"></i>
+            </button>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-footer">
+    <div class="row-count">Total: {{ reservations.length }} reservations</div>
+
+  </div>
+</div>

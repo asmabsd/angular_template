@@ -1,7 +1,25 @@
+import { RecaptchaModule } from 'ng-recaptcha';
+import { GastronomiesComponent } from './pages/gastronomies/gastronomies.component';
+import { MenusPlatsComponent } from './pages/menus-plats/menus-plats.component';
+import { DashboardPartnerComponent } from '../backend/pages/dashboard-partner/dashboard-partner.component';
+import { SetupFaComponent } from './pages/setup-fa/setup-fa.component';
+import { GethebergementComponent } from './pages/gethebergement/gethebergement.component';
+import { ModifierReservationComponent } from './pages/modifier-reservation/modifier-reservation.component';
+import { ReservationChambreListComponent } from './pages/reservation-chambre-list/reservation-chambre-list.component';
+import { ReservationchambreComponent } from './pages/reservationchambre/reservationchambre.component';
+import { ToastrModule } from 'ngx-toastr';
+import { VerifyOtpComponent } from './pages/verify-otp/verify-otp.component';
+import { ActivitiesComponent } from './pages/activities/activities.component';
+import { MyReservationsComponent } from './pages/my-reservations/my-reservations.component';
+import { ReservationFormComponent } from './pages/reservation-form/reservation-form.component';
+
+
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
+
 import { AboutComponent } from './pages/about/about.component';
 import { OffersComponent } from './pages/offers/offers.component';
 import { NewsComponent } from './pages/news/news.component';
@@ -13,7 +31,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from '../auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'src/app/interceptors/jwt.interceptor';
-import { RecaptchaModule } from 'ng-recaptcha';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { BlogComponent } from './pages/blog/blog.component';
@@ -24,9 +41,44 @@ import { GuideComponent } from './pages/guide/guide.component';
 import { ListGReservationComponent } from './pages/list-greservation/list-greservation.component';
 import { EditreservationComponent } from './pages/editreservation/editreservation.component';
 import { ListereservationsComponent } from './pages/accessGuide/listereservations/listereservations.component';
-import { GastronomiesComponent } from './pages/gastronomies/gastronomies.component';
-import { MenusPlatsComponent } from './pages/menus-plats/menus-plats.component';
-import { DashboardPartnerComponent } from '../backend/pages/dashboard-partner/dashboard-partner.component';
+import { DetailsguideComponent } from './pages/detailsguide/detailsguide.component';
+import { RatingguideComponent } from './pages/ratingguide/ratingguide.component';
+
+
+/*asma
+const routes: Routes = [
+  
+  
+  {
+    path: '', component: HomeComponent, 
+    //path: 'guide/:email', component: GuideComponent,
+   // Layout parent
+    children: [
+    //  { path: '', component: HomeComponent },
+      { path: 'guide/:email', component: GuideComponent },
+      {path: 'guidedetails/:id', component: DetailsguideComponent ,children: [      {path: 'afficherplanning', component: AfficherplanningComponent },
+      ]},
+      { path: 'guide', component: GuideComponent },
+      { path: 'rateguide/:guideId/:reservationDate/:status', component: RatingguideComponent },
+      { path: 'listereservationsguide/byuser/:email', component: ListGReservationComponent },
+
+
+      { path: 'resguide', component:ReservationGuideComponent },
+      {path: 'reservationsbyguide', component: ListereservationsComponent ,children: [      {path: 'afficherplanning', component: AfficherplanningComponent },
+      ]},
+      { path: 'reservationguidedetails/:id', component:DetailsreservationComponent },
+
+      { path: 'listereservationsguide', component:ListGReservationComponent},
+      { path: 'editreservation/:id', component:EditreservationComponent },
+      { path: 'reservationsbyguide/:guideId', component: ListereservationsComponent},
+      {
+        path: 'afficherplanning/:guideId',
+        component: AfficherplanningComponent
+      }
+    ]
+  },
+*/
+
 
 const routes: Routes = [
   
@@ -43,11 +95,50 @@ const routes: Routes = [
 
       { path: 'resguide', component:ReservationGuideComponent },
       { path: 'reservationguidedetails/:id', component:DetailsreservationComponent },
+     
+      { path: 'blog', component: BlogComponent },
+      { path: 'partnerdashboard', component: DashboardPartnerComponent },
+      { path: 'chat', component: HomeComponent },
+      { path: 'verify-otp', component: VerifyOtpComponent },
+      { path: 'activities', component: ActivitiesComponent },
+      { path: 'reservation/:id', component: ReservationFormComponent },
 
+      { path: '', component: HomeComponent },
+      { path: 'guide/:email', component: GuideComponent },
+      {path: 'guidedetails/:id', component: DetailsguideComponent ,children: [      {path: 'afficherplanning', component: AfficherplanningComponent },
+      ]},
+      { path: 'guide', component: GuideComponent },
+      { path: 'rateguide/:guideId/:reservationDate/:status', component: RatingguideComponent },
+      { path: 'listereservationsguide/byuser/:email', component: ListGReservationComponent },
+
+
+      { path: 'resguide', component:ReservationGuideComponent },
+      {path: 'reservationsbyguide', component: ListereservationsComponent ,children: [      {path: 'afficherplanning', component: AfficherplanningComponent },
+      ]},
+      { path: 'reservationguidedetails/:id', component:DetailsreservationComponent },
+
+      { path: 'listereservationsguide', component:ListGReservationComponent},
+      { path: 'editreservation/:id', component:EditreservationComponent },
+      { path: 'reservationsbyguide/:guideId', component: ListereservationsComponent},
+      {
+        path: 'afficherplanning/:guideId',
+        component: AfficherplanningComponent
+      },
+
+      { path: 'my-reservations', component: MyReservationsComponent },
 
       { path: 'listereservationsguide', component:ListGReservationComponent },
       { path: 'editreservation/:id', component:EditreservationComponent },
       { path: 'reservationsbyguide', component: ListereservationsComponent},
+      { path: 'hebergement', component: GethebergementComponent},
+      { path: 'reservationchambre/:id_hebergement', component: ReservationchambreComponent },
+      { path: 'listreservations', component: ReservationChambreListComponent },
+      {
+        path: 'modifier-reservation/:id',
+        component: ModifierReservationComponent  // remplace par le vrai nom du composant
+      },
+
+
 
     ]
   },
@@ -64,9 +155,10 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent},
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'blog', component: BlogComponent },
-      { path: 'partnerdashboard', component: DashboardPartnerComponent },
-      { path: 'chat', component: HomeComponent },
+  
+
+
+      
 
 
 
@@ -75,6 +167,36 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+
+RatingguideComponent,
+    EditreservationComponent,
+    ListGReservationComponent,
+    GuideComponent,
+    HomeComponent, 
+    DetailsguideComponent,
+    ListereservationsComponent,
+    ListGReservationComponent,
+    DetailsreservationComponent,
+    EditreservationComponent,
+    AfficherplanningComponent,
+    EditreservationComponent,
+    RegisterComponent,
+    ResetPasswordComponent, 
+    ForgotPasswordComponent,
+    HomeComponent,
+    AboutComponent,
+    OffersComponent,
+    NewsComponent,
+    ContactComponent,
+    GuideComponent,
+    LoginComponent,
+    BlogComponent,
+    DetailsreservationComponent,
+    ReservationGuideComponent,
+    AfficherplanningComponent,
+    RatingguideComponent,
+
+
     ListereservationsComponent,
     ListGReservationComponent,
     DetailsreservationComponent,
@@ -100,6 +222,15 @@ const routes: Routes = [
     BlogComponent,  
     GastronomiesComponent,
     MenusPlatsComponent,
+    SetupFaComponent,
+    GethebergementComponent,
+    ModifierReservationComponent,
+    ReservationChambreListComponent,
+    ReservationchambreComponent,
+    VerifyOtpComponent,
+    ActivitiesComponent,
+    MyReservationsComponent,
+    ReservationFormComponent,
   ],
   imports: [
     FormsModule,
@@ -107,7 +238,11 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HttpClientModule ,
     ReactiveFormsModule,
-    RecaptchaModule, // Importation du module reCAPTCHA
+    RecaptchaModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-left', // ou 'toast-top-center', etc.
+      timeOut: 3000
+    }),
    // Enregistrer les routes pour le frontend
   ],
  /*  providers: [ {

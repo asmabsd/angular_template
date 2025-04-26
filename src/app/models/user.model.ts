@@ -9,6 +9,8 @@ export interface User {
     nTel?: string;
     numPasseport?: string;
     role?: Role;
+    using2FA?: boolean;
+
     
     authProvider?: 'LOCAL' | 'GOOGLE';
     message?: string; // <-- Add this

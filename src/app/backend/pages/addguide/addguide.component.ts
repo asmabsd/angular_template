@@ -43,6 +43,7 @@ export class AddguideComponent {
       averageRating: [0, Validators.required],
       availability: ['', Validators.required],
       contact: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
       // Validation de l'email
     });
   }
@@ -128,4 +129,3 @@ export class AddguideComponent {
   
   
   
-

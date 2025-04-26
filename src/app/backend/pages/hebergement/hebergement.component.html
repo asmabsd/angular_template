@@ -1,0 +1,88 @@
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="text-center">List of Accommodations</h2>
+      <button 
+        class="btn btn-primary d-flex align-items-center gap-2 px-4 py-2 shadow-sm"
+        (click)="goToAddHebergement()"
+        style="border-radius: 8px; font-weight: 500;"
+      >
+        <i class="fas fa-plus"></i> Add Accommodation
+      </button>
+    </div>
+  
+    <table class="table table-striped table-bordered table-hover">
+      <thead class="thead-blue">
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Address</th>
+          <th>Price / Night (dt)</th>
+          <th>Description</th>
+          <th>Availability</th>
+          <th>Telephone</th>
+          <th>Region</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let hebergement of hebergements">
+          <td>
+            <img
+              [src]="'assets/frontend/images/hotels/' + hebergement.imageUrl"
+              alt="Accommodation Image"
+              width="100"
+              height="80"
+              class="rounded"
+            >
+          </td>
+          <td>{{ hebergement.name }}</td>
+          <td>{{ hebergement.type }}</td>
+          <td>{{ hebergement.adresse }}</td>
+          <td>{{ hebergement.price }}</td>
+          <td>{{ hebergement.description }}</td>
+          <td>
+            <span [ngClass]="isHebergementAvailable(hebergement) ? 'text-success' : 'text-danger'">
+              <i 
+                class="fa" 
+                [ngClass]="isHebergementAvailable(hebergement) ? 'fa-check-circle' : 'fa-times-circle'"
+              ></i>
+              {{ isHebergementAvailable(hebergement) ? 'Available' : 'Not Available' }}
+            </span>
+          </td>
+          <td>{{ hebergement.telephone }}</td>
+          <td>{{ hebergement.region }}</td>
+          <td>
+            <div class="d-flex gap-2">
+              <button 
+                class="btn btn-warning btn-sm"
+                (click)="updateHebergement(hebergement)"
+              >
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button 
+                class="btn btn-danger btn-sm"
+                [disabled]="!hebergement.id_hebergement"
+                (click)="deleteHebergement(hebergement.id_hebergement!)"
+              >
+                <i class="fas fa-trash"></i> Delete
+              </button>
+              <button 
+                class="btn btn-info btn-sm"
+                (click)="viewHebergementDetails(hebergement.id_hebergement)"
+              >
+                <i class="fas fa-eye"></i> Details
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Statistics Chart Section -->
+  <div class="container mt-5">
+    <div class="chart-container" style="width: 80%; margin: auto;">
+      <canvas id="statChart"></canvas>
+    </div>
+  </div>

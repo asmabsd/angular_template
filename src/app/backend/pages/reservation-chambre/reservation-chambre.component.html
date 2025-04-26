@@ -1,0 +1,37 @@
+<div class="container mt-5">
+    <h2>Réserver une chambre - {{ hebergement?.name }}</h2>
+    <form [formGroup]="reservationForm" (ngSubmit)="submitReservation()">
+      <div class="mb-3">
+        <label>Date de début</label>
+        <input type="date" class="form-control" formControlName="dateDebut" title="Date de début" placeholder="Sélectionnez la date de début">
+      </div>
+  
+      <div class="mb-3">
+        <label>Date de fin</label>
+        <input type="date" class="form-control" formControlName="dateFin">
+      </div>
+  
+      <div class="mb-3">
+        <label>Nombre d'adultes</label>
+        <input type="number" class="form-control" formControlName="nombreadulte">
+      </div>
+  
+      <div class="mb-3">
+        <label>Nombre d'enfants</label>
+        <input type="number" class="form-control" formControlName="nombrenfant">
+      </div>
+      <div class="mb-3">
+        <label>Client Email</label>
+        <input type="number" class="form-control" formControlName="clientEmail">
+      </div>
+      <select formControlName="typeChambre" required>
+        <option value="">Choisir un type</option>
+        <option *ngFor="let type of typeChambres" [value]="type">{{ type }}</option>
+      </select>
+  
+      <div class="text-end">
+        <button class="btn btn-success" type="submit" [disabled]="reservationForm.invalid">Confirmer la réservation</button>
+      </div>
+    </form>
+  </div>
+  
