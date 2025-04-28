@@ -11,7 +11,7 @@ import { Guide } from 'src/app/models/guide.model';
 export class EditguideComponent implements OnInit {
 
   guideId: number = 0; // Initialize guideId to a default value (0 or another appropriate value)
-  guide: Guide = { id: 0, availability:'',name: '', experience: '', language: '', speciality: '', contact: '', averageRating: '' };  // Initialize guide with default empty values
+  guide: Guide = { id: 0, availability:'',name: '', experience: '', language: '', speciality: '', contact: '', averageRating: '' ,phone:''};  // Initialize guide with default empty values
   errorMessage: string = ''; // Initialize with an empty string
   isLoading: boolean = true;  // Flag to manage loading state
 

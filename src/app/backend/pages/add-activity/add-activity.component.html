@@ -1,0 +1,239 @@
+<div class="add-activity-container">
+  <div class="card">
+    <div class="card-header">
+      <h2><i class="fas fa-plus-circle"></i> Add New Activity</h2>
+    </div>
+    
+    <div class="card-body">
+      <!-- Alert messages -->
+      <div class="alert alert-success" *ngIf="successMessage">
+        <i class="fas fa-check-circle"></i> {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+      </div>
+      
+      <!-- Form -->
+      <form [formGroup]="activityForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <!-- Left column - Form fields -->
+          <div class="form-column">
+            <div class="form-group">
+              <label for="name">Activity Name*</label>
+              <div class="input-group">
+                <input 
+                  type="text" 
+                  id="name" 
+                  formControlName="name" 
+                  class="form-control" 
+                  placeholder="Enter activity name or record audio"
+                  [ngClass]="{'is-invalid': activityForm.get('name')?.invalid && activityForm.get('name')?.touched}"
+                >
+                <div class="input-group-append">
+                  <button 
+                    type="button" 
+                    class="btn btn-outline-secondary" 
+                    (click)="isRecording ? stopRecording() : startRecording()"
+                    [disabled]="isProcessing || loading"
+                  >
+                    <i class="fas" [ngClass]="isRecording ? 'fa-stop' : 'fa-microphone'"></i>
+                    {{ isRecording ? 'Stop Recording' : 'Record Audio' }}
+                  </button>
+                </div>
+              </div>
+              <!-- Status Indicators -->
+              <div class="mt-2 text-sm">
+                <div *ngIf="isRecording" class="flex items-center text-green-600">
+                  <span class="w-2 h-2 mr-2 bg-green-500 rounded-full animate-pulse"></span>
+                  <span>Recording...</span>
+                </div>
+                <div *ngIf="isProcessing" class="flex items-center text-blue-600">
+                  <i class="fas fa-spinner fa-spin mr-2"></i>
+                  <span>Processing...</span>
+                </div>
+              </div>
+              <div class="invalid-feedback" *ngIf="activityForm.get('name')?.errors?.['required'] && activityForm.get('name')?.touched">
+                Activity name is required.
+              </div>
+              <div class="invalid-feedback" *ngIf="activityForm.get('name')?.errors?.['minlength'] && activityForm.get('name')?.touched">
+                Activity name must be at least 3 characters.
+              </div>
+            </div>
+            
+            <!-- Other form fields remain unchanged -->
+            <div class="form-group">
+              <label for="categoryA">Category*</label>
+              <select 
+                id="categoryA" 
+                formControlName="categoryA" 
+                class="form-control"
+                [ngClass]="{'is-invalid': activityForm.get('categoryA')?.invalid && activityForm.get('categoryA')?.touched}"
+              >
+                <option value="" disabled>Select category</option>
+                <option *ngFor="let category of categoryOptions" [value]="category">
+                  {{ category.replace('_', ' ') }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="activityForm.get('categoryA')?.invalid && activityForm.get('categoryA')?.touched">
+                Please select a category.
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="location">Location*</label>
+              <input 
+                type="text" 
+                id="location" 
+                formControlName="location" 
+                class="form-control" 
+                placeholder="Enter location"
+                [ngClass]="{'is-invalid': activityForm.get('location')?.invalid && activityForm.get('location')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="activityForm.get('location')?.invalid && activityForm.get('location')?.touched">
+                Location is required.
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="price">Price (TND)*</label>
+              <input 
+                type="number" 
+                id="price" 
+                formControlName="price" 
+                class="form-control" 
+                placeholder="Enter price"
+                [ngClass]="{'is-invalid': activityForm.get('price')?.invalid && activityForm.get('price')?.touched}"
+                min="0"
+              >
+              <div class="invalid-feedback" *ngIf="activityForm.get('price')?.invalid && activityForm.get('price')?.touched">
+                Please enter a valid price (must be 0 or greater).
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="region">Region*</label>
+              <select 
+                id="region" 
+                formControlName="region" 
+                class="form-control"
+                [ngClass]="{'is-invalid': activityForm.get('region')?.invalid && activityForm.get('region')?.touched}"
+              >
+                <option value="" disabled>Select region</option>
+                <option *ngFor="let region of regionOptions" [value]="region">
+                  {{ region }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="activityForm.get('region')?.invalid && activityForm.get('region')?.touched">
+                Please select a region.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="map">Select Location on Map*</label>
+              <div id="map-container" style="margin: 1rem 0;">
+                <div id="map" style="height: 400px; border: 1px solid #ccc;"></div>
+                <small class="text-muted">Sélectionnez un emplacement sur la carte</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="location">Location (Lat,Lng)*</label>
+              <input 
+                type="text" 
+                id="location" 
+                formControlName="location" 
+                class="form-control" 
+                placeholder="Select a location on the map"
+                readonly
+                [ngClass]="{'is-invalid': activityForm.get('location')?.invalid && activityForm.get('location')?.touched}"
+              >
+              <div class="invalid-feedback" *ngIf="activityForm.get('location')?.invalid && activityForm.get('location')?.touched">
+                Please select a location on the map.
+              </div>
+            </div>
+
+            <div class="form-group form-check">
+              <input 
+                type="checkbox" 
+                id="disponibility" 
+                formControlName="disponibility" 
+                class="form-check-input"
+              >
+              <label class="form-check-label" for="disponibility">Available</label>
+            </div>
+            
+            <div class="form-group">
+              <label for="blogId">Associate with Blog (Optional)</label>
+              <select 
+                id="blogId" 
+                formControlName="blogId" 
+                class="form-control"
+              >
+                <option value="">-- No blog association --</option>
+                <option *ngFor="let blog of blogs" [value]="blog.idBlog">
+                  {{ blog.title }}
+                </option>
+              </select>
+              <div class="form-feedback loading-text" *ngIf="isLoadingBlogs">
+                <i class="fas fa-spinner fa-spin"></i> Loading blogs...
+              </div>
+              <div class="form-help-text" *ngIf="blogs.length === 0 && !isLoadingBlogs">
+                No blogs available for association.
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right column - Image upload -->
+          <div class="form-column image-column">
+            <div class="image-upload-container">
+              <div class="image-preview-container" *ngIf="imagePreview">
+                <img [src]="imagePreview" alt="Image Preview" class="image-preview">
+                <button type="button" class="remove-image-btn" (click)="removeImage()" title="Remove Image">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              
+              <div class="upload-placeholder" *ngIf="!imagePreview">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag and drop an image or click to browse</p>
+              </div>
+              
+              <input 
+                type="file" 
+                id="image" 
+                (change)="onFileSelected($event)" 
+                accept="image/*" 
+                class="file-input"
+                #fileInput
+                title="Upload an image file"
+                placeholder="Choose an image file"
+              >
+              
+              <button type="button" class="browse-btn" (click)="fileInput.click()" *ngIf="!imagePreview">
+                Browse Files
+              </button>
+            </div>
+            
+            <div class="image-format-info">
+              <p><i class="fas fa-info-circle"></i> Supported formats: JPEG, PNG, GIF</p>
+              <p><i class="fas fa-info-circle"></i> Max size: 5MB</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Form actions -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" [routerLink]="['/dashboard/activities']">
+            <i class="fas fa-arrow-left"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="loading">
+            <i class="fas fa-save"></i> 
+            <span *ngIf="!loading">Save Activity</span>
+            <span *ngIf="loading">Saving...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,143 @@
+
+<div class="add-hebergement-container">
+  <h2>Add Accommodation</h2>
+  <form [formGroup]="hebergementForm" (ngSubmit)="ajouterHebergement()" class="styled-form">
+<!-- Accommodation Name -->
+<div class="form-group">
+<label for="name">Accommodation Name:</label>
+<input id="name" formControlName="name" type="text" class="form-control" />
+<div *ngIf="hebergementForm.get('name')?.hasError('required') && hebergementForm.get('name')?.touched" class="error-message">
+  This field is required.
+</div>
+<div *ngIf="hebergementForm.get('name')?.hasError('nameTooShort') && hebergementForm.get('name')?.touched" class="error-message">
+  The name must be longer than 3 characters.
+</div>
+<div *ngIf="hebergementForm.get('name')?.hasError('nameNotCapitalized') && hebergementForm.get('name')?.touched" class="error-message">
+  The name must start with a capital letter.
+</div>
+</div>
+  
+    <div class="form-group">
+      <label for="type">Accommodation Type:</label>
+      <select id="type" formControlName="type" class="form-control">
+        <option *ngFor="let type of typeHebergementValues" [value]="type">{{ type }}</option>
+      </select>
+      <!-- Error message -->
+      <div *ngIf="hebergementForm.get('type')?.invalid && hebergementForm.get('type')?.touched" class="error-message">
+        This field is required.
+      </div>
+    </div>
+  
+<!-- Address -->
+<div class="form-group">
+<label for="adresse">Address:</label>
+<input id="adresse" formControlName="adresse" type="text" class="form-control" />
+<div *ngIf="hebergementForm.get('adresse')?.hasError('required') && hebergementForm.get('adresse')?.touched" class="error-message">
+  This field is required.
+</div>
+<div *ngIf="hebergementForm.get('adresse')?.hasError('addressTooShort') && hebergementForm.get('adresse')?.touched" class="error-message">
+  The address must be longer than 7 characters.
+</div>
+<div *ngIf="hebergementForm.get('adresse')?.hasError('addressInvalid') && hebergementForm.get('adresse')?.touched" class="error-message">
+  The address must contain letters and numbers.
+</div>
+</div>
+  
+<!-- Description -->
+<div class="form-group">
+<label for="description">Description:</label>
+<textarea id="description" formControlName="description" class="form-control"></textarea>
+<div *ngIf="hebergementForm.get('description')?.hasError('required') && hebergementForm.get('description')?.touched" class="error-message">
+  This field is required.
+</div>
+<div *ngIf="hebergementForm.get('description')?.hasError('descriptionTooShort') && hebergementForm.get('description')?.touched" class="error-message">
+  The description must be longer than 10 characters.
+</div>
+<div *ngIf="hebergementForm.get('description')?.hasError('descriptionInvalid') && hebergementForm.get('description')?.touched" class="error-message">
+  The description must not contain special characters.
+</div>
+</div>
+  
+    <div class="form-group">
+      <label for="price">Price per night:</label>
+      <input id="price" formControlName="price" type="number" class="form-control" min="0" />
+      <!-- Error message -->
+      <div *ngIf="hebergementForm.get('price')?.invalid && hebergementForm.get('price')?.touched" class="error-message">
+        The price must be a positive number.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="image">Accommodation Image:</label>
+      <input type="file" id="image" (change)="onFileSelected($event)" class="form-control" accept="image/*">
+      <!-- Error message -->
+      <div *ngIf="hebergementForm.get('imageUrl')?.invalid && hebergementForm.get('imageUrl')?.touched" class="error-message">
+        This field is required.
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="availability">Availability:</label>
+      <input id="availability" formControlName="availability" type="text" class="form-control" />
+      <!-- Error message -->
+      <div *ngIf="hebergementForm.get('availability')?.invalid && hebergementForm.get('availability')?.touched" class="error-message">
+        This field is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="telephone">Phone Number:</label>
+      <input id="telephone" formControlName="telephone" type="text" class="form-control" />
+      <div *ngIf="hebergementForm.get('telephone')?.hasError('required') && hebergementForm.get('telephone')?.touched" class="error-message">
+        This field is required.
+      </div>
+      <div *ngIf="hebergementForm.get('telephone')?.hasError('pattern') && hebergementForm.get('telephone')?.touched" class="error-message">
+        Phone number must be 8 digits.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="region">Region:</label>
+      <select id="region" formControlName="region" class="form-control">
+        <option *ngFor="let city of tunisianCities" [value]="city">{{ city }}</option>
+      </select>
+      <div *ngIf="hebergementForm.get('region')?.hasError('required') && hebergementForm.get('region')?.touched" class="error-message">
+        This field is required.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="totalSingleChambres">Single Rooms:</label>
+      <input id="totalSingleChambres" formControlName="totalSingleChambres" type="number" class="form-control" min="0" />
+      <div *ngIf="hebergementForm.get('totalSingleChambres')?.invalid && hebergementForm.get('totalSingleChambres')?.touched" class="error-message">
+          Please enter a valid number of single rooms.
+      </div>
+  </div>
+  
+  <div class="form-group">
+      <label for="totalDoubleChambres">Double Rooms:</label>
+      <input id="totalDoubleChambres" formControlName="totalDoubleChambres" type="number" class="form-control" min="0" />
+      <div *ngIf="hebergementForm.get('totalDoubleChambres')?.invalid && hebergementForm.get('totalDoubleChambres')?.touched" class="error-message">
+          Please enter a valid number of double rooms.
+      </div>
+  </div>
+  
+  <div class="form-group">
+      <label for="totalSuiteChambres">Suites:</label>
+      <input id="totalSuiteChambres" formControlName="totalSuiteChambres" type="number" class="form-control" min="0" />
+      <div *ngIf="hebergementForm.get('totalSuiteChambres')?.invalid && hebergementForm.get('totalSuiteChambres')?.touched" class="error-message">
+          Please enter a valid number of suites.
+      </div>
+  </div>
+  
+  <div class="form-group">
+      <label for="totalDelexueChambres">Deluxe Rooms:</label>
+      <input id="totalDelexueChambres" formControlName="totalDelexueChambres" type="number" class="form-control" min="0" />
+      <div *ngIf="hebergementForm.get('totalDelexueChambres')?.invalid && hebergementForm.get('totalDelexueChambres')?.touched" class="error-message">
+          Please enter a valid number of deluxe rooms.
+      </div>
+  </div>
+
+    
+  
+    <button type="submit" class="btn-primary" [disabled]="hebergementForm.invalid">Add Accommodation</button>
+  </form>
+  
+</div>

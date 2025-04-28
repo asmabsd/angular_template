@@ -6,6 +6,8 @@ import { AdminService } from 'src/app/services/admin.service';
 import { UserStatsService } from 'src/app/services/user-stats.service';
 import { User } from 'src/app/models/user.model';
 import { DashboardStats, TrendData } from 'src/app/models/stats.model';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { StatsallService } from 'src/app/services/statsall.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +17,12 @@ import { DashboardStats, TrendData } from 'src/app/models/stats.model';
 
 })
 export class DashboardComponent implements OnInit {
+  userCount: number = 0;
+  activityCount: number = 0;
+  restaurantCount: number = 0;
+  storeCount: number = 0;
+  guideCount: number = 0;
+
   email: string | null = null;
   pendingUsers: (Partial<User> & { status?: string })[] = [];
   showPendingUsers: boolean = false;
@@ -46,13 +54,16 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private adminService: AdminService,
-    private statsService: UserStatsService
+    private statsService: UserStatsService,
+    private allstatsService: StatsallService
   ) {}
 
   ngOnInit() {
     this.email = this.authService.getCurrentUserEmail();
     this.loadPendingUsers();
     this.loadDashboardStats();
+    this.loadStats();
+
   }
 
   get isUserManagementPage(): boolean {
@@ -93,6 +104,14 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getImage(): string {
+    const imageName = 'salah.png';
+    const path = `assets/frontend/${imageName}`;
+    // Check if the file exists or use a fallback
+    return path; // Or use a fallback like 'assets/frontend/default-guide.jpg'
+  }
+
+
   loadDashboardStats(): void {
     this.statsLoading = true;
     this.statsError = null;
@@ -124,5 +143,20 @@ toggleSidebar() {
 
   refreshStats(): void {
     this.loadDashboardStats();
+  }
+
+
+
+
+ 
+
+
+
+  loadStats(): void {
+    this.allstatsService.getUserCount().subscribe(count => this.userCount = count);
+    this.allstatsService.getActivityCount().subscribe(count => this.activityCount = count);
+    this.allstatsService.getRestaurantCount().subscribe(count => this.restaurantCount = count);
+    this.allstatsService.getStoreCount().subscribe(count => this.storeCount = count);
+    this.allstatsService.getGuideCount().subscribe(count => this.guideCount = count);
   }
 }

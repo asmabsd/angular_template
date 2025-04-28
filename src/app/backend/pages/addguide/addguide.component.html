@@ -3,7 +3,7 @@
 
   
   <!-- Langue -->
-  <label for="language">Langue :</label>
+  <label for="language">Language :</label>
 <div class="select-wrapper">
   <select id="language" formControlName="language" required>
     <option *ngFor="let lang of languages" [value]="lang.code">
@@ -13,13 +13,13 @@
 </div>
 
   <!-- Name -->
-  <label for="name">Nom :</label>
+  <label for="name">Name:</label>
   <input id="name" formControlName="name" required>
 
   <!-- Spécialité (Liste déroulante) -->
-  <label for="speciality">Spécialité :</label>
+  <label for="speciality">Spéciality:</label>
   <select id="speciality" formControlName="speciality" required>
-    <option value="" disabled selected>Sélectionner une spécialité</option>
+    <option value="" disabled selected>Choose the speciality : </option>
     <option value="tourGuide">Guide touristique</option>
     <option value="natureGuide">Guide nature</option>
     <option value="cityTourGuide">Guide de ville</option>
@@ -27,7 +27,7 @@
   </select>
 
   <!-- Expérience (Liste déroulante) -->
-  <label for="experience">Expérience :</label>
+  <label for="experience">Experience :</label>
   <select id="experience" formControlName="experience" required>
     <option value="" disabled selected>Sélectionner une expérience</option>
     <option value="beginner">Débutant</option>
@@ -36,7 +36,7 @@
   </select>
 
   <!-- Note moyenne (Liste déroulante) -->
- <label for="averageRating">Note moyenne :</label>
+ <label for="averageRating">Rate :</label>
   <div class="star-rating">
     <span *ngFor="let star of stars; let i = index" 
           [class.filled]="i < guideForm.value.averageRating" 
@@ -46,7 +46,7 @@
   </div>
 
   <!-- Disponibilité (Liste déroulante) -->
-  <label for="availability">Disponibilité :</label>
+  <label for="availability">Disponibility :</label>
   <select id="availability" formControlName="availability" required>
     <option value="" disabled selected>Sélectionner la disponibilité</option>
     <option value="weekdays">En semaine</option>
@@ -67,6 +67,10 @@
       <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
     </div>
   </div>
+
+
+  <label for="phone">phone number:</label>
+  <input id="phone" formControlName="phone" required>
   <!-- Submit Button -->
   <button type="submit" [disabled]="guideForm.invalid">Ajouter</button>
 </form>

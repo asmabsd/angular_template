@@ -1,0 +1,127 @@
+<div class="reservation-container">
+    <div class="reservation-card">
+      <div class="reservation-header">
+        <h2 class="reservation-title">
+          <i class="fas fa-calendar-plus"></i> {{ isEditMode ? 'Edit Reservation' : 'New Reservation' }}
+        </h2>
+        <div class="header-divider"></div>
+      </div>
+  
+      <form [formGroup]="reservationForm" (ngSubmit)="saveReservation()" class="reservation-form">
+        <div class="form-row">
+          <!-- Arrival Date -->
+          <div class="form-group col-md-6">
+            <label for="dateDebut" class="form-label">
+              <i class="far fa-calendar-alt"></i> Arrival Date
+            </label>
+            <input type="date" id="dateDebut" class="form-control" formControlName="dateDebut" 
+                   [min]="today" (change)="onDateChange()">
+            <div *ngIf="reservationForm.get('dateDebut')?.invalid && reservationForm.get('dateDebut')?.touched" 
+                 class="error-message">
+              <i class="fas fa-exclamation-circle"></i> Arrival date is required
+            </div>
+          </div>
+  
+          <!-- Departure Date -->
+          <div class="form-group col-md-6">
+            <label for="dateFin" class="form-label">
+              <i class="far fa-calendar-check"></i> Departure Date
+            </label>
+            <input type="date" id="dateFin" class="form-control" formControlName="dateFin" 
+                   [min]="reservationForm.get('dateDebut')?.value || today" (change)="onDateChange()">
+            <div *ngIf="reservationForm.get('dateFin')?.invalid && reservationForm.get('dateFin')?.touched" 
+                 class="error-message">
+              <i class="fas fa-exclamation-circle"></i> Departure date is required
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <!-- Number of Adults -->
+          <div class="form-group col-md-6">
+            <label for="nombreadulte" class="form-label">
+              <i class="fas fa-user-friends"></i> Adults
+            </label>
+            <input type="number" id="nombreadulte" class="form-control" formControlName="nombreadulte" min="1">
+            <div *ngIf="reservationForm.get('nombreadulte')?.invalid && reservationForm.get('nombreadulte')?.touched" 
+                 class="error-message">
+              <i class="fas fa-exclamation-circle"></i> Minimum 1 adult required
+            </div>
+          </div>
+  
+          <!-- Number of Children -->
+          <div class="form-group col-md-6">
+            <label for="nombrenfant" class="form-label">
+              <i class="fas fa-child"></i> Children
+            </label>
+            <input type="number" id="nombrenfant" class="form-control" formControlName="nombrenfant" min="0">
+          </div>
+        </div>
+  
+        <!-- Stay Type -->
+        <div class="form-group">
+          <label for="statut" class="form-label">
+            <i class="fas fa-user-tag"></i> Stay Type
+          </label>
+          <select id="statut" class="form-control" formControlName="statut">
+            <option value="" disabled selected>Select a type</option>
+            <option value="Couple">Couple</option>
+            <option value="Family">Family</option>
+            <option value="Business">Single</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+  
+        <!-- Number of Rooms -->
+        <div class="form-group">
+          <label for="nombreChambres" class="form-label">
+            <i class="fas fa-door-closed"></i> Number of Rooms
+          </label>
+          <input type="number" id="nombreChambres" class="form-control" formControlName="nombreChambres" min="1">
+          <div *ngIf="reservationForm.get('nombreChambres')?.invalid && reservationForm.get('nombreChambres')?.touched" 
+               class="error-message">
+            <i class="fas fa-exclamation-circle"></i> Please enter at least 1 room
+          </div>
+        </div>
+  
+        <!-- Room Type -->
+        <div class="form-group">
+          <label for="typeChambre" class="form-label">
+            <i class="fas fa-bed"></i> Room Type
+          </label>
+          <select id="typeChambre" class="form-control" formControlName="typeChambre" (change)="onInputChange()">
+            <option value="single">Single</option>
+            <option value="Double">Double</option>
+            <option value="Suite">Suite</option>
+            <option value="Deluxe">Deluxe</option>
+          </select>
+        </div>
+  
+        <!-- Client Email -->
+        <div class="form-group">
+          <label for="clientEmail" class="form-label">
+            <i class="fas fa-envelope"></i> Client Email
+          </label>
+          <input type="email" id="clientEmail" class="form-control" formControlName="clientEmail">
+          <div *ngIf="reservationForm.get('clientEmail')?.invalid && reservationForm.get('clientEmail')?.touched" 
+               class="error-message">
+            <i class="fas fa-exclamation-circle"></i> Please enter a valid email
+          </div>
+        </div>
+  
+        <!-- Total Price -->
+        <div class="form-group">
+          <label for="prixTotal" class="form-label">
+            <i class="fas fa-money-bill-wave"></i> Total Price
+          </label>
+          <input type="number" id="prixTotal" class="form-control" formControlName="prixTotal" readonly>
+        </div>
+  
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" [disabled]="reservationForm.invalid">
+            {{ isEditMode ? 'Update Reservation' : 'Create Reservation' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

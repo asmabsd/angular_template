@@ -1,0 +1,207 @@
+<div class="activity-list-container">
+  <!-- Header Area -->
+  <div class="header-area">
+    <h1>Activities</h1>
+    <button class="btn btn-primary add-button" (click)="addNewActivity()">
+      <i class="fas fa-plus"></i> Add New Activity
+    </button>
+  </div>
+
+  <!-- Alerts -->
+  <div class="alert alert-success" *ngIf="successMessage">
+    <i class="fas fa-check-circle"></i> {{ successMessage }}
+  </div>
+
+  <div class="alert alert-danger" *ngIf="error">
+    <i class="fas fa-exclamation-circle"></i> {{ error }}
+  </div>
+
+  <!-- Filter and Sort Controls -->
+  <div class="controls-panel">
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        placeholder="Search by name or location..."
+        class="form-control"
+      >
+      <i class="fas fa-search search-icon"></i>
+    </div>
+
+    <div class="filters">
+      <div class="filter-item">
+        <label for="region">Region:</label>
+        <select
+          id="region"
+          [(ngModel)]="selectedRegion"
+          (change)="onRegionChange()"
+          class="form-control"
+        >
+          <option [value]="null">All Regions</option>
+          <option *ngFor="let region of regionOptions" [value]="region">
+            {{ region }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-item">
+        <label for="category">Category:</label>
+        <select
+          id="category"
+          [(ngModel)]="selectedCategory"
+          (change)="onCategoryChange()"
+          class="form-control"
+        >
+          <option value="">All Categories</option>
+          <option *ngFor="let category of categoryOptions" [value]="category">
+            {{ getCategoryDisplayName(category) }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-item price-range">
+        <label>Price Range:</label>
+        <div class="price-inputs">
+          <input
+            type="number"
+            [(ngModel)]="minPrice"
+            (change)="onPriceFilterChange()"
+            placeholder="Min"
+            class="form-control"
+          >
+          <span class="price-separator">to</span>
+          <input
+            type="number"
+            [(ngModel)]="maxPrice"
+            (change)="onPriceFilterChange()"
+            placeholder="Max"
+            class="form-control"
+          >
+        </div>
+      </div>
+
+      <div class="filter-item">
+        <label for="sortBy">Sort By:</label>
+        <select
+          id="sortBy"
+          [(ngModel)]="sortBy"
+          (change)="onSortChange()"
+          class="form-control"
+        >
+          <option value="name">Name</option>
+          <option value="price">Price</option>
+          <option value="location">Location</option>
+        </select>
+      </div>
+
+      <div class="filter-item">
+        <label for="sortDirection">Order:</label>
+        <select
+          id="sortDirection"
+          [(ngModel)]="sortDirection"
+          (change)="onSortChange()"
+          class="form-control"
+        >
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </div>
+
+      <button class="btn btn-outline-secondary" (click)="clearFilters()">
+        <i class="fas fa-times"></i> Clear Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="loading-spinner" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Loading activities...</p>
+  </div>
+
+  <!-- No Results Message -->
+  <div class="no-results" *ngIf="!loading && filteredActivities.length === 0">
+    <i class="fas fa-search"></i>
+    <h3>No activities found</h3>
+    <p>Try adjusting your search filters or add a new activity.</p>
+    <button class="btn btn-primary" (click)="addNewActivity()">
+      <i class="fas fa-plus"></i> Add New Activity
+    </button>
+  </div>
+
+  <!-- Activities Grid -->
+  <div class="activities-grid" *ngIf="!loading && filteredActivities.length > 0">
+    <div class="activity-card" *ngFor="let activity of getCurrentPageItems()">
+      <div class="activity-image">
+        <img [src]="getImageUrl(activity.imagePath!)" [alt]="activity.name">
+        <div class="category-badge">
+          {{ getCategoryDisplayName(activity.categoryA) }}
+        </div>
+        <div class="availability-badge" [ngClass]="{'available': activity.disponibility, 'unavailable': !activity.disponibility}">
+          {{ activity.disponibility ? 'Available' : 'Not Available' }}
+        </div>
+      </div>
+
+      <div class="activity-content">
+        <h3 class="activity-title">{{ activity.name }}</h3>
+        <p class="activity-location">
+          <i class="fas fa-map-marker-alt"></i> {{ activity.location }}
+        </p>
+        <p class="activity-price">
+          <i class="fas fa-tag"></i> {{ activity.price }} TND
+        </p>
+      </div>
+
+      <div class="activity-actions">
+        <button class="btn btn-outline-primary" (click)="editActivity(activity.idActivity!)">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        <button class="btn btn-outline-danger" (click)="deleteActivity(activity.idActivity!)">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-container" *ngIf="totalPages > 1">
+    <ul class="pagination">
+      <li class="page-item" [ngClass]="{'disabled': currentPage === 1}">
+        <button class="page-link" (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </li>
+      <li class="page-item" *ngFor="let page of getPages()" [ngClass]="{'active': page === currentPage}">
+        <button class="page-link" (click)="setPage(page)">{{ page }}</button>
+      </li>
+      <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
+        <button class="page-link" (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </li>
+    </ul>
+    <div class="pagination-info">
+      Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ Math.min(currentPage * pageSize, filteredActivities.length) }}
+      of {{ filteredActivities.length }} activities
+    </div>
+  </div>
+
+  <!-- Section pour la visualisation du cercle unique -->
+  <div class="chart-container" *ngIf="!loading && regionStats.length > 0">
+    <h3>Distribution of Activities by Region</h3>
+    <div class="circle-stats">
+      <div class="single-circle" [style.--gradient-stops]="conicGradient"></div>
+      <div class="legend">
+        <div class="legend-item" *ngFor="let stat of regionStats; let i = index">
+          <div class="legend-color" [ngStyle]="{'background-color': circleColors[i % circleColors.length]}"></div>
+          <div class="legend-label">
+            <span>{{ stat.region }}</span> ({{ stat.percentage | number:'1.1-1' }}%)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

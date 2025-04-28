@@ -39,7 +39,13 @@
               "src/assets/frontend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css",
               "src/assets/frontend/plugins/font-awesome-4.7.0/css/font-awesome.min.css",
               "src/assets/frontend/styles//bootstrap4/bootstrap.min.css",
-              "src/assets/frontend/styles/main_styles.css"
+              "src/assets/frontend/styles/main_styles.css",
+              "src/assets/frontend/styles/main_styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "src/styles.css",
+              "node_modules/animate.css/animate.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             
             "scripts": [
@@ -50,6 +56,10 @@
               
               "src/assets/frontend/js/custom.js",
               "src/assets/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.js",
+              "src/assets/backend/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.js",
+              "node_modules/chart.js/dist/chart.umd.js",
+
               "src/assets/backend/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"
               
          

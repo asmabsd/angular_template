@@ -1,0 +1,73 @@
+.edit-activity-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 15px;
+  }
+  
+  .card {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 0.5rem;
+  }
+  
+  .card-header {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.25rem;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .form-label {
+    font-weight: 500;
+  }
+  
+  .invalid-feedback {
+    display: block;
+  }
+  
+  // Switch styling
+  .form-switch .form-check-input {
+    width: 2.5em;
+    height: 1.25em;
+  }
+  
+  .form-switch .form-check-input:checked {
+    background-color: #696cff;
+    border-color: #696cff;
+  }
+  
+  // Image preview
+  .img-thumbnail {
+    border-radius: 0.375rem;
+    border: 1px solid #d9dee3;
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      border-color: #696cff;
+    }
+  }
+  
+  // Button styling
+  .btn-primary {
+    background-color: #696cff;
+    border-color: #696cff;
+    
+    &:hover {
+      background-color: #5f65e5;
+      border-color: #5f65e5;
+    }
+    
+    &:disabled {
+      background-color: #b4b6ff;
+      border-color: #b4b6ff;
+    }
+  }
+  
+  // Loading spinner
+  .spinner-border {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
