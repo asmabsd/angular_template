@@ -1,0 +1,112 @@
+
+<div class="reservation-container">
+  <div class="reservation-card">
+    <h2 class="reservation-title"><i class="fas fa-calendar-plus"></i> New Reservation</h2>
+    
+    <form (ngSubmit)="onSubmit()" class="reservation-form">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="dateDebut" class="form-label">
+            <i class="far fa-calendar-alt"></i> Check-in Date
+          </label>
+          <input type="date" class="form-control" id="dateDebut" 
+                 [(ngModel)]="reservation.dateDebut" name="dateDebut" 
+                 [min]="today" (change)="calculerPrixTotal()" required>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="dateFin" class="form-label">
+            <i class="far fa-calendar-check"></i> Check-out Date
+          </label>
+          <input type="date" class="form-control" id="dateFin" 
+                 [(ngModel)]="reservation.dateFin" name="dateFin" 
+                 [min]="today" (change)="calculerPrixTotal()" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nombreadulte" class="form-label">
+            <i class="fas fa-user-friends"></i> Adults
+          </label>
+          <input type="number" class="form-control" id="nombreadulte" 
+                 [(ngModel)]="reservation.nombreadulte" name="nombreadulte" 
+                 (input)="calculerPrixTotal()" min="1" required>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="nombrenfant" class="form-label">
+            <i class="fas fa-child"></i> Children
+          </label>
+          <input type="number" class="form-control" id="nombrenfant" 
+                 [(ngModel)]="reservation.nombrenfant" name="nombrenfant" 
+                 (input)="calculerPrixTotal()" min="0">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="statut" class="form-label">
+          <i class="fas fa-user-tag"></i> Stay Type
+        </label>
+        <select class="form-control custom-select" id="statut" name="statut" 
+                [(ngModel)]="reservation.statut" required>
+          <option value="" disabled selected>Select your stay type</option>
+          <option value="married">Couple</option>
+          <option value="single">Single</option>
+          <option value="family">Family</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="clientEmail" class="form-label">
+            <i class="fas fa-envelope"></i> Client Email
+          </label>
+          <input type="email" class="form-control" id="clientEmail"
+                 [(ngModel)]="reservation.clientEmail" name="clientEmail"
+                 placeholder="Enter client email" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nombreChambres" class="form-label">
+            <i class="fas fa-door-open"></i>Number of Rooms
+          </label>
+          <input type="number" class="form-control" id="nombreChambres" 
+                 [(ngModel)]="reservation.nombreChambres" name="nombreChambres" 
+                 min="1" required (input)="calculerPrixTotal()">
+        </div>
+      
+        <div class="form-group col-md-6">
+          <label for="typeChambre" class="form-label">
+            <i class="fas fa-bed"></i> Room Type 
+          </label>
+          <select class="form-control" id="typeChambre" name="typeChambre" 
+          [(ngModel)]="reservation.typeChambre" 
+          required (change)="calculerPrixTotal()">
+            <option value="" disabled selected>Choose the type</option>
+            <option value="single">single</option>
+            <option value="Double">Double</option>
+            <option value="Suite">Suite</option>
+            <option value="Deluxe">Deluxe</option>
+
+          </select>
+        </div>
+      </div>
+      <div class="price-summary">
+        <div class="price-display">
+          <span class="price-label">Total :</span>
+          <span class="price-amount">{{ reservation.prixTotal || 0 }} DT</span>
+        </div>
+        <div class="price-notice">
+          <i class="fas fa-info-circle"></i> 20% surcharge for weekend nights
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary submit-btn">
+          <i class="fas fa-check"></i> Confirm Reservation
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

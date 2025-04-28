@@ -1,0 +1,119 @@
+<div *ngIf="isLoading" class="loading">Loading...</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="guide && !isLoading">
+  <h2>Edit Guide</h2>
+  
+  <form (ngSubmit)="updateGuide()" *ngIf="!isLoading && !errorMessage">
+    
+    <!-- Guide Name -->
+    <div class="form-group">
+      <label for="name">Guide Name</label>
+      <input 
+        [(ngModel)]="guide.name" 
+        name="name" 
+        id="name" 
+        class="form-control" 
+        required 
+      />
+    </div>
+
+    <!-- Guide Availability -->
+    <div class="form-group">
+      <label for="availability">Availability</label>
+      <input 
+        [(ngModel)]="guide.availability" 
+        name="availability" 
+        id="availability" 
+        class="form-control" 
+        required 
+      />
+    </div>
+
+    <!-- Experience -->
+    <div class="form-group">
+      <label for="experience">Experience</label>
+      <input 
+        [(ngModel)]="guide.experience" 
+        name="experience" 
+        id="experience" 
+        class="form-control" 
+        required 
+      />
+    </div>
+
+    <!-- Language -->
+    <div class="form-group">
+      <label for="language">Language</label>
+      <input 
+        [(ngModel)]="guide.language" 
+        name="language" 
+        id="language" 
+        class="form-control" 
+        required 
+      />
+    </div>
+
+    <!-- Speciality -->
+    <div class="form-group">
+      <label for="speciality">Speciality</label>
+      <select [(ngModel)]="guide.speciality" name="speciality" class="form-control" required>
+        <option value="" disabled selected>Select a speciality</option>
+        <option value="tourGuide">Tour Guide</option>
+        <option value="natureGuide">Nature Guide</option>
+        <option value="cityTourGuide">City Tour Guide</option>
+        <option value="museumGuide">Museum Guide</option>
+      </select>
+    </div>
+
+    <!-- Contact -->
+    <div class="form-group">
+      <label for="contact">Contact</label>
+      <input 
+        [(ngModel)]="guide.contact" 
+        name="contact" 
+        id="contact" 
+        class="form-control" 
+        required 
+      />
+    </div>
+
+    <!-- Average Rating -->
+    <div class="form-group">
+      <label for="averageRating">Average Rating</label>
+      <input 
+        [(ngModel)]="guide.averageRating" 
+        name="averageRating" 
+        id="averageRating" 
+        class="form-control" 
+        required 
+        type="number"
+        min="0"
+        max="5"
+        step="0.1"
+      />
+    </div>
+
+    <!-- Contact -->
+    <div class="form-group">
+      <label for="phone">phone number</label>
+      <input 
+        [(ngModel)]="guide.phone" 
+        name="phone" 
+        id="phone" 
+        class="form-control" 
+        required 
+      />
+    </div>
+
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Update Guide</button>
+    </div>
+
+  </form>
+</div>

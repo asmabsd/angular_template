@@ -1,0 +1,97 @@
+<form [formGroup]="storeForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input id="name" formControlName="name" type="text" />
+    <div
+      *ngIf="storeForm.get('name')?.invalid && storeForm.get('name')?.touched"
+      class="error"
+    >
+      <small *ngIf="storeForm.get('name')?.errors?.['required']">
+        Store name is required.
+      </small>
+      <small *ngIf="storeForm.get('name')?.errors?.['pattern']">
+        Only letters are allowed.
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="address">Address</label>
+    <input
+      id="address"
+      formControlName="address"
+      type="text"
+      #addressInput
+      (click)="showSuggestions = true"
+      autocomplete="off"
+    />
+    <div
+      class="suggestions-dropdown"
+      *ngIf="showSuggestions && addressSuggestions.length"
+    >
+      <div
+        *ngFor="let suggestion of addressSuggestions"
+        class="suggestion-item"
+        (click)="selectAddress(suggestion)"
+      >
+        {{ suggestion.display_name }}
+      </div>
+    </div>
+    <div
+      *ngIf="
+        storeForm.get('address')?.invalid && storeForm.get('address')?.touched
+      "
+      class="error"
+    >
+      <small *ngIf="storeForm.get('address')?.errors?.['required']"
+        >Address is required.</small
+      >
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description :</label>
+    <textarea
+      id="description"
+      formControlName="description"
+      class="large-textarea"
+    ></textarea>
+    <div
+      *ngIf="
+        storeForm.get('description')?.invalid &&
+        storeForm.get('description')?.touched
+      "
+      class="error"
+    >
+      <small *ngIf="storeForm.get('description')?.errors?.['required']">
+        Description is required.
+      </small>
+      <small *ngIf="storeForm.get('description')?.errors?.['maxlength']">
+        Description cannot exceed 150 characters.
+      </small>
+    </div>
+  </div>
+  <label for="status">Status :</label>
+  <select id="status" formControlName="status" required>
+    <option value="" disabled selected>Select a status</option>
+    <option value="LOADING">LOADING</option>
+    <option value="VALIDE">VALIDE</option>
+  </select>
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input id="phone" formControlName="phone" type="text" />
+    <div
+      *ngIf="storeForm.get('phone')?.invalid && storeForm.get('phone')?.touched"
+      class="error"
+    >
+      <small *ngIf="storeForm.get('phone')?.errors?.['required']"
+        >Phone number is required.</small
+      >
+      <small *ngIf="storeForm.get('phone')?.errors?.['pattern']"
+        >Phone number must contain only numbers.</small
+      >
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="storeForm.invalid">Add Store</button>
+</form>

@@ -1,0 +1,79 @@
+<div class="form-container">
+  <div class="card">
+    <div class="card-header">
+      <h2>Add New Planning</h2>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="PlanningForm" (ngSubmit)="onSubmit()">
+        <!-- Guide Selection -->
+        <div class="form-group">
+          <label for="guide">Guide:</label>
+          <select
+            id="guide"
+            formControlName="guideId"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': PlanningForm.get('guideId')?.invalid && PlanningForm.get('guideId')?.touched }"
+          >
+            <option value="">Select a Guide</option>
+            <option *ngFor="let guide of guides" [value]="guide.id">
+              {{ guide.id }} - {{ guide.name }}
+            </option>
+          </select>
+          <div *ngIf="PlanningForm.get('guideId')?.invalid && PlanningForm.get('guideId')?.touched" class="invalid-feedback">
+            Please select a guide
+          </div>
+        </div>
+
+        <!-- Date Field -->
+        <div class="form-group">
+          <label for="date">Date:</label>
+          <input
+            type="datetime-local"
+            id="date"
+            formControlName="date"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': PlanningForm.get('date')?.invalid && PlanningForm.get('date')?.touched }"
+          />
+          <div *ngIf="PlanningForm.get('date')?.invalid && PlanningForm.get('date')?.touched" class="invalid-feedback">
+            Please select a valid date and time
+          </div>
+        </div>
+
+        <!-- Reserved Checkbox -->
+        <div class="form-group form-check">
+          <input
+            type="checkbox"
+            id="isReserved"
+            formControlName="isReserved"
+            class="form-check-input"
+            (change)="onCheckboxChange($event)"
+          />
+          <label class="form-check-label" for="isReserved">Reserved</label>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="error" class="alert alert-danger">
+          {{ error }}
+        </div>
+
+        <!-- Loading Indicator -->
+        <div *ngIf="isLoading" class="loading-overlay">
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Form Buttons -->
+        <div class="form-actions">
+          <button type="submit" [disabled]="PlanningForm.invalid || isLoading" class="btn btn-primary">
+            <span *ngIf="!isLoading">Submit</span>
+            <span *ngIf="isLoading">Processing...</span>
+          </button>
+          <button type="button" class="btn btn-outline-secondary" (click)="navigateToList()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,156 @@
+<div class="add-blog-container">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="m-0">Ajouter un nouveau blog</h5>
+      <button class="btn btn-secondary btn-sm" (click)="goBack()">
+        <i class="bx bx-arrow-back me-1"></i> Go to blogs
+      </button>
+    </div>
+
+    <div class="card-body">
+      <!-- Messages -->
+      <div class="alert alert-success alert-dismissible fade show" *ngIf="successMessage">
+        <i class="bx bx-check-circle me-2"></i> {{ successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <div class="alert alert-danger alert-dismissible fade show" *ngIf="errorMessage">
+        <i class="bx bx-error-circle me-2"></i> {{ errorMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+      <!-- Formulaire -->
+      <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card mb-4">
+              <div class="card-body">
+                <!-- Titre -->
+                <div class="mb-3">
+                  <label for="title" class="form-label">Blog title</label>
+                  <input
+                    id="title"
+                    type="text"
+                    class="form-control"
+                    formControlName="title"
+                    [ngClass]="{'is-invalid': blogForm.get('title')?.invalid && blogForm.get('title')?.touched}"
+                  >
+                  <div class="invalid-feedback" *ngIf="blogForm.get('title')?.errors?.['required'] && blogForm.get('title')?.touched">
+                    Le titre est requis
+                  </div>
+                </div>
+
+                <!-- Contenu -->
+                <div class="mb-3">
+                  <label for="content" class="form-label">Content</label>
+                  <textarea
+                    id="content"
+                    class="form-control"
+                    formControlName="content"
+                    rows="6"
+                    [ngClass]="{'is-invalid': blogForm.get('content')?.invalid && blogForm.get('content')?.touched}"
+                  ></textarea>
+                  <div class="invalid-feedback" *ngIf="blogForm.get('content')?.errors?.['required'] && blogForm.get('content')?.touched">
+                    Content is required.
+                  </div>
+                  <!-- Bouton de summarisation -->
+                  <div class="text-end mt-2">
+                    <button
+                      class="btn btn-outline-info btn-sm"
+                      type="button"
+                      (click)="onSummarizeContent()"
+                      [disabled]="isSummarizing || !blogForm.get('content')?.value"
+                    >
+                      <span *ngIf="isSummarizing" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                      <i class="bx bx-book-open me-1"></i> Summarize content
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h6 class="mb-3">Publication Detaials</h6>
+
+                <!-- Date de publication -->
+                <div class="mb-3">
+                  <label for="publication" class="form-label">Publication date</label>
+                  <input
+                    id="publication"
+                    type="date"
+                    class="form-control"
+                    formControlName="publication"
+                    [ngClass]="{'is-invalid': blogForm.get('publication')?.invalid && blogForm.get('publication')?.touched}"
+                  >
+                  <div class="invalid-feedback" *ngIf="blogForm.get('publication')?.errors?.['required'] && blogForm.get('publication')?.touched">
+                    Publication date is required
+                  </div>
+                </div>
+
+                <!-- Région -->
+                <div class="mb-3">
+                  <label for="region" class="form-label">Region</label>
+                  <select
+                    id="region"
+                    class="form-select"
+                    formControlName="region"
+                    [ngClass]="{'is-invalid': blogForm.get('region')?.invalid && blogForm.get('region')?.touched}"
+                  >
+                    <option value="">-- Select Region --</option>
+                    <option *ngFor="let region of regions" [value]="region">
+                      {{ region }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="blogForm.get('region')?.errors?.['required'] && blogForm.get('region')?.touched">
+                    Region is required.
+                  </div>
+                </div>
+
+                <!-- Auteur -->
+                <div class="mb-3">
+                  <label for="userId" class="form-label">Author</label>
+                  <select
+                    id="userId"
+                    class="form-select"
+                    formControlName="userId"
+                    [ngClass]="{'is-invalid': blogForm.get('userId')?.invalid && blogForm.get('userId')?.touched}"
+                  >
+                    <option value="">-- Select author --</option>
+                    <option *ngFor="let user of users" [value]="user.id">
+                      {{ user.email }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="blogForm.get('userId')?.errors?.['required'] && blogForm.get('userId')?.touched">
+                    Author is required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="card">
+              <div class="card-body">
+                <h6 class="mb-3">Actions</h6>
+                <div class="d-grid gap-2">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="blogForm.invalid || isSubmitting"
+                  >
+                    <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                    {{ isSubmitting ? 'Création...' : 'Create blog' }}
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary" (click)="resetForm()">
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

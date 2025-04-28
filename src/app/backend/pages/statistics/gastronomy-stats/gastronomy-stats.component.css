@@ -1,0 +1,11 @@
+.chart-container {
+    display: flex;
+    justify-content: center; /* Centre les graphiques */
+    margin-right: 10%; /* Déplace légèrement vers la droite */
+  }
+  canvas {
+    width: 100%; /* Cela fait en sorte que les graphiques s'adaptent à la largeur de leur conteneur */
+    max-width: 600px; /* La largeur maximale du graphique */
+    height: 300px; /* Hauteur fixe du graphique */
+  }
+  

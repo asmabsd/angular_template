@@ -1,0 +1,76 @@
+<form [formGroup]="guideForm" (ngSubmit)="onSubmit()">
+  
+
+  
+  <!-- Langue -->
+  <label for="language">Language :</label>
+<div class="select-wrapper">
+  <select id="language" formControlName="language" required>
+    <option *ngFor="let lang of languages" [value]="lang.code">
+      {{ lang.flag }} {{ lang.label }}
+    </option>
+  </select>
+</div>
+
+  <!-- Name -->
+  <label for="name">Name:</label>
+  <input id="name" formControlName="name" required>
+
+  <!-- Spécialité (Liste déroulante) -->
+  <label for="speciality">Spéciality:</label>
+  <select id="speciality" formControlName="speciality" required>
+    <option value="" disabled selected>Choose the speciality : </option>
+    <option value="tourGuide">Guide touristique</option>
+    <option value="natureGuide">Guide nature</option>
+    <option value="cityTourGuide">Guide de ville</option>
+    <option value="museumGuide">Guide musée</option>
+  </select>
+
+  <!-- Expérience (Liste déroulante) -->
+  <label for="experience">Experience :</label>
+  <select id="experience" formControlName="experience" required>
+    <option value="" disabled selected>Sélectionner une expérience</option>
+    <option value="beginner">Débutant</option>
+    <option value="intermediate">Intermédiaire</option>
+    <option value="expert">Expert</option>
+  </select>
+
+  <!-- Note moyenne (Liste déroulante) -->
+ <label for="averageRating">Rate :</label>
+  <div class="star-rating">
+    <span *ngFor="let star of stars; let i = index" 
+          [class.filled]="i < guideForm.value.averageRating" 
+          (click)="rate(i + 1)">
+      &#9733; <!-- L'étoile -->
+    </span>
+  </div>
+
+  <!-- Disponibilité (Liste déroulante) -->
+  <label for="availability">Disponibility :</label>
+  <select id="availability" formControlName="availability" required>
+    <option value="" disabled selected>Sélectionner la disponibilité</option>
+    <option value="weekdays">En semaine</option>
+    <option value="weekends">Le weekend</option>
+    <option value="fullTime">À temps plein</option>
+    <option value="partTime">À temps partiel</option>
+  </select>
+
+  <!-- Contact -->
+  <label for="contact">Contact (email address):</label>
+  <input id="contact" formControlName="contact" required>
+  <div class="form-group mb-3">
+    <label class="form-label">Photo du guide</label>
+    <div class="image-upload-container">
+      <div class="image-preview mb-2">
+        <img [src]="imgPreview" alt="Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px;">
+      </div>
+      <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+    </div>
+  </div>
+
+
+  <label for="phone">phone number:</label>
+  <input id="phone" formControlName="phone" required>
+  <!-- Submit Button -->
+  <button type="submit" [disabled]="guideForm.invalid">Ajouter</button>
+</form>

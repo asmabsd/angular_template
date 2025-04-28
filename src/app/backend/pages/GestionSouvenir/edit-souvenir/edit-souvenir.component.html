@@ -1,0 +1,111 @@
+<form [formGroup]="souvenirForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Name :</label>
+      <input id="name" formControlName="name" type="text" />
+      <div
+        *ngIf="
+          souvenirForm.get('name')?.invalid && souvenirForm.get('name')?.touched
+        "
+        class="error"
+      >
+        <small *ngIf="souvenirForm.get('name')?.errors?.['required']"
+          >souvenir name is required.</small
+        >
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="description">Description :</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        class="large-textarea"
+      ></textarea>
+      <div
+        *ngIf="
+          souvenirForm.get('description')?.invalid &&
+          souvenirForm.get('description')?.touched
+        "
+        class="error"
+      >
+        <small *ngIf="souvenirForm.get('description')?.errors?.['required']">
+          Description is required.
+        </small>
+        <small *ngIf="souvenirForm.get('description')?.errors?.['maxlength']">
+          Description cannot exceed 150 characters.
+        </small>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="price">Price :</label>
+      <input id="price" formControlName="price" type="text" />
+      <div
+        *ngIf="
+          souvenirForm.get('price')?.invalid && souvenirForm.get('price')?.touched
+        "
+        class="error"
+      >
+        <small *ngIf="souvenirForm.get('price')?.errors?.['required']"
+          >price is required.</small
+        >
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="quantity">Quantity :</label>
+      <input id="quantity" formControlName="quantity" type="text" />
+      <div
+        *ngIf="
+          souvenirForm.get('quantity')?.invalid &&
+          souvenirForm.get('quantity')?.touched
+        "
+        class="error"
+      >
+        <small *ngIf="souvenirForm.get('quantity')?.errors?.['required']"
+          >quantity number is required.</small
+        >
+        <small *ngIf="souvenirForm.get('quantity')?.errors?.['pattern']"
+          >quantity number must contain only numbers.</small
+        >
+      </div>
+    </div>
+  
+    <label for="category">Category :</label>
+    <select id="category" formControlName="category" required>
+      <option value="" disabled selected>Sélectionner une expérience</option>
+      <option value="HANDICRAFTS">HandiCrafts</option>
+      <option value="JEWERLY">Jewerly</option>
+      <option value="TEXTILES">Textiles</option>
+    </select>
+  <!-- Champ pour sélectionner l'image -->
+  <div>
+    <label for="image">Image du souvenir :</label>
+    <input type="file" id="image" (change)="onFileSelected($event)" />
+  </div>
+
+    <!-- Afficher l'image actuelle -->
+    <!-- <div class="form-group">
+      <label>Current Image</label>
+      <img [src]="currentImageUrl" alt="Souvenir Image" style="width: 200px; height: auto; border-radius: 10px;" />
+    </div> -->
+    <div class="form-group">
+      <label for="storeId">Store</label>
+    
+      <!-- Si un store est déjà sélectionné (cas avec storeId dans l’URL), afficher juste son nom -->
+      <div *ngIf="storeId && selectedStoreName; else selectStore">
+        <input type="text" [value]="selectedStoreName" class="form-control" disabled />
+      </div>
+    
+      <!-- Sinon, afficher le <select> pour choisir le store -->
+      <ng-template #selectStore>
+        <select id="storeId" formControlName="storeId" class="form-control" required>
+          <option value="" disabled selected>Select a Store</option>
+          <option *ngFor="let store of stores" [value]="store.id">{{ store.name }}</option>
+        </select>
+      </ng-template>
+    </div>
+    
+    <button type="submit" [disabled]="souvenirForm.invalid">Update souvenir</button>
+  </form>
+  

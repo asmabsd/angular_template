@@ -1,0 +1,66 @@
+<div class="container mt-3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+    <!-- Loading indicator -->
+    <div *ngIf="isLoading" class="text-center py-3">
+      <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+      <p class="mt-2 small text-muted">Loading Souvenir details...</p>
+    </div>
+  
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="alert alert-danger py-2 px-3 mb-3 small">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Compact Souvenir details card -->
+    <div *ngIf="Souvenir && !isLoading" class="card shadow-sm border-0">
+      <div class="card-header bg-white py-2 px-3 border-bottom">
+        <h6 class="mb-0 text-primary">Souvenir Details</h6>
+      </div>
+      <div class="card-body p-2">
+        <ul class="list-group list-group-flush small">
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <span class="text-muted">Name:</span>
+            <span>{{ Souvenir.name }}</span>
+          </li>
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <span class="text-muted">Price:</span>
+            <span>{{ Souvenir.price | currency : "EUR"}} </span>
+          </li>
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <span class="text-muted">Description:</span>
+            <span>{{ Souvenir.description }}</span>
+          </li>
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <span class="text-muted">Quantity:</span>
+            <span>{{ Souvenir.quantity }}</span>
+          </li>          
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <span class="text-muted">Status:</span>
+            <span>{{ Souvenir.status }}</span>
+          </li>          
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <span class="text-muted">Category:</span>
+            <span>{{ Souvenir.category }}</span>
+          </li>          
+       
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <span class="text-muted">Store Name:</span>
+            <span>{{ Souvenir.store?.name }}</span>
+          </li> 
+          <li class="list-group-item px-2 py-1 d-flex justify-content-between">
+            <!-- Affichage de l'image -->
+            <span class="text-muted">Image:</span>
+
+            <img [src]="getSafeImageUrl(Souvenir.photo)" alt="Image du souvenir" class="souvenir-image"/>
+          </li>         
+        </ul>  
+        <!-- Compact action buttons -->
+        <div class="d-flex justify-content-between mt-2">
+          <button class="btn btn-sm btn-outline-secondary px-2 py-1" (click)="goBack()">
+            <i class="fas fa-arrow-left fa-xs"></i> Back
+          </button>
+        </div>
+      </div>
+    </div>
+</div>

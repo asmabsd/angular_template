@@ -1,0 +1,126 @@
+/* Ajouts pour le tableau */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 0.5rem; /* Réduire le padding pour compacter */
+    white-space: nowrap; /* Éviter le retour à la ligne pour la plupart des colonnes */
+  }
+  
+  .table .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* Ajuster la mise en page principale pour éviter le chevauchement avec la sidebar */
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px; /* Correspond à la largeur de la sidebar */
+    overflow-x: hidden;
+  }
+  
+  @media (max-width: 992px) {
+    .main-content {
+      margin-left: 80px; /* Largeur de la sidebar réduite */
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .main-content {
+      margin-left: 0; /* Pas de sidebar sur les très petits écrans */
+      padding: 10px;
+    }
+    .table th, .table td {
+      padding: 0.3rem;
+      font-size: 0.8rem;
+    }
+    .table img {
+      width: 50px;
+      height: 35px;
+    }
+    .btn-sm {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.4rem;
+    }
+  }
+  
+  /* Ajuster le conteneur pour éviter le débordement */
+  .container {
+    max-width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  
+  /* S'assurer que le tableau ne dépasse pas le conteneur */
+  .table-responsive table {
+    min-width: 900px; /* Largeur minimale pour forcer le défilement si nécessaire */
+  }
+  
+  /* Style pour la sidebar pour éviter tout chevauchement */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    z-index: 1000; /* S'assurer que la sidebar est au-dessus du contenu */
+    min-height: 100vh;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    transition: all 0.3s;
+  }
+  
+  @media (max-width: 992px) {
+    .sidebar {
+      width: 80px;
+    }
+  }
+  
+  /* Réduire la taille des boutons dans la colonne Actions */
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Ajuster les styles existants pour le tableau */
+  .thead-blue th {
+    background-color: var(--primary);
+    color: white;
+    font-size: 0.9rem;
+  }
+  
+  table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  table td, table th {
+    border-radius: 3px;
+    text-align: center;
+  }
+  
+  button {
+    font-weight: 500;
+    border-radius: 5px;
+  }
+  
+  /* Style pour le graphique */
+  .chart-container {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }

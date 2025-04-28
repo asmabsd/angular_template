@@ -1,0 +1,83 @@
+.add-blog-container {
+  padding: 1.5rem;
+}
+
+.card {
+  box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.12);
+  margin-bottom: 1.5rem;
+  border: 0;
+  border-radius: 0.5rem;
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: 1px solid #d9dee3;
+  padding: 1.25rem;
+}
+
+.btn-primary {
+  background-color: #696cff;
+  border-color: #696cff;
+  
+  &:hover:not(:disabled) {
+    background-color: #5f65e4;
+    border-color: #5f65e4;
+  }
+  
+  &:disabled {
+    background-color: #b4b6ff;
+    border-color: #b4b6ff;
+  }
+}
+
+.btn-secondary {
+  background-color: #8592a3;
+  border-color: #8592a3;
+  
+  &:hover {
+    background-color: #677486;
+    border-color: #677486;
+  }
+}
+
+.btn-outline-secondary {
+  color: #8592a3;
+  border-color: #8592a3;
+  
+  &:hover {
+    background-color: #8592a3;
+    border-color: #8592a3;
+    color: white;
+  }
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.invalid-feedback {
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+}
+
+.alert {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  
+  .btn-close {
+    margin-left: auto;
+  }
+}
+
+.alert-success {
+  background-color: #e8fadf;
+  border-color: #d2f5c1;
+  color: #496a2d;
+}
+
+.alert-danger {
+  background-color: #fee4e2;
+  border-color: #fecdca;
+  color: #8a2825;
+}

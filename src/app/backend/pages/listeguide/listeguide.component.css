@@ -1,0 +1,97 @@
+.table-container {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin-top: 20px;
+}
+
+.custom-table th {
+  background-color: #f8f9fa;
+  color: #343a40;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.custom-table td {
+  vertical-align: middle;
+  border-color: #dee2e6;
+}
+
+.custom-table img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-action {
+  padding: 6px 12px;
+  font-size: 14px;
+  margin: 2px;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+  border: none;
+}
+
+.btn-edit {
+  background-color: #ffc107;
+  color: white;
+}
+
+.btn-view {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-action:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.btn-action.btn-block {
+  background-color: #dc3545; /* rouge */
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-right: 5px;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.btn-action.btn-block:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+/* src/app/backend/pages/users/user-list/user-list.component.css */
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+.table th, .table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.btn-group {
+  display: flex;
+  gap: 5px;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
