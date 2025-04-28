@@ -1,0 +1,31 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    
+  <label for="firstName">First Name:</label>
+  <input id="firstName" formControlName="firstName" placeholder="Enter your first name" required>
+
+  <label for="lastName">Last Name:</label>
+  <input id="lastName" formControlName="lastName" required>
+
+  <label for="email">Email:</label>
+  <input id="email" formControlName="email" type="email" required>
+
+  <label for="password">Password:</label>
+  <input id="password" formControlName="password" type="password" required>
+
+  <label for="nTel">Phone Number:</label>
+  <input id="nTel" formControlName="nTel" required>
+
+  <label for="numPasseport">Passport Number:</label>
+  <input id="numPasseport" formControlName="numPasseport" required>
+
+  <!-- Fix: Add role selection -->
+  <label for="role">Role:</label>
+  <select id="role" formControlName="role" required>
+      <option value="">-- Select Role --</option>
+      <option value="USER">User</option>
+      <option value="ADMIN">Admin</option>
+      <option value="GUIDE">Guide</option>
+  </select>
+
+  <button type="submit" [disabled]="userForm.invalid">Ajouter</button>
+</form>

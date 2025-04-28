@@ -1,0 +1,24 @@
+<div class="prediction-form">
+  <h2>🔍 Prédire le type de gastronomie</h2>
+  <form (ngSubmit)="onSubmit()">
+    <label>
+      Région :
+      <input type="text" [(ngModel)]="request.location" name="location" required />
+    </label>
+    <br />
+    <label>
+      Note moyenne :
+      <input type="number" step="0.1" [(ngModel)]="request.rating" name="rating" required />
+    </label>
+    <br />
+    <button type="submit">Prédire</button>
+  </form>
+
+  <div *ngIf="predictionResult" class="result">
+    🧠 Type prédit : <strong>{{ predictionResult }}</strong>
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+</div>

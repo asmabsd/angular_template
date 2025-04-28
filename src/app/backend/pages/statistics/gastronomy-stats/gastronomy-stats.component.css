@@ -1,0 +1,65 @@
+/* Conteneur des graphiques */
+.charts-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Deux colonnes */
+  gap: 30px; /* Espacement entre les graphiques */
+  justify-items: center; /* Centrer les graphiques */
+  padding: 20px;
+}
+
+/* Styles pour chaque graphique */
+.chart-item {
+  background-color: #f9f9f9; /* Fond gris clair pour séparer les graphiques */
+  border-radius: 8px; /* Bordures arrondies */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce */
+  padding: 20px; /* Espacement interne agrandi */
+  text-align: center;
+  transition: transform 0.3s ease; /* Animation au survol */
+  width: 100%; /* Prendre toute la largeur disponible */
+}
+
+/* Effet de survol pour ajouter de l'interaction */
+.chart-item:hover {
+  transform: scale(1.03); /* Légère augmentation de la taille au survol */
+}
+
+/* Largeur spécifique pour certains graphiques */
+.chart-item.medium-chart {
+  max-width: 450px; /* Largeur augmentée pour chaque graphique */
+}
+
+/* Pour la première, troisième et quatrième graphiques, agrandir encore plus l'intérieur */
+.chart-item:nth-child(1),
+.chart-item:nth-child(3),
+.chart-item:nth-child(4) {
+  max-width: 550px; /* Largeur plus grande pour ces graphiques */
+}
+
+/* Titres des graphiques */
+.chart-item h3 {
+  font-size: 1.4rem; /* Taille de police réduite pour les titres */
+  margin-bottom: 15px; /* Espacement réduit sous le titre */
+  color: #333; /* Couleur foncée pour un bon contraste */
+  font-weight: 600; /* Gras pour attirer l'attention */
+}
+
+/* Améliorer l'apparence des titres de la page */
+h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+/* Ajustements spécifiques pour les graphiques */
+#typeChart, #ratingChart, #combinedChart {
+  width: 100%; /* Garantir que les graphiques utilisent toute la largeur disponible */
+  height: 250px; /* Hauteur constante pour tous les graphiques */
+}
+
+/* Graphique : Graphique pie (par exemple pour la localisation) */
+#locationChart {
+  width: 100%; /* S'assurer que le graphique occupe toute la largeur disponible */
+  height: 220px; /* Hauteur plus petite pour le graphique circulaire */
+}

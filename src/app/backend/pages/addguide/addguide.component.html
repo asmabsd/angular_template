@@ -1,0 +1,24 @@
+<form [formGroup]="guideForm" (ngSubmit)="onSubmit()">
+    <label for="language">Langue :</label>
+    <input id="language" formControlName="language" required>
+    <label for="name">name :</label>
+    <input id="" formControlName="name" required>
+  
+    <label for="speciality">Spécialité :</label>
+    <input id="speciality" formControlName="speciality" required>
+  
+    <label for="experience">Expérience :</label>
+    <input id="experience" formControlName="experience" required>
+  
+    <label for="averageRating">Note moyenne :</label>
+    <input id="averageRating" formControlName="averageRating" required>
+  
+    <label for="availability">Disponibilité :</label>
+    <input id="availability" formControlName="availability" required>
+  
+    <label for="contact">Contact :</label>
+    <input id="contact" formControlName="contact" required>
+  
+    <button type="submit" [disabled]="guideForm.invalid">Ajouter</button>
+  </form>
+  

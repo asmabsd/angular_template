@@ -1,0 +1,61 @@
+<!-- src/app/backend/pages/users/user-list/user-list.component.html -->
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">User List</h3>
+    <a routerLink="/dashboard/users/add" class="btn btn-primary float-right">
+      <i class="fas fa-plus"></i> Add User
+    </a>
+  </div>
+
+  <div class="card-body">
+    <!-- Loading state -->
+    <div *ngIf="isLoading" class="text-center py-4">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+      <p>Loading users...</p>
+    </div>
+
+    <!-- Error state -->
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+      <button (click)="loadUsers()" class="btn btn-sm btn-link">Retry</button>
+    </div>
+
+    <!-- Success state -->
+    <div *ngIf="!isLoading && !error">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <div class="btn-group">
+                <a [routerLink]="['/dashboard/users/view', user.id]" class="btn btn-info btn-sm">
+                  <i class="fas fa-eye"></i> View
+                </a>
+                <a [routerLink]="['/dashboard/users/edit', user.id]" class="btn btn-warning btn-sm">
+                  <i class="fas fa-edit"></i> Edit
+                </a>
+                
+               
+               
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="users.length === 0" class="alert alert-info">
+        No users found.
+      </div>
+    </div>
+  </div>
+</div>

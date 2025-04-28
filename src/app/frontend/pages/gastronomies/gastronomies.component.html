@@ -1,0 +1,120 @@
+<div class="container mt-5">
+  <h2 class="text-center">Liste des Gastronomies</h2>
+  <!-- Section prédiction IA -->
+<div class="card p-3 mb-4">
+  <h4>Prédire le type de gastronomie dominant</h4>
+  <form (ngSubmit)="predictGastronomyType()">
+    <div class="row">
+      <div class="col-md-4">
+        <select class="form-control" [(ngModel)]="predictionData.location" name="predictionLocation" required>
+          <option value="" disabled selected>Choisir une région</option>
+          <option *ngFor="let region of regions" [value]="region">{{ region }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <input type="number" class="form-control" [(ngModel)]="predictionData.rating" name="predictionRating" placeholder="Note moyenne (ex: 4.2)" required min="0" max="5" step="0.1" />
+      </div>
+      <div class="col-md-4">
+        <button type="submit" class="btn btn-success w-100">Prédire</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="mt-3 text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+
+  <!-- Résultat -->
+  <div *ngIf="predictedType" class="mt-3 alert alert-info d-flex align-items-center">
+    <span class="me-2" style="font-size: 1.5rem;">{{ getIconForType(predictedType) }}</span>
+    <strong>Type prédit :</strong>&nbsp; {{ predictedType }}
+  </div>
+</div>
+
+<!-- Formulaire de recherche dynamique -->
+<div class="mb-4">
+  <div class="row">
+    <div class="col-md-3">
+      <input type="text" class="form-control" [(ngModel)]="searchCriteria.name" (input)="searchGastronomies()" name="name" placeholder="Name" />
+    </div>
+    <div class="col-md-3">
+      <!-- Liste déroulante pour le type -->
+      <select class="form-control" [(ngModel)]="searchCriteria.type" (change)="searchGastronomies()" name="type">
+        <option value="">Select Type</option> <!-- Option vide pour "tous types" -->
+        <option *ngFor="let type of gastronomyTypes" [value]="type">{{ type | titlecase }}</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <input type="text" class="form-control" [(ngModel)]="searchCriteria.location" (input)="searchGastronomies()" name="location" placeholder="Location" />
+    </div>
+  </div>
+</div>
+
+<!-- Affichage des gastronomies -->
+<div class="row">
+  <div class="col-md-4" *ngFor="let gastronomy of gastronomiesFiltered">
+    <div class="card mb-4">
+      
+      <!-- Vérification si l'image de gastronomy existe -->
+      <div *ngIf="gastronomy.image" class="gastronomy-image">
+        <img [src]="gastronomy.image" alt="gastronomy image" class="img-fluid rounded">
+      </div>
+      <div *ngIf="!gastronomy.image" class="gastronomy-image">
+        <img src="default-image.jpg" alt="Default image" class="img-fluid rounded"> <!-- Image par défaut -->
+      </div>
+      
+      <div class="card-body">
+        <h5 class="card-title">{{ gastronomy.name }}</h5>
+        <p class="card-text"><strong>Location:</strong> {{ gastronomy.location }}</p>
+        <p class="card-text"><strong>Type:</strong> {{ gastronomy.type }}</p>
+
+        <!-- Détails de la gastronomy -->
+        <div *ngIf="gastronomy.detailGastronomy">
+          <p class="card-text"><strong>Description:</strong> {{ gastronomy.detailGastronomy.description }}</p>
+          <p class="card-text"><strong>Rating:</strong> {{ gastronomy.detailGastronomy.rating }} / 5 ⭐</p>
+          <p class="card-text"><strong>Availability:</strong> 
+            <span *ngIf="gastronomy.detailGastronomy.availability">Available</span>
+            <span *ngIf="!gastronomy.detailGastronomy.availability">Unavailable</span>
+          </p>
+        </div>
+
+        <!-- Vérification et affichage du QR code -->
+        <div *ngIf="gastronomy.id && qrCodes[gastronomy.id]" class="qr-code">
+          <img [src]="qrCodes[gastronomy.id]" alt="QR Code" class="img-fluid rounded">
+        </div>
+
+        <!-- Lien vers les menus -->
+        <a [routerLink]="['/menus-plats', gastronomy.id]" class="btn btn-primary" [class.disabled]="!gastronomy.id">
+          View Menus
+        </a>
+
+        <!-- Notation utilisateur avec étoiles cliquables -->
+        <div class="mt-3">
+          <p *ngIf="gastronomy.detailGastronomy?.rating">
+            <strong>Note actuelle :</strong> {{ gastronomy.detailGastronomy.rating }} / 5 ⭐
+          </p>
+
+          <label for="rating-{{ gastronomy.id }}"><strong>Notez cette gastronomie :</strong></label>
+
+          <div class="star-rating">
+            <span *ngFor="let r of [1, 2, 3, 4, 5]" 
+                  [ngClass]="{'star-filled': r <= selectedRating[gastronomy.id], 'star-empty': r > selectedRating[gastronomy.id]}"
+                  (click)="setRating(gastronomy.id, r)">
+              &#9733;
+            </span>
+          </div>
+
+          <button
+            class="btn btn-sm btn-outline-success"
+            (click)="submitRating(gastronomy.id, selectedRating[gastronomy.id])"
+            [disabled]="!selectedRating[gastronomy.id]">
+            Envoyer
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

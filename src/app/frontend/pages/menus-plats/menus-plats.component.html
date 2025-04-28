@@ -1,0 +1,45 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Menus de la Gastronomie "{{ gastronomyName }}"</h2>
+
+    <div *ngIf="menus.length === 0" class="text-center">
+        <p>Aucun menu disponible pour cette gastronomie.</p>
+    </div>
+
+    <div class="row" *ngFor="let menu of menus">
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ menu.nameMenu }}</h5>
+                    <p class="card-text"><strong>Description:</strong> {{ menu.descriptionMenu }}</p>
+                    <p class="card-text">
+                        <strong>Prix Menu:</strong> {{ menu.prixMenu }} Dt
+                        <span *ngIf="showConvertedPrices" class="text-muted">
+                            ({{ convertTndToEur(menu.prixMenu) }})
+                        </span>
+                    </p>
+                    <div *ngIf="menu.plates && menu.plates.length > 0">
+                        <h6>Plats :</h6>
+                        <ul class="list-unstyled">
+                            <li *ngFor="let plate of menu.plates" class="mb-3">
+                                <strong>{{ plate.namePlate }}</strong> - {{ plate.pricePlate }} Dt
+                                <span *ngIf="showConvertedPrices" class="text-muted">
+                                    ({{ convertTndToEur(plate.pricePlate) }})
+                                </span>
+                                <p class="mb-2">{{ plate.descriptionPlate }}</p>
+                                <img *ngIf="plate.imagePlate" [src]="plate.imagePlate" class="img-fluid" style="max-width: 150px;" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary" (click)="toggleConversion()">
+                            {{ showConvertedPrices ? 'Masquer les conversions' : 'Convertir les prix en Euros' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+    
+  

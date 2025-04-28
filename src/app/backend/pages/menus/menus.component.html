@@ -1,0 +1,51 @@
+<div class="menu-form">
+  <form [formGroup]="menuForm" (ngSubmit)="submitForm()">
+    <input formControlName="nameMenu" placeholder="Menu Name" />
+    <input formControlName="descriptionMenu" placeholder="Description" />
+
+    <div formArrayName="plates">
+      <div *ngFor="let plate of platesArray.controls; let i = index" [formGroupName]="i" class="plate-form">
+        <h4>Plate {{ i + 1 }}</h4>
+        <input formControlName="namePlate" placeholder="Plate Name" />
+        <input formControlName="descriptionPlate" placeholder="Plate Description" />
+        <input type="number" formControlName="pricePlate" placeholder="Plate Price" />
+        <input formControlName="imagePlate" placeholder="Image URL" />
+        <button type="button" (click)="removePlateField(i)">Remove Plate</button>
+        <hr />
+      </div>
+    </div>
+
+    <button type="button" (click)="addPlateField()">+ Add Plate</button>
+    <br /><br />
+
+    <button type="submit">{{ selectedMenu ? 'Update' : 'Create' }}</button>
+    <button type="button" (click)="resetForm()" *ngIf="selectedMenu">Cancel</button>
+  </form>
+</div>
+
+<hr />
+
+<div class="menu-list">
+  <ul>
+    <li *ngFor="let menu of menus">
+      <strong>{{ menu.nameMenu }}</strong>  
+      <p>{{ menu.descriptionMenu }}</p>
+      <button *ngIf="menu.id" (click)="loadPlates(menu.id)">Show Plates</button>
+      <button (click)="editMenu(menu)">Edit</button>
+      <button (click)="deleteMenu(menu.id)">Delete</button>
+
+      <<div *ngIf="shownPlatesMenus.has(menu.id!)">
+        <h4>Plates:</h4>
+        <ul>
+          <li *ngFor="let plate of menu.plates">
+            <strong>{{ plate.namePlate }}</strong>
+            <p>{{ plate.descriptionPlate }}</p>
+            <p>{{ plate.pricePlate }} Dt</p>
+            <img *ngIf="plate.imagePlate" [src]="plate.imagePlate" alt="Plate image" width="150" />
+          </li>
+        </ul>
+      </div>
+      
+    </li>
+  </ul>
+</div>

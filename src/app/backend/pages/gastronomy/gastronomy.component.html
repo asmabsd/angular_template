@@ -1,0 +1,195 @@
+<div class="gastronomy-container">
+  <h2>Gestion des Gastronomies</h2>
+
+  <!-- ===== Liste des Gastronomies ===== -->
+  <h3>Liste des Gastronomies</h3>
+  <table class="gastronomy-table">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Type</th>
+        <th>Lieu</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let gastronomy of gastronomies">
+        <tr>
+          <td>{{ gastronomy.name }}</td>
+          <td>{{ gastronomy.type }}</td>
+          <td>{{ gastronomy.location }}</td>
+          <td>
+            <div *ngIf="gastronomy.image" class="gastronomy-image">
+              <img [src]="gastronomy.image" alt="gastronomy image" class="rounded">
+            </div>
+          </td>      
+          <td class="actions">
+            <button class="btn btn-info btn-sm" (click)="editGastronomy(gastronomy)">Modifier</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteGastronomy(gastronomy.id!)">Supprimer</button>
+            <button class="btn btn-primary btn-sm" (click)="toggleDetails(gastronomy.id!)">Afficher Détails</button>
+            <button class="btn btn-secondary btn-sm" (click)="toggleMenus(gastronomy.id!)">Afficher Menus</button>
+          </td>
+        </tr>
+<!-- Affichage des détails de la gastronomie -->
+<tr *ngIf="gastronomy.id && showDetailIds.includes(gastronomy.id)">
+  <td colspan="5" class="bg-light p-2 rounded">
+    <strong>Description :</strong>
+    <span *ngIf="gastronomy.detailGastronomy?.description; else noDescription">
+      {{ gastronomy.detailGastronomy?.description }}
+    </span>
+    <ng-template #noDescription>
+      <em>Aucune description disponible</em>
+    </ng-template>
+    <br />
+    <strong>Note :</strong>
+    <span *ngIf="gastronomy.detailGastronomy?.rating !== undefined; else noRating">
+      {{ gastronomy.detailGastronomy?.rating }}/5
+    </span>
+    <ng-template #noRating>
+      <em>Note non disponible</em>
+    </ng-template>
+  </td>
+</tr>
+
+
+
+        <!-- Affichage des menus associés -->
+        <tr *ngIf="gastronomy.id && showMenuIds.includes(gastronomy.id)">
+          <td colspan="5">
+            <h5>Menus :</h5>
+            <div *ngFor="let menu of gastronomy.menus" class="mb-3">
+              <strong>{{ menu.nameMenu }}</strong> - {{ menu.descriptionMenu }} : {{ menu.prixMenu }} DT
+              <div *ngIf="menu.plates?.length">
+                <h6 class="mt-2">Plats :</h6>
+                <ul>
+                  <li *ngFor="let plate of menu.plates" class="mb-2">
+                    <strong>{{ plate.namePlate }}</strong> - {{ plate.descriptionPlate }} - {{ plate.pricePlate }} DT
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+      </ng-container>
+    </tbody>
+  </table>
+
+  <button class="btn btn-success btn-sm mt-3" (click)="goToStatistics()">Voir les Statistiques</button>
+
+  <hr />
+
+  <!-- ===== Formulaire Gastronomy avec menus et plats ===== -->
+  <form [formGroup]="gastronomyForm" (ngSubmit)="selectedGastronomy ? updateGastronomy() : addGastronomy()" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="name">Nom</label>
+      <input id="name" formControlName="name" class="form-control" type="text" required />
+    </div>
+
+    <div class="form-group">
+      <label for="type">Type</label>
+      <select id="type" formControlName="type" class="form-control">
+        <option *ngFor="let type of gastronomyTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="location">Lieu</label>
+      <input id="location" formControlName="location" class="form-control" type="text" required />
+    </div>
+
+    <div>
+      <label for="image">Image :</label>
+      <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" />
+      <div *ngIf="gastronomyForm.get('image')?.invalid && gastronomyForm.get('image')?.touched">
+        <small class="text-danger">L’image est requise</small>
+      </div>
+    </div>
+
+    <!-- Aperçu de l'image -->
+    <div *ngIf="selectedImage">
+      <p>Aperçu de l’image :</p>
+      <img [src]="imagePreview" alt="Preview" width="200" />
+    </div>
+
+    <div formGroupName="detailGastronomy">
+      <h3>Détails Gastronomie</h3>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" class="form-control" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="rating">Note</label>
+        <input id="rating" formControlName="rating" class="form-control" type="number" min="0" max="5" required />
+      </div>
+    </div>
+
+    <!-- Liste des menus -->
+    <div formArrayName="menus">
+      <h3>Menus</h3>
+      <div *ngFor="let menu of menus.controls; let i = index" [formGroupName]="i" class="menu-item">
+        <div class="form-group">
+          <label>Nom du menu</label>
+          <input formControlName="nameMenu" class="form-control" type="text" required />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input formControlName="descriptionMenu" class="form-control" type="text" required />
+        </div>
+
+        <!-- Formulaire des plats -->
+        <div formArrayName="plates">
+          <h4>Plats</h4>
+          <div *ngFor="let plate of getPlatesControls(i).controls; let j = index" [formGroupName]="j" class="plate-form">
+            <div class="form-group">
+              <label>Nom du plat</label>
+              <input formControlName="namePlate" class="form-control" type="text" required />
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <input formControlName="descriptionPlate" class="form-control" type="text" required />
+            </div>
+            <div class="form-group">
+              <label>Prix</label>
+              <input formControlName="pricePlate" class="form-control" type="number" required />
+            </div>
+
+            <button type="button" class="btn btn-danger btn-sm" (click)="removePlate(i, j)">Supprimer ce plat</button>
+            <hr />
+          </div>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="addPlate(i)">+ Ajouter un plat</button>
+        </div>
+
+        <button type="button" (click)="removeMenu(i)" class="btn btn-danger mt-2">Supprimer ce menu</button>
+      </div>
+    </div>
+
+    <button type="button" (click)="addMenu()" class="btn btn-secondary mt-3">Ajouter un menu</button>
+
+    <button type="submit" class="btn btn-success mt-3" [disabled]="!gastronomyForm.valid">
+      {{ selectedGastronomy ? 'Mettre à jour' : 'Ajouter' }} la Gastronomie
+    </button>
+  </form>
+
+  <!-- ===== Demande de conseils avant soumission ===== -->
+  <div class="form-group mt-4">
+    <label for="adviceRequest">Demander des conseils :</label>
+    <textarea id="adviceRequest" formControlName="description" class="form-control" placeholder="Entrez une description pour obtenir des conseils" required></textarea>
+  </div>
+
+  <button type="button" class="btn btn-primary mt-3" (click)="generateAdviceForGastronomy()">
+    Générer les conseils pour améliorer cette gastronomie
+  </button>
+
+  <!-- ===== Résultat des conseils ===== -->
+  <div class="mt-4">
+    <h2>Conseils pour améliorer la gastronomie :</h2>
+    <div *ngIf="advice && advice !== 'Conseil non disponible'">
+      <div [innerHTML]="advice | safeHtml"></div>
+    </div>
+    <div *ngIf="!advice || advice === 'Conseil non disponible'">
+      <p>Aucun conseil disponible.</p>
+    </div>
+  </div>
+</div>

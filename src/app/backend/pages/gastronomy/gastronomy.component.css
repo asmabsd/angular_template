@@ -1,0 +1,198 @@
+.gastronomy-container {
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.gastronomy-container h2,
+.gastronomy-container h3,
+.gastronomy-container h5 {
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #343a40;
+}
+
+.gastronomy-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.gastronomy-table th,
+.gastronomy-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.gastronomy-table th {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.gastronomy-table tr:nth-child(even) {
+  background-color: #f1f3f5;
+}
+
+.actions button {
+  margin-right: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #212529;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #495057;
+  outline: none;
+}
+
+.menu-item {
+  border: 1px solid #ced4da;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+button.btn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+  border: none;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+.gastronomy-image img {
+  width: 150px;  /* Ajuste la largeur selon ce que tu souhaites */
+  height: 150px; /* Ajuste la hauteur selon ce que tu souhaites */
+  object-fit: cover; /* Pour que l'image soit bien redimensionnée sans déformation */
+}
+@media (max-width: 768px) {
+  .gastronomy-table, .gastronomy-table thead, .gastronomy-table tbody, .gastronomy-table th, .gastronomy-table td, .gastronomy-table tr {
+    display: block;
+  }
+
+  .gastronomy-table thead {
+    display: none;
+  }
+
+  .gastronomy-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+
+  .gastronomy-table td {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .gastronomy-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-left: 1rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  
+  /* Appliquer une police lisible et un espacement agréable */
+div {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Styliser le titre */
+h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Appliquer un style pour les conseils */
+div[innerHTML] {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+/* Styliser les conseils sous forme de liste avec des alinéas */
+div[innerHTML] ul {
+  padding-left: 20px;
+  list-style-type: disc;
+  font-size: 16px;
+}
+
+/* Assurer que les tirets apparaissent bien au début et avoir un espacement */
+div[innerHTML] li {
+  margin-bottom: 10px;
+  padding-left: 10px; /* Créer l'alinéa */
+}
+
+/* Ajouter des styles pour les sections de texte */
+div[innerHTML] p {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+/* Ajouter un peu de marge pour séparer les conseils */
+div[innerHTML] p:last-child {
+  margin-bottom: 20px;
+}
+
+}
