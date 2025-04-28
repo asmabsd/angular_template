@@ -1,0 +1,27 @@
+export enum Region {
+    Gabes= "Gabes",
+    Tunis = "Tunis",
+    Beja = "Beja",
+    BenArous = "BenArous",
+    Bizerte = "Bizerte", 
+    Gafsa= "Gafsa",
+    Jendouba = "Jendouba", 
+    Kairouan = "Kairouan",
+    Kasserine = "Kasserine", 
+    Ariana = "Ariana", 
+    Kebili = "Kebili",
+    Manouba = "Manouba", 
+    Kef = "Kef", 
+   
+    Mahdia = "Mahdia", 
+    Medenine = "Medenine", 
+    Monastir = "Monastir", 
+    Nabeul= "Nabeul", 
+    Sfax= "Sfax", 
+    SidiBouzid= "SidiBouzid",
+    Siliana= "Siliana", 
+    Sousse= "Sousse", 
+    Tataouine=  "Tataouine", 
+    Tozeur= "Tozeur", 
+    Zaghouan = "Zaghouan"
+}

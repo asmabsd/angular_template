@@ -1,0 +1,92 @@
+.container {
+    max-width: 700px;
+    margin: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Spinner de chargement */
+  .spinner-border {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .text-center p {
+    color: #555;
+    font-size: 1.1rem;
+  }
+  
+  /* Message d'erreur */
+  .alert-danger {
+    font-weight: bold;
+    border-radius: 8px;
+  }
+  
+  /* Carte des détails */
+  .card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .card-header {
+    background: linear-gradient(135deg, #007bff, #00aaff);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-bottom: none;
+  }
+  
+  .card-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+  }
+  
+  /* Corps de la carte */
+  .card-body {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+  }
+  
+  /* Liste des éléments */
+  .list-group-item {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0.8rem 0;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .list-group-item strong {
+    color: #0056b3;
+  }
+  
+  /* Dernier élément sans bordure */
+  .list-group-item:last-child {
+    border-bottom: none;
+  }
+  
+  /* Animation légère à l'affichage */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 576px) {
+    .card-header h2 {
+      font-size: 1.3rem;
+    }
+  
+    .list-group-item {
+      font-size: 0.95rem;
+    }
+  }
+  

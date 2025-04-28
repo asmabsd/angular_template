@@ -1,0 +1,184 @@
+<!-- Home -->
+<div class="home">
+  <div class="home_background parallax-window" data-parallax="scroll" data-image-src="assets/travelix/images/activities_background.jpg"></div>
+  <div class="home_content">
+    <div class="home_title">Blog</div>
+  </div>
+</div>
+
+<!-- Top Liked Activities Section -->
+<div class="container top-liked-section" *ngIf="!loading && topLikedActivities.length > 0">
+  <div class="row mb-5">
+    <div class="col-12">
+      <h4 class="page_title">Top 3 Most Liked Activities</h4>
+      <p *ngIf="topLikedActivities.length >= 3">
+        The top 3 most liked activities on our platform are {{topLikedActivities[0]?.name}}, {{topLikedActivities[1]?.name}}, and {{topLikedActivities[2]?.name}}, with {{topLikedActivities[0]?.likes || 0}}, {{topLikedActivities[1]?.likes || 0}}, and {{topLikedActivities[2]?.likes || 0}} likes respectively.
+      </p>
+      <div class="row">
+        <div class="col-lg-4 col-md-6" *ngFor="let activity of topLikedActivities">
+          <div class="offers_item">
+            <div class="offers_image_container">
+              <div class="offers_image_background" [style.background-image]="'url(' + getImageUrl(activity) + ')'"></div>
+              <div class="offer_name">
+                <a>{{ activity.name }}</a>
+              </div>
+            </div>
+            <div class="offers_content">
+              <div class="offers_price">{{ activity.price }} DT<span>per person</span></div>
+              <div class="rating_r rating_r_4 offers_rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <p class="offers_text">
+                <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>{{ activity.location }}
+                <br>
+                <i class="fa" [ngClass]="getCategoryIcon(activity.categoryA)" aria-hidden="true"></i> {{ activity.categoryA }}
+              </p>
+              <div class="offers_icons">
+                <ul class="offers_icons_list">
+                  <li class="offers_icons_item"><img src="assets/travelix/images/post.png" alt=""></li>
+                  <li class="offers_icons_item"><img src="assets/travelix/images/compass.png" alt=""></li>
+                  <li class="offers_icons_item"><img src="assets/travelix/images/bicycle.png" alt=""></li>
+                  <li class="offers_icons_item"><img src="assets/travelix/images/sailboat.png" alt=""></li>
+                </ul>
+              </div>
+              <div class="button book_button">
+                <a (click)="reserveActivity(activity.idActivity!)">Book Now<span></span><span></span><span></span></a>
+              </div>
+              <div class="like-dislike">
+                <span (click)="likeActivity(activity)" style="cursor: pointer;">
+                  👍 {{ activity.likes || 0 }}
+                </span>
+                <span (click)="dislikeActivity(activity)" style="cursor: pointer;">
+                  👎 {{ activity.dislikes || 0 }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="filter_section">
+  <h4>Filter Blogs by Region</h4>
+  <select class="form-select" [(ngModel)]="selectedRegion" (change)="onRegionChange(selectedRegion)" title="Filter Blogs by Region">
+    <option *ngFor="let region of regions" [value]="region">{{ region }}</option>
+  </select>
+</div>
+
+<!-- Activities Content -->
+<div class="offers_container">
+  <div class="container">
+    <!-- Activity Filters -->
+    <div class="row mb-5">
+      <div class="col-12">
+        <div class="filter_panel">
+          <div class="filter_section">
+            <h4>Filter by Category</h4>
+            <div class="category_buttons">
+              <button class="btn btn-sm" 
+                      [ngClass]="{'btn-primary': categoryFilter === 'ALL', 'btn-outline-primary': categoryFilter !== 'ALL'}" 
+                      (click)="filterByCategory('ALL')">All</button>
+              <button *ngFor="let category of categories" 
+                      class="btn btn-sm" 
+                      [ngClass]="{'btn-primary': categoryFilter === category, 'btn-outline-primary': categoryFilter !== category}" 
+                      (click)="filterByCategory(category)">{{ category }}</button>
+            </div>
+          </div>
+          <div class="filter_section">
+            <h4>Price Range (up to {{ priceRangeFilter }}DT)</h4>
+            <input type="range" class="form-range" min="0" max="1000" step="50" [(ngModel)]="priceRangeFilter" (change)="applyFilters()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity Cards -->
+    <div class="row" *ngIf="!loading && filteredActivities.length > 0">
+      <div class="col-lg-4 col-md-6" *ngFor="let activity of filteredActivities">
+        <div class="offers_item">
+          <div class="offers_image_container">
+            <div class="offers_image_background" [style.background-image]="'url(' + getImageUrl(activity) + ')'"></div>
+            <div class="offer_name">
+              <a>{{ activity.name }}</a>
+            </div>
+          </div>
+          <div class="offers_content">
+            <div class="offers_price">{{ activity.price }} DT<span>per person</span></div>
+            <div class="rating_r rating_r_4 offers_rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+            </div>
+            <p class="offers_text">
+              <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>{{ activity.location }}
+              <br>
+              <i class="fa" [ngClass]="getCategoryIcon(activity.categoryA)" aria-hidden="true"></i> {{ activity.categoryA }}
+            </p>
+            <div class="offers_icons">
+              <ul class="offers_icons_list">
+                <li class="offers_icons_item"><img src="assets/travelix/images/post.png" alt=""></li>
+                <li class="offers_icons_item"><img src="assets/travelix/images/compass.png" alt=""></li>
+                <li class="offers_icons_item"><img src="assets/travelix/images/bicycle.png" alt=""></li>
+                <li class="offers_icons_item"><img src="assets/travelix/images/sailboat.png" alt=""></li>
+              </ul>
+            </div>
+            <div class="button book_button">
+              <a (click)="reserveActivity(activity.idActivity!)">Book Now<span></span><span></span><span></span></a>
+            </div>
+            <div class="like-dislike">
+              <span (click)="likeActivity(activity)" style="cursor: pointer;">
+                👍 {{ activity.likes || 0 }}
+              </span>
+              <span (click)="dislikeActivity(activity)" style="cursor: pointer;">
+                👎 {{ activity.dislikes || 0 }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="row" *ngIf="loading">
+      <div class="col-12 text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Activities Found State -->
+    <div class="row" *ngIf="!loading && filteredActivities.length === 0">
+      <div class="col-12 text-center py-5">
+        <div class="alert alert-info" role="alert">
+          <h4 class="alert-heading">No Activities Found</h4>
+          <p>There are no activities matching your filter criteria.</p>
+          <button class="btn btn-primary mt-3" (click)="categoryFilter = 'ALL'; priceRangeFilter = 1000; applyFilters();">
+            Reset Filters
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div class="row" *ngIf="errorMessage">
+      <div class="col-12 text-center py-5">
+        <div class="alert alert-danger" role="alert">
+          <h4 class="alert-heading">Error</h4>
+          <p>{{ errorMessage }}</p>
+          <button class="btn btn-primary mt-3" (click)="loadActivities()">
+            Try Again
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

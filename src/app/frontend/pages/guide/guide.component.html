@@ -1,30 +1,308 @@
-<h2 class="text-center">Liste des Guides</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
 
-<div class="table-responsive">
-  <table class="table table-striped table-hover custom-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Note Moyenne</th>
-        <th>Contact</th>
-        <th>Expérience</th>
-        <th>Langue</th>
-        <th>Spécialité</th>
-        <th>Action</th> <!-- Colonne pour le bouton -->
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let guide of guides">
-        <td>{{ guide.id }}</td>
-        <td>{{ guide.averageRating }}</td>
-        <td>{{ guide.contact }}</td>
-        <td>{{ guide.experience }}</td>
-        <td>{{ guide.language }}</td>
-        <td>{{ guide.speciality }}</td>
-        <td>
-          <button class="btn btn-reserve" (click)="reserver(guide)">Réserver</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<style>
+  /* Custom Styles for Filter Dropdown and Search Input */
+  .filter-container {
+    max-width: 500px;
+    margin: 20px auto;
+    position: relative;
+  }
+
+  .form-control {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+    outline: none;
+  }
+
+  select.form-control {
+    appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23333" d="M7 10l5 5 5-5z"/></svg>')
+      no-repeat right 15px center;
+    background-size: 12px;
+    padding-right: 35px;
+    cursor: pointer;
+  }
+
+  .filter-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+  }
+
+  .search-input-container {
+    position: relative;
+  }
+
+  .search-input-container i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+  }
+
+  .search-input-container input {
+    padding-left: 40px;
+  }
+
+  /* Guide Card Styling */
+  .guide-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .guide-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .guide-photo {
+    width: 140px !important;
+    height: 140px !important;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .guide-name {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+  }
+
+  .btn-primary,
+  .btn-outline-primary {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+  }
+
+  .btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  /* Bot Icon */
+  .bot-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #007bff;
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .bot-icon:hover {
+    transform: scale(1.1);
+  }
+
+  /* Suggestions Panel */
+  .suggestions-panel {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    z-index: 1000;
+  }
+
+  .suggestions-panel h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .suggestions-panel ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .suggestions-panel li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    color: #555;
+  }
+
+  .suggestions-panel button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .suggestions-panel button:hover {
+    background: #0056b3;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .guide-photo {
+      width: 100px !important;
+      height: 100px !important;
+    }
+
+    .guide-name {
+      font-size: 1.2rem;
+    }
+
+    .col-md-4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+</style>
+<div class="container" >
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4 mb-4"></div>
+  <!-- Filter Dropdown for Search -->
+  <select
+  [(ngModel)]="searchParams.filter"
+  name="filter"
+  class="form-control mb-3"
+  (change)="searchGuides()"
+>
+  <option value="">-- Filtrer les guides --</option>
+  <option value="name">Nom</option>
+  <option value="category">Catégorie</option>
+  <option value="experience">Expérience</option>
+  <option value="language">Langue</option>
+  <option value="speciality">Spécialité</option>
+  <option value="rating">Note</option>
+</select>
+  <!-- Input Field for the Selected Filter -->
+  <div *ngIf="searchParams.filter">
+    <input
+      type="text"
+      [(ngModel)]="searchParams.searchTerm"
+      class="form-control mb-3"
+      [placeholder]="'Rechercher par ' + searchParams.filter"
+      (input)="searchGuides()"
+    />
+  </div>
+
+  <!-- Guides Section -->
+<!-- Guides Section -->
+<div id="guide-section">
+  <div *ngIf="filteredGuides.length > 0; else noGuides">
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-4 mb-4" *ngFor="let guide of filteredGuides">
+        <div class="card shadow-sm h-100 text-center p-3 d-flex flex-column" style="min-height: 600px;">
+          <img
+            [src]="guide.photo ? 'http://localhost:8089/tourisme/Guide/images/' + guide.photo : '/src/assets/frontend/images/guide.jpg'"
+            class="guide-photo rounded-circle mx-auto mb-3"
+            alt="{{ guide.name || 'Photo Guide' }}"
+            style="width: 120px; height: 120px; object-fit: cover;"
+          />
+
+          <h4 class="guide-name mb-2" *ngIf="guide.name">{{ guide.name }}</h4>
+
+          <!-- Rating -->
+          <div class="rating-stars mb-3" *ngIf="guide.averageRating !== undefined">
+            <strong>Note :</strong>
+            <ng-container *ngFor="let i of ratingStars">
+              <i
+                class="fas fa-star"
+                [ngClass]="{
+                  'text-warning': i <= (+guide.averageRating),
+                  'text-muted': i > (+guide.averageRating)
+                }"
+              ></i>
+            </ng-container>
+            <small class="d-block text-muted mt-1">({{ guide.averageRating | number:'1.1-1' }}/5)</small>
+          </div>
+
+          <p class="mb-2" *ngIf="guide.language">
+            <strong>Langues :</strong> {{ guide.language }}
+          </p>
+
+          <p class="mb-2" *ngIf="guide.speciality">
+            <strong>Spécialité :</strong> {{ guide.speciality }}
+          </p>
+
+          <a [routerLink]="['/afficherplanning', guide.id]" class="btn btn-primary w-100 mb-2">
+            <i class="fas fa-calendar-check me-2"></i>Voir le planning de ce guide
+          </a>
+
+          <a
+            [routerLink]="['/resguide']"
+            [queryParams]="{ guideId: guide.id }"
+            fragment="reservationfragment"
+            class="btn btn-primary w-100 mb-2"
+          >
+            <i class="fas fa-calendar-check me-2"></i>Réserver
+          </a>
+
+          <a [routerLink]="['/guidedetails', guide.id]" class="btn btn-outline-primary w-100">
+            <i class="fas fa-info-circle me-2"></i>Détails
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noGuides>
+    <div class="text-center text-muted">
+      Aucun guide disponible pour le moment.
+    </div>
+  </ng-template>
+</div>
+
+</div>
+<!-- Icône du bot AI -->
+
+<button (click)="onBotClick()" class="bot-icon" title="Get AI Suggestions">
+  <img [src]="getBotImagePath()" alt="AI Bot" width="40" height="40"></button>
+
+<!-- Panneau des suggestions -->
+<div *ngIf="showSuggestions" class="suggestions-panel">
+  <h3>Suggestions of the best guides that matches you </h3>
+  <ul>
+    <li *ngFor="let guide of suggestedGuides">
+      {{ guide.name }} (Rating: {{ guide.rating.toFixed(1) }})
+    </li>
+  </ul>
+  <button (click)="closeSuggestions()">Fermer</button>
 </div>

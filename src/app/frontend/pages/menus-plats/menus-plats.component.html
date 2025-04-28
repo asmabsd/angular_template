@@ -1,0 +1,45 @@
+<div class="container mt-5">
+<div class="container mt-5">
+    <h2 class="text-center">Menus de la Gastronomie "{{ gastronomyName }}"</h2>
+
+  <div class="row" *ngFor="let menu of menus">
+    <div class="col-md-12">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ menu.nameMenu }}</h5>
+          <p class="card-text"><strong>Description:</strong> {{ menu.descriptionMenu }}</p>
+          <p class="card-text">
+            <strong>Prix Menu:</strong> {{ menu.prixMenu }} Dt
+            <span *ngIf="showConvertedPrices" class="text-muted">
+              ({{ convertTndToEur(menu.prixMenu) }})
+            </span>
+          </p>
+          <div *ngIf="menu.plates && menu.plates.length > 0">
+            <h6>Plats :</h6>
+            <ul>
+              <li *ngFor="let plate of menu.plates">
+                <strong>{{ plate.namePlate }}</strong> - {{ plate.pricePlate }} Dt
+                <span *ngIf="showConvertedPrices" class="text-muted">
+                  ({{ convertTndToEur(plate.pricePlate) }})
+                </span>
+                <p>{{ plate.descriptionPlate }}</p>
+                <img *ngIf="plate.imagePlate" [src]="plate.imagePlate" width="150" />
+              </li>
+             
+              
+            </ul>
+          </div>
+          <div class="text-center my-4">
+            <button class="btn btn-primary" (click)="toggleConversion()">
+              {{ showConvertedPrices ? 'Masquer les conversions' : 'Convertir les prix en Euros' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+    
+  </div>
+  

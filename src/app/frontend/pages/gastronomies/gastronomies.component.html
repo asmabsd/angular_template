@@ -1,0 +1,65 @@
+<div class="container mt-5">
+  <h2 class="text-center">Liste des Gastronomies</h2>
+  
+  <!-- Formulaire de recherche -->
+  <div class="mb-4">
+    <form (ngSubmit)="searchGastronomies()">
+      <div class="row">
+        <div class="col-md-3">
+          <input type="text" class="form-control" [(ngModel)]="searchCriteria.name" name="name" placeholder="Name" />
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control" [(ngModel)]="searchCriteria.type" name="type" placeholder="Type" />
+        </div>
+        <div class="col-md-3">
+          <input type="text" class="form-control" [(ngModel)]="searchCriteria.location" name="location" placeholder="Location" />
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <!-- Affichage des gastronomies -->
+  <div class="row">
+    <div class="col-md-4" *ngFor="let gastronomy of gastronomies">
+      <div class="card mb-4">
+        
+        <!-- Vérification si l'image de gastronomy existe -->
+        <div *ngIf="gastronomy.image" class="gastronomy-image">
+          <img [src]="gastronomy.image" alt="gastronomy image" class="img-fluid rounded">
+        </div>
+        <div *ngIf="!gastronomy.image" class="gastronomy-image">
+          <img src="default-image.jpg" alt="Default image" class="img-fluid rounded"> <!-- Image par défaut -->
+        </div>
+        
+        <div class="card-body">
+          <h5 class="card-title">{{ gastronomy.name }}</h5>
+          <p class="card-text"><strong>Location:</strong> {{ gastronomy.location }}</p>
+          <p class="card-text"><strong>Type:</strong> {{ gastronomy.type }}</p>
+  
+          <!-- Détails de la gastronomy -->
+          <div *ngIf="gastronomy.detailGastronomy">
+            <p class="card-text"><strong>Description:</strong> {{ gastronomy.detailGastronomy.description }}</p>
+            <p class="card-text"><strong>Rating:</strong> {{ gastronomy.detailGastronomy.rating }}</p>
+            <p class="card-text"><strong>Availability:</strong> 
+              <span *ngIf="gastronomy.detailGastronomy.availability">Available</span>
+              <span *ngIf="!gastronomy.detailGastronomy.availability">Unavailable</span>
+            </p>
+          </div>
+  
+          <!-- Vérification et affichage du QR code -->
+          <div *ngIf="gastronomy.id && qrCodes[gastronomy.id]" class="qr-code">
+            <img [src]="qrCodes[gastronomy.id]" alt="QR Code" class="img-fluid rounded">
+          </div>
+  
+          <!-- Lien vers les menus -->
+          <a [routerLink]="['/menus-plats', gastronomy.id]" class="btn btn-primary" [class.disabled]="!gastronomy.id">
+            View Menus
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

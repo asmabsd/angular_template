@@ -2,7 +2,7 @@
 <div class="card">
   <div class="card-header">
     <h3 class="card-title">User List</h3>
-    <a routerLink="/dashboard/users/add" class="btn btn-primary float-right">
+    <a routerLink="/dashboard/adduser" class="btn btn-primary float-right">
       <i class="fas fa-plus"></i> Add User
     </a>
   </div>
@@ -41,11 +41,15 @@
                 <a [routerLink]="['/dashboard/users/view', user.id]" class="btn btn-info btn-sm">
                   <i class="fas fa-eye"></i> View
                 </a>
-                <a [routerLink]="['/dashboard/users/edit', user.id]" class="btn btn-warning btn-sm">
+                <a [routerLink]="['/dashboard/edit-user', user.id]" class="btn btn-warning btn-sm">
                   <i class="fas fa-edit"></i> Edit
                 </a>
                 
-               
+                <button class="btn-action btn-delete" (click)="deleteUser(user.id)">
+                  <i class="fas fa-trash"></i> Delete
+                </button>
+                
+                
                
               </div>
             </td>

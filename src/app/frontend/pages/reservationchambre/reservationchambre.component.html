@@ -1,18 +1,28 @@
 <div *ngIf="hebergement" class="reservation-container">
-    <div class="card">
-      <img [src]="'assets/frontend/images/hotels/' + hebergement.imageUrl" alt="Image hébergement" class="hebergement-image" />
-      <div class="card-content">
-        <h2 class="title">🏨 Réserver - {{ hebergement.name }}</h2>
-        <p><span class="label">Type :</span> {{ hebergement.type }}</p>
-        <p><span class="label">Adresse :</span> {{ hebergement.adresse }}</p>
-        <p><span class="label">Description :</span> {{ hebergement.description }}</p>
-        <p><span class="label">Prix :</span> <strong>{{ hebergement.price }} €</strong> / nuit</p>
-  
-        <!-- Formulaire de réservation -->
-        <form (ngSubmit)="reserverChambre()" #reservationForm="ngForm">
-          <div class="form-group">
-            <label for="dateDebut">📅 Date début :</label>
-            <input 
+  <div class="card">
+    <img [src]="'assets/frontend/images/hotels/' + hebergement.imageUrl" alt="Accommodation Image" class="hebergement-image" />
+    
+    <div class="card-content">
+      <div class="availability-badge" [ngClass]="isHebergementAvailable(hebergement) ? 'available' : 'not-available'">
+        <i class="fa" [ngClass]="isHebergementAvailable(hebergement) ? 'fa-check-circle' : 'fa-times-circle'"></i>
+        <strong>{{ isHebergementAvailable(hebergement) ? 'available' : 'not available' }}</strong>
+      </div>
+      <h2 class="title">🏨 Book - {{ hebergement.name }}</h2>
+      <p><span class="label">Type:</span> {{ hebergement.type }}</p>
+      <p><span class="label">Address:</span> {{ hebergement.adresse }}</p>
+      <p><span class="label">Description:</span> {{ hebergement.description }}</p>
+      <p><span class="label">Price:</span> 
+        <strong *ngIf="hebergement.discountedPrice !== undefined" class="original-price">{{ hebergement.price }} dt</strong>
+        <strong class="discounted-price">{{ (hebergement.discountedPrice !== undefined ? hebergement.discountedPrice : hebergement.price) | number:'1.0-0' }} dt</strong> / night
+      </p>
+      <p><span class="label">Region:</span> {{ hebergement.region }}</p>
+      <p><span class="label">Phone:</span> {{ hebergement.telephone }}</p>
+
+      <!-- Booking Form -->
+      <form (ngSubmit)="reserverChambre()" #reservationForm="ngForm">
+        <div class="form-group">
+          <label for="dateDebut">📅 Start date:</label>
+          <input 
             type="date" 
             id="dateDebut" 
             name="dateDebut" 
@@ -20,11 +30,11 @@
             [min]="today" 
             (change)="calculerPrixTotal()" 
             required>
-                  </div>
-  
-          <div class="form-group">
-            <label for="dateFin">📅 Date fin :</label>
-            <input 
+        </div>
+
+        <div class="form-group">
+          <label for="dateFin">📅 End date:</label>
+          <input 
             type="date" 
             id="dateFin" 
             name="dateFin" 
@@ -32,45 +42,96 @@
             [min]="today" 
             (change)="calculerPrixTotal()" 
             required>
-                  </div>
-  
-          <div class="form-group">
-            <label for="nombreadulte">🧑 Adultes :</label>
-            <input type="number" id="nombreadulte" name="nombreadulte" [(ngModel)]="reservation.nombreadulte" (input)="calculerPrixTotal()" min="0" required>
-          </div>
-  
-          <div class="form-group">
-            <label for="nombrenfant">🧒 Enfants :</label>
-            <input type="number" id="nombrenfant" name="nombrenfant" [(ngModel)]="reservation.nombrenfant" (input)="calculerPrixTotal()" min="0" required>
-          </div>
-  
-          <div class="form-group">
-            <label for="statut">👤 Statut :</label>
-            <select id="statut" name="statut" [(ngModel)]="reservation.statut" required>
-              <option value="" disabled selected>-- Choisissez votre statut --</option>
-              <option value="marié">Couple</option>
-              <option value="célibataire">Célibataire</option>
-              <option value="famille">Famille</option>
-            </select>
-          </div>
-  
-          <p><span class="label">💰 Prix total :</span> {{ reservation.prixTotal || 0 }} €</p>
-          <p style="color: darkorange; font-style: italic;">
-            ⚠️ Un supplément de 20% est appliqué pour les nuits du week-end (vendredi, samedi, dimanche).
-          </p>
-          <button 
+        </div>
+
+        <div class="form-group">
+          <label for="nombreadulte">🧑 Adults:</label>
+          <input 
+            type="number" 
+            id="nombreadulte" 
+            name="nombreadulte" 
+            [(ngModel)]="reservation.nombreadulte" 
+            (input)="calculerPrixTotal()" 
+            min="0" 
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="nombrenfant">🧒 Children:</label>
+          <input 
+            type="number" 
+            id="nombrenfant" 
+            name="nombrenfant" 
+            [(ngModel)]="reservation.nombrenfant" 
+            (input)="calculerPrixTotal()" 
+            min="0" 
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="clientEmail">📧 Email:</label>
+          <input 
+            type="email" 
+            id="clientEmail" 
+            name="clientEmail" 
+            [(ngModel)]="reservation.clientEmail" 
+            required
+            placeholder="Votre email pour la confirmation">
+        </div>
+
+        <div class="form-group">
+          <label for="statut">👤 Status:</label>
+          <select id="statut" name="statut" [(ngModel)]="reservation.statut" required>
+            <option value="" disabled selected>-- Choose your status --</option>
+            <option value="marié">Couple</option>
+            <option value="célibataire">Single</option>
+            <option value="famille">Family</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="typeChambre">🏠 Type de chambre:</label>
+          <select 
+            id="typeChambre" 
+            name="typeChambre" 
+            [(ngModel)]="reservation.typeChambre" 
+            (change)="calculerPrixTotal()"
+            required>
+            <option value="" disabled selected>-- Choisissez un type --</option>
+            <option value="single">Single</option>
+            <option value="Double">Double</option>
+            <option value="Suite">Suite</option>
+            <option value="Deluxe">Deluxe</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="nombreChambres">🛏️ Nombre de chambres:</label>
+          <input 
+            type="number" 
+            id="nombreChambres" 
+            name="nombreChambres" 
+            [(ngModel)]="reservation.nombreChambres" 
+            (input)="calculerPrixTotal()" 
+            min="1" 
+            required>
+        </div>
+
+        <p><span class="label">💰 Total price:</span> {{ reservation.prixTotal || 0 }} dt</p>
+        <p style="color: darkorange; font-style: italic;">
+          ⚠️ A 20% extra charge is applied for weekend nights (Friday, Saturday, Sunday).
+        </p>
+        <button 
           type="submit" 
           class="reserve-button" 
           [disabled]="!reservationForm.form.valid">
-          ✅ Confirmer la réservation
+          ✅ Confirm reservation
         </button>
-        </form>
-      </div>
+      </form>
     </div>
   </div>
-  
-  <div *ngIf="!hebergement" class="loading">
-    <p>⏳ Chargement des informations de l'hébergement...</p>
-  </div>
+</div>
 
-  
+<div *ngIf="!hebergement" class="loading">
+  <p>⏳ Loading accommodation information...</p>
+</div>

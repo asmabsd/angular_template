@@ -557,3 +557,10 @@ body {
     to { transform: rotateY(360deg); }
   }
   
+  #statut,
+#typeChambre {
+    height: 50px; /* Par exemple */
+    padding: 10px 15px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+}

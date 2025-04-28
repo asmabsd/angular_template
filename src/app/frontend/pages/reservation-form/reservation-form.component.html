@@ -1,0 +1,140 @@
+<!-- Home -->
+<div class="home">
+    <div class="home_background parallax-window" data-parallax="scroll" data-image-src="assets/travelix/images/about_background.jpg"></div>
+    <div class="home_content">
+      <div class="home_title">Make a Reservation</div>
+    </div>
+  </div>
+  
+  <!-- Rest of your reservation form content -->
+  <div class="reservation_container">
+    <div class="container">
+<div class="page_title_container">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="page_title_content d-flex flex-row align-items-center justify-content-start">
+            <div class="page_title">Make a Reservation</div>
+            <div class="breadcrumbs ml-auto">
+              <ul class="breadcrumb_list d-flex flex-row align-items-center justify-content-start">
+                <li><a [routerLink]="['/']">Home</a></li>
+                <li><a [routerLink]="['/activities']">Activities</a></li>
+                <li>Reservation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="reservation_container">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="booking_form_container">
+            <!-- Loading State -->
+            <div *ngIf="loading" class="text-center py-5">
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+  
+            <!-- Error State -->
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+              {{ error }}
+            </div>
+  
+            <!-- Success Message -->
+            <div *ngIf="success" class="alert alert-success" role="alert">
+              <h4>Reservation Successful!</h4>
+              <p>Your booking has been confirmed. Redirecting to your reservations...</p>
+            </div>
+  
+            <!-- Booking Form -->
+            <div *ngIf="!loading && !error && !success && activity">
+              <h2>Book {{ activity.name }}</h2>
+              <form [formGroup]="reservationForm" (ngSubmit)="onSubmit()" class="booking_form">
+                <div class="form-group">
+                  <label for="dateReservation">Date & hour of reservation*</label>
+                  <input
+                    type="datetime-local"
+                    id="dateReservation"
+                    formControlName="dateReservation"
+                    class="form-control"
+                    [attr.step]="1"
+                    [min]="minDate + 'T00:00:00'"
+                    [ngClass]="{'is-invalid': f['dateReservation'].invalid && (f['dateReservation'].touched || submitted)}"
+                  />
+                  <div class="invalid-feedback" *ngIf="f['dateReservation'].touched || submitted">
+                    Please select a valid date and time.
+                  </div>
+                </div>
+                
+  
+                <div class="form-group">
+                  <label for="numberOfPeople">Number of People:</label>
+                  <input 
+                    id="numberOfPeople"
+                    type="number" 
+                    class="booking_input" 
+                    formControlName="numberOfPeople"
+                    min="1"
+                    [class.is-invalid]="submitted && f['numberOfPeople'].errors"
+                  >
+                  <div *ngIf="submitted && f['numberOfPeople'].errors" class="invalid-feedback">
+                    <div *ngIf="f['numberOfPeople'].errors['required']">Number of people is required</div>
+                    <div *ngIf="f['numberOfPeople'].errors['min']">Minimum 1 person required</div>
+                  </div>
+                </div>
+  
+                <div class="form-group">
+                  <button type="submit" class="booking_button" [disabled]="loading">
+                    <span *ngIf="!loading">Confirm Booking</span>
+                    <span *ngIf="loading">Processing...</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Activity Summary -->
+        <div class="col-lg-4" *ngIf="!loading && !error && activity">
+          <div class="booking_summary">
+            <h3>Booking Summary</h3>
+            <div class="booking_item">
+              <div class="booking_image" [style.background-image]="'url(' + activityService.getImageUrl(activity.imagePath!) + ')'"></div>
+              <div class="booking_details">
+                <div class="booking_name">{{ activity.name }}</div>
+                <div class="booking_location">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  {{ activity.location }}
+                </div>
+                <div class="booking_category">
+                  <i class="fa fa-tag" aria-hidden="true"></i>
+                  {{ activity.categoryA }}
+                </div>
+              </div>
+            </div>
+            <div class="booking_price_details">
+              <div class="price_item">
+                <div class="price_label">Price per person</div>
+                <div class="price_value">${{ activity.price }}</div>
+              </div>
+              <div class="price_item">
+                <div class="price_label">Number of people</div>
+                <div class="price_value">{{ f['numberOfPeople'].value }}</div>
+              </div>
+              <div class="price_total">
+                <div class="price_label">Total</div>
+                <div class="price_value">${{ calculateTotalPrice() }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

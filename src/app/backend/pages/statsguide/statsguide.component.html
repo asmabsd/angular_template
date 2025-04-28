@@ -1,0 +1,56 @@
+<div *ngIf="stats" class="stats-container">
+    <h2>Total des Guides : {{ stats.totalGuides }}</h2>
+  
+    <!-- Répartition par Langue -->
+    <div class="chart-section">
+      <h3>Répartition par Langue</h3>
+      <div class="stat-circles">
+        <div *ngFor="let lang of getLabelValues(stats.guidesByLanguage).labels">
+          <div class="circle-container">
+            <div class="circle" [style.background]="getColorForCircle()"></div>
+            <p>{{ lang }}: {{ stats.guidesByLanguage[lang] }} guides</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Répartition par Spécialité -->
+    <div class="chart-section">
+      <h3>Répartition par Spécialité</h3>
+      <div class="stat-bars">
+        <div *ngFor="let speciality of getLabelValues(stats.guidesBySpeciality).labels">
+          <div class="bar-label">{{ speciality }}: {{ stats.guidesBySpeciality[speciality] }} guides</div>
+          <div class="progress-container">
+            <div class="progress-bar" [style.width]="(stats.guidesBySpeciality[speciality] / stats.totalGuides) * 100 + '%'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Évaluations moyennes -->
+    <div class="chart-section">
+      <h3>Évaluations moyennes</h3>
+      <div class="stat-bars">
+        <div *ngFor="let guideName of getLabelValues(stats.averageRatingsByGuide).labels">
+          <div class="bar-label">{{ guideName }}: {{ stats.averageRatingsByGuide[guideName] }} / 5</div>
+          <div class="progress-container">
+            <div class="progress-bar" [style.width]="(stats.averageRatingsByGuide[guideName] / 5) * 100 + '%'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Réservations par Guide -->
+    <div class="chart-section">
+      <h3>Réservations par Guide</h3>
+      <div class="stat-bars">
+        <div *ngFor="let guideName of getLabelValues(stats.reservationsByGuide).labels">
+          <div class="bar-label">{{ guideName }}: {{ stats.reservationsByGuide[guideName] }} réservations</div>
+          <div class="progress-container">
+            <div class="progress-bar" [style.width]="(stats.reservationsByGuide[guideName] / stats.totalGuides) * 100 + '%'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,107 @@
+<div class="container mt-4">
+ 
+
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <h2 class="mb-4">Guide Request Reservations Management</h2>
+    
+    <div class="mb-3">
+     
+    </div>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+    <table class="table table-hover reservation-table">
+      <thead>
+        <tr class="table-header">
+          <th>Date</th>
+          <th>Duration</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Comment</th>
+          <th>Actions</th>
+          <th>get in contact </th>
+          <th>planning </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reservation of  filteredReservations" 
+        
+            [class.reservation-accepted]="reservation.status === 'accepted'"
+            [class.reservation-pending]="reservation.status === 'pending'"
+            [class.reservation-cancelled]="reservation.status === 'rejected'">
+          <td>{{ reservation.dateHour | date:'mediumDate' }}</td>
+          <td>{{ reservation.duration }}</td>
+          <td>{{ reservation.price | currency:'USD':'symbol':'1.2-2' }}</td>
+          <td>
+            
+            <span class="status-badge" [ngClass]="{
+              'badge-pending': reservation.status === 'pending',
+              'badge-accepted': reservation.status === 'accepted',
+              'badge-cancelled': reservation.status === 'rejected'
+            }">
+              {{ reservation.status | uppercase }}
+            </span>
+          </td>
+          <td class="comment-cell">{{ reservation.comment || '-' }}</td>
+          <td>
+            <div class="action-buttons">
+              <!-- Approve Button (only for pending) -->
+              <button *ngIf="reservation.status === 'pending'"
+                      (click)="approveReservation(reservation.idReservation)"
+                      class="btn btn-approve">
+                <i class="bi bi-check-circle-fill"></i> Accept
+              </button>
+              
+              <!-- Reject Button (only for pending) -->
+              <button *ngIf="reservation.status === 'pending'"
+                      (click)="rejectReservation(reservation.idReservation)"
+                      class="btn btn-reject">
+                <i class="bi bi-x-circle-fill"></i> Reject
+              </button>
+              
+              <button *ngIf="reservation.status === 'rejected' || reservation.status === 'cancelled'"
+              (click)="deleteReservationGuide(reservation.idReservation)"
+              class="btn btn-delete">
+        <i class="bi bi-trash"></i> Delete
+      </button>
+      
+      
+            </div>
+          </td>
+          <td>
+            <button 
+              class="btn btn-light btn-sm d-flex align-items-center gap-2 px-2 py-1 email-button"
+              title="Contact user via Email"
+              (click)="sendEmail(reservation.user, reservation.guide)">
+              <i class="fas fa-envelope text-danger"></i>
+              {{ getUseremail(reservation.user) }}
+            </button>
+          </td>
+          
+          <td>
+            <button 
+              class="btn btn-info btn-sm"
+              (click)="goToPlanning(getGuideId(reservation.guide))"
+              title="Voir le planning du guide">
+              <i class="bi bi-calendar-event"></i> Voir planning
+            </button>
+          </td>
+
+        </tr>
+        <tr *ngIf="reservationGuides.length === 0">
+          <td colspan="6" class="text-center no-reservations">
+            <i class="bi bi-calendar-x"></i> No reservations found
+          </td>
+        </tr>
+      </tbody>
+      
+    </table>
+    <router-outlet></router-outlet>
+  </div>
+</div>

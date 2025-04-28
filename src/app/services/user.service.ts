@@ -9,27 +9,41 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8089/pidev/auth/login';
-  private apiUrl2 = 'http://localhost:8089/pidev/api/users';
- private apiUrl3 ='http://localhost:8089/pidev/api/users';
+  private apiUrl = 'http://localhost:8089/tourisme/auth/login';
+  private add = 'http://localhost:8089/tourisme/api/users';
+ private get ='http://localhost:8089/tourisme/api/users';
+ private update ='http://localhost:8089/tourisme/api/users';
+ private getone ='http://localhost:8089/tourisme/api/users';
+ private delete ='http://localhost:8089/tourisme/api/users';
+
 
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl3);
+    return this.http.get<User[]>(this.get);
   } 
   
-
+  updateUser(id: number, user: User): Observable<User> {
+    return this.http.put<User>(`${this.update}/${id}`, user);
+  }
+  getUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.getone}/${id}`);
+  }
+  deleteUser(userId: number): Observable<any> {
+    const url = `${this.delete}/${userId}`;
+    return this.http.delete(url);
+  }
+  
 
   // Corrected addUser method
   adduser(guide: User): Observable<User> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.http.post<User>(this.apiUrl2, guide, { headers }); // Fixed "guide" reference
+    return this.http.post<User>(this.add, guide, { headers }); // Fixed "guide" reference
   }
 
-  private apiUrl4 = 'http://localhost:8089/pidev/auth/login'; // URL du backend
+  private apiUrl4 = 'http://localhost:8089/tourisme/auth/login'; // URL du backend
 
 
 

@@ -1,0 +1,8 @@
+export enum GastronomyType {
+    FAST_FOOD = 'FAST_FOOD',
+    RESTAURANT = 'RESTAURANT',
+    CAFE = 'CAFE',
+    SALON_DE_THE = 'SALON_DE_THE',
+    BOULANGERIE = 'BOULANGERIE',
+    BAR_A_TAPAS = 'BAR_A_TAPAS'
+  }

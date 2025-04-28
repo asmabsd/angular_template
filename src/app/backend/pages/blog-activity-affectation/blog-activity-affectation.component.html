@@ -1,0 +1,224 @@
+<div class="affectation-container">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Blog-Activity Associations</h5>
+        <button class="btn btn-secondary btn-sm" (click)="goBack()">
+          <i class="bx bx-arrow-back me-1"></i> Back to Blogs
+        </button>
+      </div>
+      
+      <div class="card-body">
+        <!-- Loading Spinner -->
+        <div class="text-center p-5" *ngIf="loadingData">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-3">Loading blogs and activities...</p>
+        </div>
+        
+        <!-- Error Message -->
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          <i class="bx bx-error-circle me-2"></i> {{ errorMessage }}
+        </div>
+        
+        <!-- Success Message -->
+        <div class="alert alert-success" *ngIf="successMessage">
+          <i class="bx bx-check-circle me-2"></i> {{ successMessage }}
+        </div>
+        
+        <!-- Main Content -->
+        <div *ngIf="!loadingData">
+          <form [formGroup]="affectationForm" (ngSubmit)="onSubmit()">
+            <div class="row mb-4">
+              <!-- Blog Selection -->
+              <div class="col-md-8">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="mb-3">Step 1: Select a Blog</h6>
+                    <div class="mb-3">
+                      <label class="form-label" for="blogId">Blog</label>
+                      <select 
+                        id="blogId"
+                        class="form-select"
+                        formControlName="blogId"
+                        [ngClass]="{'is-invalid': affectationForm.get('blogId')?.invalid && affectationForm.get('blogId')?.touched}"
+                      >
+                        <option value="">-- Select a blog --</option>
+                        <option *ngFor="let blog of blogs" [value]="blog.idBlog">
+                          {{ blog.title }} (ID: {{ blog.idBlog }})
+                        </option>
+                      </select>
+                      <div class="invalid-feedback" *ngIf="affectationForm.get('blogId')?.errors?.['required'] && affectationForm.get('blogId')?.touched">
+                        Please select a blog to continue
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Affectation Type -->
+              <div class="col-md-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="mb-3">Step 2: Choose Affectation Type</h6>
+                    <div class="form-check mb-2">
+                      <input 
+                        class="form-check-input" 
+                        type="radio" 
+                        id="replace" 
+                        formControlName="affectationType" 
+                        value="replace"
+                      >
+                      <label class="form-check-label" for="replace">
+                        Replace existing activities
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input 
+                        class="form-check-input" 
+                        type="radio" 
+                        id="add" 
+                        formControlName="affectationType" 
+                        value="add"
+                      >
+                      <label class="form-check-label" for="add">
+                        Add to existing activities
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Select Activities Section -->
+            <div class="card mb-4">
+              <div class="card-header">
+                <h6 class="mb-0">Step 3: Select Activities to Associate</h6>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- Available Activities -->
+                    <div class="mb-3">
+                      <label class="form-label d-flex justify-content-between align-items-center">
+                        <span>Available Activities</span>
+                        <div class="input-group input-group-sm w-50">
+                          <input 
+                            type="text" 
+                            class="form-control" 
+                            placeholder="Search activities..."
+                            [(ngModel)]="activitySearchTerm"
+                            [ngModelOptions]="{standalone: true}"
+                            (input)="onSearchActivities()"
+                          >
+                          <button 
+                            class="btn btn-outline-secondary" 
+                            type="button"
+                            (click)="clearSearch()"
+                            [disabled]="!activitySearchTerm"
+                          >
+                            <i class="bx bx-x"></i>
+                          </button>
+                        </div>
+                      </label>
+                      
+                      <div class="list-group available-activities" style="max-height: 300px; overflow-y: auto;">
+                        <a 
+                          *ngFor="let activity of filteredActivities" 
+                          href="javascript:void(0)" 
+                          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                          (click)="addActivity(activity)"
+                        >
+                          <div>
+                            <h6 class="mb-1">{{ activity.name }}</h6>
+                            <div class="d-flex small text-muted">
+                              <span class="me-2">
+                                <i class="bx bx-map-pin"></i> {{ activity.location }}
+                              </span>
+                              <span class="me-2">
+                                <i class="bx bx-category"></i> {{ getCategoryDisplayName(activity.categoryA) }}
+                              </span>
+                              <span>
+                                <i class="bx bx-tag"></i> {{ activity.price }} TND
+                              </span>
+                            </div>
+                          </div>
+                          <span class="badge bg-primary rounded-pill">
+                            <i class="bx bx-plus"></i>
+                          </span>
+                        </a>
+                        
+                        <div class="list-group-item text-center text-muted" *ngIf="filteredActivities.length === 0">
+                          No activities available
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <!-- Selected Activities -->
+                    <div class="mb-3">
+                      <label class="form-label d-flex justify-content-between align-items-center">
+                        <span>Selected Activities ({{ selectedActivities.length }})</span>
+                        <span class="badge bg-primary">{{ selectedActivities.length }} selected</span>
+                      </label>
+                      <div class="list-group selected-activities" style="max-height: 300px; overflow-y: auto;">
+                        <div 
+                          *ngFor="let activity of selectedActivities" 
+                          class="list-group-item d-flex justify-content-between align-items-center"
+                        >
+                          <div>
+                            <h6 class="mb-1">{{ activity.name }}</h6>
+                            <div class="d-flex small text-muted">
+                              <span class="me-2">
+                                <i class="bx bx-map-pin"></i> {{ activity.location }}
+                              </span>
+                              <span class="me-2">
+                                <i class="bx bx-category"></i> {{ getCategoryDisplayName(activity.categoryA) }}
+                              </span>
+                              <span>
+                                <i class="bx bx-tag"></i> {{ activity.price }} TND
+                              </span>
+                            </div>
+                          </div>
+                          <button 
+                            type="button"
+                            class="btn btn-outline-danger btn-sm"
+                            (click)="removeActivity(activity)"
+                            title="Remove activity"
+                          >
+                            <i class="bx bx-trash"></i>
+                          </button>
+                        </div>
+                        
+                        <div class="list-group-item text-center text-muted" *ngIf="selectedActivities.length === 0">
+                          No activities selected
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <button type="button" class="btn btn-secondary" (click)="goBack()">Cancel</button>
+                  <button 
+                    type="submit" 
+                    class="btn btn-primary" 
+                    [disabled]="affectationForm.invalid || selectedActivities.length === 0 || submitting"
+                  >
+                    <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+                    Associate Activities with Blog
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

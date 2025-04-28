@@ -1,0 +1,56 @@
+.stats-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 2rem;
+  }
+  
+  .chart-section {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    padding: 2rem;
+  }
+  
+  .stat-circles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+  }
+  
+  .circle-container {
+    text-align: center;
+    width: 120px;
+  }
+  
+  .circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    background-color: #36b9cc;
+    display: inline-block;
+  }
+  
+  .stat-bars {
+    margin-top: 20px;
+  }
+  
+  .progress-container {
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    background-color: #36b9cc;
+    height: 20px;
+    border-radius: 20px;
+  }
+  .bar-label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+  }
+  

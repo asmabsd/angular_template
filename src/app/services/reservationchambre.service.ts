@@ -14,7 +14,6 @@ export class ReservationchambreService {
   private apiUrl4 = 'http://localhost:8089/tourisme/reservationchambre/getonereservationchambre';  // URL pour mettre à jour
   
   constructor(private http: HttpClient) {}
-
   getreservation(): Observable<ReservationChambre[]> {
     return this.http.get<ReservationChambre[]>(this.apiUrl2);
   }

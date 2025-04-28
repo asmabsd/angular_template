@@ -1,51 +1,155 @@
-<div class="super_container">
-  <div class="offers">
-    <div class="container">
-      <div class="row">
-        <div class="col text-center">
-          <h2 class="section_title">Liste des Hôtels</h2>
-        </div>
-      </div>
-      <div class="row offers_items">
-        <div class="col-lg-6 offers_col" *ngFor="let hebergement of hebergements">
-          <div class="offers_item">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="offers_image_container">
-                  <div 
-                  class="offers_image_background" 
-                  [ngStyle]="{'background-image': 'url(assets/frontend/images/hotels/' + hebergement.imageUrl + ')'}">
+<div class="hotel-listing">
+  <div class="container">
+    <!-- Filtre par région -->
+    <div class="region-filter text-center mb-4">
+      <label for="regionSelect">Search by Region:</label>
+      <select id="regionSelect" class="form-select w-auto d-inline-block ms-2" [(ngModel)]="selectedRegion">
+        <option value="">All Regions</option>
+        <option *ngFor="let city of tunisianCities" [value]="city">{{ city }}</option>
+      </select>
+    </div>
+
+    <!-- Section pour les hébergements premium -->
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Top-Rated Accommodations</h2>
+      <p class="section-subtitle">Discover our most popular and highly rated hotels with exclusive discounts</p>
+    </div>
+    <div class="row g-4 premium-section" *ngIf="filteredPremiumHebergements.length > 0; else noPremium">
+      <div class="col-lg-6" *ngFor="let hebergement of filteredPremiumHebergements">
+        <div class="hotel-card">
+          <div class="row g-0">
+            <!-- Image Section -->
+            <div class="col-md-6">
+              <div class="hotel-image" [ngStyle]="{'background-image': 'url(assets/frontend/images/hotels/' + hebergement.imageUrl + ')'}">
+                <div class="price-tag">
+                  <span class="original-price">{{ hebergement.price }} dt</span>
+                  <span class="discounted-price">{{ hebergement.discountedPrice | number:'1.0-0' }} dt</span>
+                  <small>/night</small>
                 </div>
+                <div class="type-badge">
+                  {{ hebergement.type }}
                 </div>
               </div>
-              <div class="col-lg-6">
-                <div class="offers_content">
-
-                  <div class="offers_price">{{ hebergement.price }} €<span>/nuit</span></div>
-                  <div class="">
-                    <span class="hotel_type">{{ hebergement.type }}</span>
-                  </div>
-                  <div class="rating_r offers_rating">
-                  </div>
-                  <p class="offers_text">
-                    <strong>Adresse:</strong> {{ hebergement.adresse }}<br>
-                    <strong>Description:</strong> {{ hebergement.description }}<br>
-                    <strong>Disponibilité:</strong> 
-                    <span [class.text-success]="hebergement.availability" [class.text-danger]="!hebergement.availability">
-                      {{ hebergement.availability ? 'Disponible' : 'Complet' }}
+            </div>
+            <!-- Content Section -->
+            <div class="col-md-6">
+              <div class="hotel-details">
+                <div class="hotel-meta">
+                  <span [ngClass]="isHebergementAvailable(hebergement) ? 'text-success' : 'text-danger'">
+                    <i class="fa" [ngClass]="isHebergementAvailable(hebergement) ? 'fa-check-circle' : 'fa-times-circle'"></i>
+                    {{ isHebergementAvailable(hebergement) ? 'available' : 'not available' }}
+                  </span>
+                  <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                    <span 
+                      (click)="handleStarClick($event, hebergement, star)"
+                      style="cursor: pointer; font-size: 24px;"
+                      [class.text-warning]="star <= (hoveredRating || hebergement.rating || 0)"
+                    >
+                      {{ star <= (hoveredRating || hebergement.rating || 0) ? '★' : '☆' }}
                     </span>
+                  </ng-container>
+                </div>
+                <div class="hotel-info">
+                  <h3 class="hotel-name">{{ hebergement.name }}</h3>
+                  <p class="hotel-address">
+                    <i class="fas fa-map-marker-alt"></i> {{ hebergement.adresse }}
                   </p>
-                  <div class="offers_link">
-                    <a [routerLink]="['/reservationchambre', hebergement.id_hebergement]" class="btn btn-primary w-100">
-                      Réserver
-                    </a>
-                  </div>
+                  <p class="hotel-description">
+                    {{ (hebergement.description | slice:0:100) + (hebergement.description.length > 100 ? '...' : '') }}
+                  </p>
+                  <p class="hotel-region">
+                    <i class="fas fa-globe"></i> {{ hebergement.region }}
+                  </p>
+                  <p class="hotel-phone">
+                    <i class="fas fa-phone-alt"></i> {{ hebergement.telephone }}
+                  </p>
+                </div>
+                <div class="hotel-actions">
+                  <a [routerLink]="['/reservationchambre', hebergement.id_hebergement]" class="btn btn-book">
+                    <i class="far fa-calendar-check"></i> Book now
+                  </a>
                 </div>
               </div>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
     </div>
+    <ng-template #noPremium>
+      <div class="text-center mb-5">
+        <p class="text-muted">No top-rated accommodations available for this region.</p>
+      </div>
+    </ng-template>
+
+    <!-- Section pour les autres hébergements -->
+    <div class="section-header text-center mb-5 mt-5">
+      <h2 class="section-title">Other Accommodations</h2>
+      <p class="section-subtitle">Explore more options for your stay</p>
+    </div>
+    <div class="row g-4" *ngIf="filteredOtherHebergements.length > 0; else noOther">
+      <div class="col-lg-6" *ngFor="let hebergement of filteredOtherHebergements">
+        <div class="hotel-card">
+          <div class="row g-0">
+            <!-- Image Section -->
+            <div class="col-md-6">
+              <div class="hotel-image" [ngStyle]="{'background-image': 'url(assets/frontend/images/hotels/' + hebergement.imageUrl + ')'}">
+                <div class="price-tag">
+                  <span>{{ hebergement.price }} dt</span>
+                  <small>/night</small>
+                </div>
+                <div class="type-badge">
+                  {{ hebergement.type }}
+                </div>
+              </div>
+            </div>
+            <!-- Content Section -->
+            <div class="col-md-6">
+              <div class="hotel-details">
+                <div class="hotel-meta">
+                  <span [ngClass]="isHebergementAvailable(hebergement) ? 'text-success' : 'text-danger'">
+                    <i class="fa" [ngClass]="isHebergementAvailable(hebergement) ? 'fa-check-circle' : 'fa-times-circle'"></i>
+                    {{ isHebergementAvailable(hebergement) ? 'available' : 'not available' }}
+                  </span>
+                  <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                    <span 
+                      (click)="handleStarClick($event, hebergement, star)"
+                      style="cursor: pointer; font-size: 24px;"
+                      [class.text-warning]="star <= (hoveredRating || hebergement.rating || 0)"
+                    >
+                      {{ star <= (hoveredRating || hebergement.rating || 0) ? '★' : '☆' }}
+                    </span>
+                  </ng-container>
+                </div>
+                <div class="hotel-info">
+                  <h3 class="hotel-name">{{ hebergement.name }}</h3>
+                  <p class="hotel-address">
+                    <i class="fas fa-map-marker-alt"></i> {{ hebergement.adresse }}
+                  </p>
+                  <p class="hotel-description">
+                    {{ (hebergement.description | slice:0:100) + (hebergement.description.length > 100 ? '...' : '') }}
+                  </p>
+                  <p class="hotel-region">
+                    <i class="fas fa-globe"></i> {{ hebergement.region }}
+                  </p>
+                  <p class="hotel-phone">
+                    <i class="fas fa-phone-alt"></i> {{ hebergement.telephone }}
+                  </p>
+                </div>
+                <div class="hotel-actions">
+                  <a [routerLink]="['/reservationchambre', hebergement.id_hebergement]" class="btn btn-book">
+                    <i class="far fa-calendar-check"></i> Book now
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noOther>
+      <div class="text-center mb-5">
+        <p class="text-muted">No other accommodations available for this region.</p>
+      </div>
+    </ng-template>
   </div>
 </div>

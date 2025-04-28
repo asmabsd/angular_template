@@ -1,0 +1,76 @@
+<div *ngIf="isLoading" class="loading text-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+  
+  <div *ngIf="userForm && !isLoading">
+    <h2 class="text-center mb-4">Edit User</h2>
+  
+    <form [formGroup]="userForm" (ngSubmit)="updateUser()" class="mx-auto" style="max-width: 600px;">
+  
+      <!-- First Name -->
+      <div class="form-group">
+        <label for="firstName" class="form-label">First Name:</label>
+        <input id="firstName" formControlName="firstName" placeholder="Enter your first name" class="form-control" required />
+      </div>
+  
+      <!-- Last Name -->
+      <div class="form-group">
+        <label for="lastName" class="form-label">Last Name:</label>
+        <input id="lastName" formControlName="lastName" class="form-control" required />
+      </div>
+  
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email:</label>
+        <input id="email" formControlName="email" type="email" class="form-control" required />
+      </div>
+  
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password" class="form-label">Password:</label>
+        <input id="password" formControlName="password" type="password" class="form-control" placeholder="Leave empty to keep current" />
+      </div>
+  
+      <!-- Phone Number -->
+      <div class="form-group">
+        <label for="nTel" class="form-label">Phone Number:</label>
+        <input id="nTel" formControlName="nTel" class="form-control" required />
+      </div>
+  
+      <!-- Passport Number -->
+      <div class="form-group">
+        <label for="numPasseport" class="form-label">Passport Number:</label>
+        <input id="numPasseport" formControlName="numPasseport" class="form-control" required />
+      </div>
+  
+      <!-- Role -->
+      <div class="form-group">
+        <label for="role" class="form-label">Role:</label>
+        <select id="role" formControlName="role" class="form-control" required>
+          <option value="">-- Select Role --</option>
+          <option value="USER">User</option>
+          <option value="ADMIN">Admin</option>
+          <option value="GUIDE">Guide</option>
+          
+          <option value="PARTNER">Partner</option> <!-- Added Partner role -->
+
+        </select>
+      </div>
+  
+      <!-- Submit Button -->
+      <div class="form-group text-center mt-4">
+        <button type="submit" class="btn btn-primary btn-lg" [disabled]="userForm.invalid">
+          Update User
+        </button>
+      </div>
+      
+  
+    </form>
+  </div>
+  

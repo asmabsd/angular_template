@@ -1,0 +1,13 @@
+<div *ngIf="isEligibleForRating" class="rating-modal">
+    <h3>Notez votre guide</h3>
+    <div class="stars">
+      <span *ngFor="let star of [1, 2, 3, 4, 5]" 
+            (click)="handleRatingChange(star)" 
+            [ngStyle]="{'color': rating >= star ? 'yellow' : 'gray'}">
+        ★
+      </span>
+    </div>
+    <button (click)="handleSubmit()">Soumettre</button>
+    <button (click)="close()">Fermer</button>
+  </div>
+  

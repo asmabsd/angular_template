@@ -1,0 +1,369 @@
+// Adjust styles to match the Travelix theme
+.page_title_container {
+  width: 100%;
+  background: linear-gradient(to right, #fa9e1b, #8d4fff);
+  padding-top: 50px;
+  padding-bottom: 30px;
+  color: #FFFFFF;
+  margin-bottom: 40px;
+}
+
+.page_title {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+// Add specific styling for the top-liked section title to ensure visibility
+.top-liked-section .page_title {
+  color: #4B0082; // Dark purple color
+  font-weight: 700; // Ensure it remains bold
+  margin-bottom: 20px;
+  text-align: center; // Center the text
+}
+
+.breadcrumbs {
+  margin-left: auto;
+}
+
+.breadcrumb_list {
+  list-style: none;
+  padding-left: 0px;
+  margin-bottom: 0px;
+}
+
+.breadcrumb_list li {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.breadcrumb_list li::after {
+  content: '/';
+  margin-left: 5px;
+}
+
+.breadcrumb_list li:last-child::after {
+  display: none;
+}
+
+.breadcrumb_list li a {
+  color: #FFFFFF;
+}
+
+.filter_panel {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.filter_section {
+  margin-bottom: 20px;
+  
+  h4 {
+      font-size: 18px;
+      margin-bottom: 15px;
+  }
+  
+  &:last-child {
+      margin-bottom: 0;
+  }
+}
+
+.category_buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  
+  .btn {
+      margin: 5px;
+  }
+}
+
+.form-range {
+  width: 100%;
+}
+
+.offers_item {
+  margin-bottom: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  
+  &:hover {
+      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+      
+      .offer_name a {
+          background: #fa9e1b; // Solid orange on hover (same as default)
+          opacity: 0.9; // Slight opacity change for hover effect
+      }
+  }
+}
+
+.offers_image_container {
+  width: 100%;
+  height: 250px;
+  position: relative;
+}
+
+.offers_image_background {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.offer_name {
+  position: absolute;
+  left: 0;
+  bottom: 27px;
+  width: 90%; // Ensure the container takes most of the card width
+  padding-right: 10px; // Add some padding to prevent text from touching the edge
+  
+  a {
+      font-size: 14px; // Slightly reduce font size for better fit
+      font-weight: 700;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: #fa9e1b; // Solid orange color
+      padding: 10px 15px; // Reduce padding slightly
+      display: inline-block; // Allow wrapping while keeping the background
+      white-space: normal; // Allow text to wrap
+      line-height: 1.2; // Improve readability for wrapped text
+  }
+}
+
+.offers_content {
+  padding: 25px 30px;
+  background-color: #ffffff;
+}
+
+.offers_price {
+  display: inline-block;
+  font-size: 24px;
+  font-weight: 700;
+  color: #eda35e;
+  margin-bottom: 15px;
+  
+  span {
+      font-size: 14px;
+      font-weight: 400;
+      color: #929191;
+      margin-left: 12px;
+  }
+}
+
+.rating_r {
+  margin-bottom: 10px;
+  
+  i {
+      color: #fac451;
+  }
+}
+
+.offers_text {
+  margin-bottom: 20px;
+  color: #636363;
+  font-size: 14px;
+}
+
+.offers_icons {
+  margin-bottom: 20px;
+  
+  ul {
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+  }
+}
+
+.offers_icons_item {
+  margin-right: 15px;
+  
+  img {
+      width: 24px;
+      height: 24px;
+  }
+}
+
+.book_button {
+  display: inline-block;
+  margin-bottom: 15px;
+  
+  a {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      text-decoration: none;
+      line-height: 52px;
+      text-align: center;
+      background: linear-gradient(to right, #fa9e1b, #8d4fff);
+      padding: 0px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      
+      &:hover {
+          opacity: 0.8;
+      }
+  }
+}
+
+.offer_reviews {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  .offer_reviews_content {
+      .offer_reviews_title {
+          font-size: 14px;
+          font-weight: 700;
+          color: #333333;
+      }
+      
+      .offer_reviews_subtitle {
+          font-size: 12px;
+          color: #929191;
+      }
+  }
+  
+  .offer_reviews_rating {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(to right, #fa9e1b, #8d4fff);
+      color: #FFFFFF;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 40px;
+  }
+}
+
+.fa {
+  margin-right: 8px;
+}
+
+.mr-2 {
+  margin-right: 10px;
+}
+
+// Custom styles for the activities to match the Travelix theme
+.btn-primary,
+.btn-outline-primary:hover {
+  background: linear-gradient(to right, #fa9e1b, #8d4fff);
+  border-color: #fa9e1b;
+  color: white;
+  
+  &:hover {
+      opacity: 0.9;
+  }
+}
+
+.btn-outline-primary {
+  background: transparent;
+  border-color: #fa9e1b;
+  color: #fa9e1b;
+}
+
+// Spinner styling
+.spinner-border.text-primary {
+  color: #fa9e1b !important;
+}
+
+// Add these styles to activities.component.scss
+.home {
+  width: 100%;
+  height: 65vh;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.home_background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.home::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.home_content {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+}
+
+.home_title {
+  font-size: 72px;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+@media only screen and (max-width: 991px) {
+  .home {
+      height: 50vh;
+  }
+  .home_title {
+      font-size: 48px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .home {
+      height: 45vh;
+  }
+  .home_title {
+      font-size: 36px;
+  }
+}
+
+// Style pour les emojis Like/Dislike
+.like-dislike {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  justify-content: center;
+
+  span {
+      font-size: 1.2rem;
+      color: #636363;
+      transition: transform 0.3s ease;
+
+      &:hover {
+          transform: scale(1.2);
+      }
+
+      &.liked {
+          color: #28a745;
+      }
+
+      &.disliked {
+          color: #dc3545;
+      }
+  }
+}

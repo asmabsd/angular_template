@@ -1,0 +1,7 @@
+<div>
+    <h2>Vérification du code OTP</h2>
+    <input type="text" [(ngModel)]="otpCode" placeholder="Entrez votre code OTP" />
+    <button (click)="verifyOtp()">Vérifier</button>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  </div>
+  

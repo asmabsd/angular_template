@@ -1,0 +1,194 @@
+<div class="edit-activity-container">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Edit Activity</h5>
+        <button class="btn btn-secondary btn-sm" (click)="goBack()">
+          <i class="bx bx-arrow-back me-1"></i> Back to Activities
+        </button>
+      </div>
+      
+      <div class="card-body">
+        <!-- Loading Spinner -->
+        <div class="text-center p-5" *ngIf="loadingActivity">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-3">Loading activity details...</p>
+        </div>
+        
+        <!-- Error Alert -->
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          <i class="bx bx-error-circle me-2"></i>{{ errorMessage }}
+        </div>
+        
+        <!-- Success Alert -->
+        <div class="alert alert-success" *ngIf="successMessage">
+          <i class="bx bx-check-circle me-2"></i>{{ successMessage }}
+        </div>
+        
+        <!-- Form -->
+        <form [formGroup]="activityForm" (ngSubmit)="onSubmit()" *ngIf="!loadingActivity">
+          <!-- Name -->
+          <div class="mb-3">
+            <label class="form-label" for="name">Activity Name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              formControlName="name"
+              [ngClass]="{'is-invalid': activityForm.get('name')?.invalid && activityForm.get('name')?.touched}"
+              placeholder="Enter activity name"
+            />
+            <div class="invalid-feedback" *ngIf="activityForm.get('name')?.errors?.['required'] && activityForm.get('name')?.touched">
+              Activity name is required.
+            </div>
+            <div class="invalid-feedback" *ngIf="activityForm.get('name')?.errors?.['minlength'] && activityForm.get('name')?.touched">
+              Activity name must be at least 3 characters.
+            </div>
+          </div>
+          
+          <!-- Category -->
+          <div class="mb-3">
+            <label class="form-label" for="categoryA">Category</label>
+            <select
+              id="categoryA"
+              class="form-select"
+              formControlName="categoryA"
+              [ngClass]="{'is-invalid': activityForm.get('categoryA')?.invalid && activityForm.get('categoryA')?.touched}"
+            >
+              <option value="" disabled>Select a category</option>
+              <option *ngFor="let category of categoryOptions" [value]="category">
+                {{ category.replace('_', ' ') }}
+              </option>
+            </select>
+            <div class="invalid-feedback" *ngIf="activityForm.get('categoryA')?.errors?.['required'] && activityForm.get('categoryA')?.touched">
+              Please select a category.
+            </div>
+          </div>
+          
+          <!-- Location -->
+          <div class="mb-3">
+            <label class="form-label" for="location">Location</label>
+            <input
+              type="text"
+              id="location"
+              class="form-control"
+              formControlName="location"
+              [ngClass]="{'is-invalid': activityForm.get('location')?.invalid && activityForm.get('location')?.touched}"
+              placeholder="Enter location"
+            />
+            <div class="invalid-feedback" *ngIf="activityForm.get('location')?.errors?.['required'] && activityForm.get('location')?.touched">
+              Location is required.
+            </div>
+          </div>
+          <!-- Region -->
+<div class="mb-3">
+  <label class="form-label" for="region">Region</label>
+  <select
+    id="region"
+    class="form-select"
+    formControlName="region"
+    [ngClass]="{'is-invalid': activityForm.get('region')?.invalid && activityForm.get('region')?.touched}"
+  >
+    <option value="" disabled>Select a region</option>
+    <option *ngFor="let region of regionOptions" [value]="region">{{ region }}</option>
+  </select>
+  <div class="invalid-feedback" *ngIf="activityForm.get('region')?.errors?.['required'] && activityForm.get('region')?.touched">
+    Region is required.
+  </div>
+</div>
+
+          <!-- Price -->
+          <div class="mb-3">
+            <label class="form-label" for="price">Price (TND)</label>
+            <input
+              type="number"
+              id="price"
+              class="form-control"
+              formControlName="price"
+              [ngClass]="{'is-invalid': activityForm.get('price')?.invalid && activityForm.get('price')?.touched}"
+              placeholder="Enter price"
+              min="0"
+              step="0.01"
+            />
+            <div class="invalid-feedback" *ngIf="activityForm.get('price')?.errors?.['required'] && activityForm.get('price')?.touched">
+              Price is required.
+            </div>
+            <div class="invalid-feedback" *ngIf="activityForm.get('price')?.errors?.['min'] && activityForm.get('price')?.touched">
+              Price cannot be negative.
+            </div>
+          </div>
+          
+          <!-- Availability Switch -->
+          <div class="form-check form-switch mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="disponibility"
+              formControlName="disponibility"
+            />
+            <label class="form-check-label" for="disponibility">
+              Activity is available
+            </label>
+          </div>
+          
+          <!-- Blog Association -->
+          <div class="mb-3">
+            <label class="form-label" for="blogId">Associated Blog (Optional)</label>
+            <select
+              id="blogId"
+              class="form-select"
+              formControlName="blogId"
+            >
+              <option value="">-- No blog association --</option>
+              <option *ngFor="let blog of blogs" [value]="blog.idBlog">
+                {{ blog.title }}
+              </option>
+            </select>
+            <div class="form-text text-muted" *ngIf="isLoadingBlogs">
+              <i class="bx bx-loader bx-spin me-1"></i> Loading blogs...
+            </div>
+          </div>
+          
+          <!-- Image -->
+          <div class="mb-4">
+            <label class="form-label d-block">Activity Image</label>
+            
+            <!-- Current Image Preview -->
+            <div class="mb-3" *ngIf="imagePreview">
+              <div class="position-relative d-inline-block">
+                <img [src]="imagePreview" alt="Activity Preview" class="img-thumbnail" style="max-height: 200px;">
+                <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1" (click)="removeImage()">
+                  <i class="bx bx-x"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Image Upload -->
+            <div class="input-group">
+              <input
+                type="file"
+                class="form-control"
+                id="image"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+              />
+              <label class="input-group-text" for="image">Upload</label>
+            </div>
+            <div class="form-text text-muted">
+              Upload a new image or keep the existing one.
+            </div>
+          </div>
+          
+          <!-- Form Actions -->
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary" (click)="goBack()">Cancel</button>
+            <button type="submit" class="btn btn-primary" [disabled]="loading || activityForm.invalid">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+              Update Activity
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

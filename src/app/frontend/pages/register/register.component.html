@@ -1,355 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Travelix</title>
+<!-- ...existing content above remains the same -->
 
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/frontend/styles/bootstrap4/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/frontend/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/frontend/styles/custom_login.css">
+<!-- Registration Section with Background -->
+<div class="register-background">
+  <div class="register-container">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <h2>Create Your Account</h2>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* Custom Registration Form Styles */
-        .register-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .register-form {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2.5rem;
-            border-radius: 12px;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .register-form h2 {
-            color: #2d3436;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        
-        .form-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .form-row .input-group {
-            flex: 1;
-        }
-        
-        .role-selection {
-            margin: 20px 0;
-        }
-        
-        .role-options {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
-        
-        .role-option {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .role-option input[type="radio"] {
-            display: none;
-        }
-        
-        .role-option label {
-            display: block;
-            padding: 12px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .role-option input[type="radio"]:checked + label {
-            background: #0984e3;
-            color: white;
-        }
-        
-        .btn-register {
-            width: 100%;
-            background: #ff2d55;
-            border: none;
-            padding: 14px;
-            color: white;
-            font-size: 16px;
-            font-weight: 500;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-        
-        .btn-register:hover {
-            background: #e02448;
-        }
-        
-        .login-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #636e72;
-        }
-        
-        .login-link a {
-            color: #0984e3;
-            text-decoration: none;
-        }
+      <!-- Google Sign-In Button -->
+      <div class="google-signin">
+        <button type="button" (click)="registerWithOAuth2()" class="google-btn" aria-label="Sign up with Google">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="google-icon" alt="Google logo">
+          Sign up with Google
+        </button>
+      </div>
 
-        /* Google Sign-In Button Styles */
-        .google-signin {
-            margin: 20px 0;
-            text-align: center;
-        }
-        
-        .google-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            color: #757575;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 12px 20px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-        }
-        
-        .google-btn:hover {
-            background: #f7f7f7;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .google-icon {
-            margin-right: 10px;
-            width: 18px;
-            height: 18px;
-        }
-        
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 20px 0;
-            color: #636e72;
-            font-size: 14px;
-        }
-        
-        .divider::before, .divider::after {
-            content: "";
-            flex: 1;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .divider::before {
-            margin-right: 10px;
-        }
-        
-        .divider::after {
-            margin-left: 10px;
-        }
-    </style>
-</head>
-<body>
+      <div class="divider">OR</div>
 
-<!-- Top Bar -->
-<div class="top_bar">
-    <div class="container">
-        <div class="row">
-            <div class="col d-flex flex-row">
-                <div class="phone">+45 345 3324 56789</div>
-                <div class="social">
-                    <ul class="social_list">
-                        <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                        <li class="social_list_item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li class="social_list_item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                        <li class="social_list_item"><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-                        <li class="social_list_item"><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
-                        <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                    </ul>
-                </div>
-                <div class="user_box ml-auto">
-                    <div class="user_box_login user_box_link"><a href="/login">login</a></div>
-                </div>
-            </div>
-        </div>
-    </div>        
-</div>
-
-<!-- Navigation -->
-<div class="main_nav">
-    <div class="container">
-        <div class="row">
-            <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
-                <div class="logo_container">
-                    <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
-                </div>
-                <div class="hamburger">
-                    <i class="fa fa-bars trans_200"></i>
-                </div>
-            </div>
-        </div>
-    </div>    
-</div>
-
-<!-- Registration Form Section -->
-<div class="register-container">
-    <form id="register_form" class="register-form">
-        <h2>Create Your Account</h2>
-        
-        <!-- Google Sign-In Button -->
-        <div class="google-signin">
-            <div id="google-signin-button" class="google-btn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="google-icon" alt="Google logo">
-                Sign up with Google
-            </div>
-        </div>
-        
-        <div class="divider">OR</div>
-        
-        <!-- Regular Registration Form -->
-        <div class="form-row">
-            <div class="input-group">
-                <i class="fa fa-user"></i>
-                <input type="text" id="first_name" placeholder="First Name" required>
-            </div>
-            <div class="input-group">
-                <i class="fa fa-user"></i>
-                <input type="text" id="last_name" placeholder="Last Name" required>
-            </div>
-        </div>
-        
+      <!-- Regular Registration Form -->
+      <div class="form-row">
         <div class="input-group">
-            <i class="fa fa-envelope"></i>
-            <input type="email" id="email" placeholder="Email Address" required>
+          <i class="fa fa-user"></i>
+          <input type="text" formControlName="firstName" id="first_name" placeholder="First Name" required>
         </div>
-        
         <div class="input-group">
-            <i class="fa fa-lock"></i>
-            <input type="password" id="password" placeholder="Password" required>
+          <i class="fa fa-user"></i>
+          <input type="text" formControlName="lastName" id="last_name" placeholder="Last Name" required>
         </div>
-        
-        <div class="form-row">
-            <div class="input-group">
-                <i class="fa fa-phone"></i>
-                <input type="tel" id="phone" placeholder="Phone Number" required>
-            </div>
-            <div class="input-group">
-                <i class="fa fa-passport"></i>
-                <input type="text" id="passport" placeholder="Passport Number" required>
-            </div>
+      </div>
+
+      <div class="input-group spaced-field">
+        <i class="fa fa-envelope"></i>
+        <input type="email" formControlName="email" id="email" placeholder="Email Address" required>
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+          Please enter a valid email address
         </div>
-        
-        <div class="role-selection">
-            <h4>Register As:</h4>
-            <div class="role-options">
-                <div class="role-option">
-                    <input type="radio" id="role_user" name="role" value="user" checked>
-                    <label for="role_user">Traveler</label>
-                </div>
-                <div class="role-option">
-                    <input type="radio" id="role_guide" name="role" value="guide">
-                    <label for="role_guide">Guide</label>
-                </div>
-                <div class="role-option">
-                    <input type="radio" id="role_partner" name="role" value="partner">
-                    <label for="role_partner">Partner</label>
-                </div>
-            </div>
+      </div>
+
+      <div class="input-group spaced-field">
+        <i class="fa fa-lock"></i>
+        <input type="password" formControlName="password" id="password" placeholder="Password" required>
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+          Password must be at least 6 characters
         </div>
-        
-        <button type="submit" class="btn-register">Create Account</button>
-        
-        <div class="login-link">
-            Already have an account? <a href="/login">Sign in</a>
+      </div>
+
+      <div class="form-row spaced-field">
+        <div class="input-group">
+          <i class="fa fa-phone"></i>
+          <input type="tel" formControlName="nTel" id="phone" placeholder="Phone Number" required>
         </div>
+        <div class="input-group">
+          <i class="fa fa-passport"></i>
+          <input type="text" formControlName="numPasseport" id="passport" placeholder="Passport Number" required>
+        </div>
+      </div>
+
+      <div class="role-selection">
+        <h4>Register As:</h4>
+        <div class="role-options">
+          <div class="role-option">
+            <input type="radio" formControlName="role" id="role_user" name="role" value="user" checked>
+            <label for="role_user">Traveler</label>
+          </div>
+          <div class="role-option">
+            <input type="radio" formControlName="role" id="role_guide" name="role" value="guide">
+            <label for="role_guide">Guide</label>
+          </div>
+          <div class="role-option">
+            <input type="radio" formControlName="role" id="role_partner" name="role" value="partner">
+            <label for="role_partner">Partner</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2FA Toggle -->
+      <div class="form-check spaced-field" style="margin-top: 20px;">
+        <label>
+          <input type="checkbox" formControlName="using2FA" />
+          Enable Two-Factor Authentication (2FA)
+        </label>
+      </div>
+
+      <button type="submit" class="btn-register" [disabled]="registerForm.invalid">Create Account</button>
+
+      <div *ngIf="errorMessage" class="error-message" style="margin-top: 15px; text-align: center;">
+        {{ errorMessage }}
+      </div>
+
+      <!-- QR Code Display -->
+      <div *ngIf="qrCodeUri" class="text-center mt-4">
+        <h4>Scan this QR Code with Google Authenticator:</h4>
+        <img [src]="qrCodeUri" alt="2FA QR Code" style="margin-top: 10px; max-width: 200px;">
+      </div>
+
+      <div class="login-link">
+        Already have an account? <a routerLink="/login">Sign in</a>
+      </div>
     </form>
+  </div>
 </div>
 
 <!-- Footer -->
 <footer>
-    <div class="container">
-        <p>&copy; 2025 Travelix. All rights reserved.</p>
-    </div>
+  <div class="container">
+    <p>&copy; 2025 MalaTrip. All rights reserved.</p>
+  </div>
 </footer>
-
-<!-- Scripts -->
-<script src="/assets/frontend/js/jquery-3.2.1.min.js"></script>
-<script src="/assets/frontend/styles/bootstrap4/popper.js"></script>
-<script src="/assets/frontend/styles/bootstrap4/bootstrap.min.js"></script>
-
-<!-- Google Sign-In API -->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script>
-    // Google Sign-In Configuration
-    function handleCredentialResponse(response) {
-        // Handle the Google Sign-In response here
-        console.log("Google Sign-In response:", response);
-        
-        // You would typically send this to your backend for verification
-        // and user registration
-        const id_token = response.credential;
-        
-        // Example: Send to your backend
-        fetch('/api/auth/google', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ credential: id_token })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            // Redirect user or show success message
-            window.location.href = '/dashboard'; // Change to your desired redirect
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    }
-
-    // Initialize Google Sign-In
-    window.onload = function () {
-        google.accounts.id.initialize({
-            client_id: "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com",
-            callback: handleCredentialResponse,
-            context: 'signup'
-        });
-        
-        // Render the button
-        google.accounts.id.renderButton(
-            document.getElementById("google-signin-button"),
-            { 
-                theme: "outline", 
-                size: "large",
-                type: "standard",
-                shape: "rectangular",
-                text: "signup_with",
-                logo_alignment: "left"
-            }
-        );
-        
-        // Also display the One Tap dialog
-        google.accounts.id.prompt();
-    };
-</script>
-
-</body>
-</html>

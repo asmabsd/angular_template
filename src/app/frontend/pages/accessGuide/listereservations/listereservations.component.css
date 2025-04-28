@@ -1,0 +1,172 @@
+/* General Table Styling */
+.reservation-table {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .table-header {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  /* Row Highlighting */
+  .reservation-pending {
+    background-color: #fff8e1;
+  }
+  
+  .reservation-accepted {
+    background-color: #e8f5e9;
+    border-left: 4px solid #4caf50;
+  }
+  
+  .reservation-cancelled {
+    background-color: #ffebee;
+    border-left: 4px solid #f44336;
+  }
+  
+  /* Status Badges */
+  .status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  
+  .badge-pending {
+    background-color: #ffc107;
+    color: #212529;
+  }
+  
+  .badge-accepted {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .badge-cancelled {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  /* Action Buttons */
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .btn-approve {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    transition: all 0.3s;
+  }
+  
+  .btn-approve:hover {
+    background-color: #388e3c;
+    transform: translateY(-1px);
+  }
+  
+  .btn-reject {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    transition: all 0.3s;
+  }
+  
+  .btn-reject:hover {
+    background-color: #d32f2f;
+    transform: translateY(-1px);
+  }
+  
+  .btn-edit {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    transition: all 0.3s;
+  }
+  
+  .btn-edit:hover {
+    background-color: #1976d2;
+    transform: translateY(-1px);
+  }
+  
+  /* Comment cell */
+  .comment-cell {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* No reservations message */
+  .no-reservations {
+    padding: 20px;
+    color: #6c757d;
+    font-size: 1.1rem;
+  }
+  
+  .no-reservations i {
+    margin-right: 8px;
+    font-size: 1.3rem;
+  }
+  .btn-delete {
+    background-color: #dc3545; /* Red background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .btn-delete i {
+    margin-right: 8px; /* Space between icon and text */
+  }
+  
+  .btn-delete:hover {
+    background-color: #c82333; /* Darker red on hover */
+  }
+  
+  .btn-delete:focus {
+    outline: none; /* Remove outline on focus */
+  }
+  /* Style for the email button */
+.email-button {
+  background-color: #f8f9fa; /* Light background color */
+  color: #dc3545; /* Red color for the text (Gmail theme) */
+  border: 1px solid #dc3545; /* Red border */
+  border-radius: 25px; /* Rounded corners */
+  font-size: 14px; /* Font size for text */
+  font-weight: 500; /* Slightly bold */
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth transitions */
+  padding: 8px 16px; /* Padding inside the button */
+  cursor: pointer; /* Pointer cursor on hover */
+  display: inline-flex; /* Flexbox for text and icon alignment */
+  align-items: center; /* Vertically align icon and text */
+  gap: 8px; /* Space between the icon and text */
+}
+
+.email-button:hover {
+  background-color: #dc3545; /* Red background on hover */
+  color: white; /* White text color on hover */
+  border-color: #dc3545; /* Match the border color with background */
+}
+
+.email-button:focus {
+  outline: none; /* Remove the outline on focus */
+}
+
+.email-button i {
+  font-size: 18px; /* Adjust the icon size */
+}
+
+/* Optional: Add a shadow on hover to make it stand out */
+.email-button:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

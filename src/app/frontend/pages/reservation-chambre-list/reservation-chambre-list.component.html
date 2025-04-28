@@ -1,5 +1,5 @@
 <div class="container mt-4">
-    <h2 class="mb-4 text-center fw-bold">Mes Réservations</h2>
+    <h2 class="mb-4 text-center fw-bold">Your Reservations</h2>
     
     <div *ngIf="reservations.length > 0; else noData" class="row g-4">
         <div *ngFor="let r of reservations" class="col-md-6 col-lg-4">
@@ -18,7 +18,7 @@
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Durée:</span>
                         <span class="fw-semibold">
-                            {{ calculateDuration(r.dateDebut, r.dateFin) }} nuit(s)
+                            {{ calculateDuration(r.dateDebut, r.dateFin) }} night(s)
                         </span>
                     </div>
                     
@@ -36,28 +36,40 @@
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted">Occupants:</span>
                         <span class="fw-semibold">
-                            {{ r.nombreadulte }} adulte(s), {{ r.nombrenfant }} enfant(s)
+                            {{ r.nombreadulte }} adult(s), {{ r.nombrenfant }} child(ren)
                         </span>
                     </div>
                     
                     <hr>
                     
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="text-muted">Prix total:</span>
+                        <span class="text-muted">Total Price:</span>
                         <span class="fs-5 fw-bold text-primary">
-                            {{ r.prixTotal | currency:'EUR':'symbol':'1.2-2' }}
+                          {{ r.prixTotal | currency:'TND':'symbol':'1.2-2' }}
                         </span>
+                      </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Email:</span>
+                        <span class="fw-semibold">{{ r.clientEmail || 'Non renseigné' }}</span>
                     </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Nombre de chambres:</span>
+                        <span class="fw-semibold">{{ r.nombreChambres || 0 }}</span>
+                    </div>
+                        <!-- Type de chambre -->
+    <div class="d-flex justify-content-between mb-2">
+        <span class="text-muted">Type de chambre:</span>
+        <span class="fw-semibold">{{ r.typeChambre || 'Inconnu' }}</span>
+    </div>
                 </div>
                 <div class="card-footer bg-transparent border-top-0 text-end">
                     <a [routerLink]="['/modifier-reservation', r.id_reservation]" class="btn btn-outline-primary btn-sm rounded-pill px-3">
-                        <i class="bi bi-pencil-square me-1"></i> Modifier
-                      </a>
+                        <i class="bi bi-pencil-square me-1"></i> Edit
+                    </a>
                     <button class="btn btn-danger btn-sm rounded-pill px-3" (click)="annulerReservation(r.id_reservation)">
                         <i class="bi bi-x-circle me-1"></i> 
-                        Annuler
+                        Cancel
                     </button>
-
                 </div>
             </div>
         </div>
@@ -67,9 +79,9 @@
         <div class="card shadow-sm">
             <div class="card-body text-center py-5">
                 <i class="bi bi-calendar-x fs-1 text-muted mb-3"></i>
-                <h4 class="text-muted">Aucune réservation trouvée</h4>
-                <p class="text-muted">Vous n'avez pas encore effectué de réservation.</p>
-                <button class="btn btn-primary mt-3">Réserver maintenant</button>
+                <h4 class="text-muted">No reservation found</h4>
+                <p class="text-muted">You haven't made any reservations yet.</p>
+                <button class="btn btn-primary mt-3">Book now</button>
             </div>
         </div>
     </ng-template>

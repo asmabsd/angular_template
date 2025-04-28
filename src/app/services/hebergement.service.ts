@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Hebergement } from '../models/hebergement.model';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +42,18 @@ export class HebergementService {
     return this.http.delete(`http://localhost:8089/tourisme/hebergement/removehebergement/${id}`);
   }
 
+  rateHebergement(id: number, rating: number): Observable<Hebergement> {
+    return this.http.put<Hebergement>(
+      `${this.baseUrl}/rate/${id}`, 
+      null, // Body vide car on utilise des params
+      {
+        params: { rating: rating.toString() }, // Envoie le rating comme paramètre d'URL
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
+      }
+    );
+  }
 
+
+  
+  
 }

@@ -1,103 +1,139 @@
 .reservation-container {
-    display: flex;
-    justify-content: center;
-    padding: 2rem;
-    background: #f7f7f7;
-  }
-  
-  .card {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    padding: 2rem;
-    max-width: 700px;
-    width: 100%;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .hebergement-image {
-    width: 100%;
-    height: auto;
-    border-radius: 15px;
-    margin-bottom: 1rem;
-  }
-  
-  .card-content h2.title {
-    font-size: 28px;
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
-  }
-  
-  .card-content p {
-    font-size: 18px;
-    margin: 8px 0;
-    color: #555;
-  }
-  
-  .card-content .label {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  form {
-    margin-top: 2rem;
-  }
-  
-  .form-group {
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group label {
-    font-size: 17px;
-    margin-bottom: 6px;
-    color: #2c3e50;
-  }
-  
-  .form-group input,
-  .form-group select {
-    padding: 10px 14px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 16px;
-    outline: none;
-    transition: border 0.3s;
-  }
-  
-  .form-group input:focus,
-  .form-group select:focus {
-    border-color: #4CAF50;
-  }
-  
-  p .label {
-    font-size: 18px;
-  }
-  
-  .reserve-button {
-    background: linear-gradient(135deg, #4CAF50, #81C784);
-    color: white;
-    padding: 14px 28px;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
-    width: 100%;
-  }
-  
-  .reserve-button:hover {
-    background: linear-gradient(135deg, #388E3C, #66BB6A);
-    transform: scale(1.02);
-    box-shadow: 0 8px 18px rgba(56, 142, 60, 0.4);
-  }
-  
-  .reserve-button:disabled {
-    background: #ccc;
-    color: #888;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-  
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background: #f7f7f7;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+}
+
+.hebergement-image {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+}
+
+.card-content h2.title {
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.card-content p {
+  font-size: 18px;
+  margin: 8px 0;
+  color: #555;
+}
+
+.card-content .label {
+  font-weight: bold;
+  color: #333;
+}
+
+.original-price {
+  font-size: 16px;
+  color: #7f8c8d;
+  text-decoration: line-through; /* Prix barré */
+  margin-right: 8px;
+}
+
+.discounted-price {
+  font-size: 18px;
+  color: #e74c3c; /* Rouge pour mettre en avant */
+}
+
+form {
+  margin-top: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 17px;
+  margin-bottom: 6px;
+  color: #2c3e50;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #4CAF50;
+}
+
+p .label {
+  font-size: 18px;
+}
+
+.reserve-button {
+  background: linear-gradient(135deg, #4CAF50, #81C784);
+  color: white;
+  padding: 14px 28px;
+  font-size: 24px;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+  width: 100%;
+}
+
+.reserve-button:hover {
+  background: linear-gradient(135deg, #388E3C, #66BB6A);
+  transform: scale(1.02);
+  box-shadow: 0 8px 18px rgba(56, 142, 60, 0.4);
+}
+
+.reserve-button:disabled {
+  background: #ccc;
+  color: #888;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.availability-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 21px;
+  z-index: 10;
+  background-color: white;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.available {
+  color: green;
+}
+
+.not-available {
+  color: red;
+}

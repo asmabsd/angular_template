@@ -56,6 +56,15 @@ export class HebergementDetailsComponent {
       });
     }
   }
+
+  isHebergementAvailable(hebergement: Hebergement): boolean {
+    return (
+      hebergement.totalSingleChambres > 0 ||
+      hebergement.totalDoubleChambres > 0 ||
+      hebergement.totalSuiteChambres > 0 ||
+      hebergement.totalDelexueChambres > 0
+    );
+  }
   
 
 

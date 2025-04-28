@@ -12,8 +12,31 @@ import { HebergementService } from 'src/app/services/hebergement.service';
 })
 export class AddhebergementComponent implements OnInit {
   hebergementForm!: FormGroup;
-  typeHebergementValues = Object.values(TypeHebergement);  // Pour récupérer les valeurs de l'énum
-  hebergement: Hebergement = new Hebergement(); // Instancier un nouvel objet Hebergement
+  typeHebergementValues = Object.values(TypeHebergement);  
+  hebergement: Hebergement = new Hebergement(); 
+  hebergements: Hebergement[] = [];
+  newHebergement: Hebergement = {
+
+   id_hebergement : 0,
+    name :'',
+    type : TypeHebergement.hotel,
+    adresse :'',
+    price :0,
+    description :'',
+   imageUrl : '',
+   availability : '',
+   region :'',
+    telephone : '',
+    nbChambre : '',
+   rating : 0,
+    nombreReservations :0,
+    totalSingleChambres:0, // ⭐️ nouvelle propriété
+    totalDoubleChambres:0,// ⭐️ nouvelle propriété
+    totalSuiteChambres: 0 ,// ⭐️ nouvelle propriété
+    totalDelexueChambres:0 // ⭐️ nouvelle propriété
+  };
+
+
   constructor(
     private fb: FormBuilder,
     private hebergementService: HebergementService,
@@ -29,13 +52,19 @@ export class AddhebergementComponent implements OnInit {
       description: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(500), this.descriptionValidator]),
       price: new FormControl('', [Validators.required, Validators.min(0)]),
       imageUrl: new FormControl('', [Validators.required]),
-      availability: new FormControl('', [Validators.required])
+      availability: new FormControl('', [Validators.required]),
+      telephone: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]), // Assuming phone number should be 8 digits
+      region: new FormControl('', [Validators.required]),
+      totalSingleChambres: new FormControl('', [Validators.required]),
+      totalDoubleChambres: new FormControl('', [Validators.required]),
+      totalSuiteChambres: new FormControl('', [Validators.required]),
+      totalDelexueChambres: new FormControl('', [Validators.required]),
+
     });
   }
 
 
   
-  // Validateur pour le nom (minimum 3 caractères, commence par une majuscule)
   nameValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
     if (!value || value.length < 3) {
@@ -73,38 +102,48 @@ export class AddhebergementComponent implements OnInit {
   };
 
 
-
   ajouterHebergement(): void {
-    // Vérifier que le formulaire est valide
     if (this.hebergementForm.invalid) {
       this.toastr.error('❌ Veuillez remplir correctement le formulaire.', 'Erreur');
       return;
     }
-
-    // Extraire les valeurs du formulaire et les assigner à l'objet hebergement
-    this.hebergement = { ...this.hebergementForm.value };
-
-    // Appel au service pour ajouter l'hébergement
-    this.hebergementService.addHebergement(this.hebergement).subscribe(
-      (response) => {
-        // Notification de succès
-        this.toastr.success('✅ Hébergement ajouté avec succès !', 'Succès', {
-          timeOut: 10000,
-          positionClass: 'toast-bottom-left',
-          closeButton: true,
-          progressBar: true,
-        });
-
-        // Redirection vers la page des hébergements après l'ajout
-        this.router.navigate(['/gethebback']);
-      },
-      (error) => {
-        // En cas d'erreur
-        console.error('Erreur lors de l\'ajout de l\'hébergement:', error);
-        this.toastr.error('❌ Une erreur est survenue, veuillez réessayer.', 'Erreur');
+  
+    const newName = this.hebergementForm.value.name.trim().toLowerCase();
+    const newRegion = this.hebergementForm.value.region.trim().toLowerCase();
+  
+    // Charger les hébergements existants pour vérifier l’unicité
+    this.hebergementService.getHebergement().subscribe((hebergements: Hebergement[]) => {
+      const existeDeja = hebergements.some(h => 
+        h.name.trim().toLowerCase() === newName &&
+        h.region.trim().toLowerCase() === newRegion
+      );
+  
+      if (existeDeja) {
+        this.toastr.error('❌ Un hébergement avec le même nom existe déjà dans cette région.', 'Doublon détecté');
+        return;
       }
-    );
+  
+      // Si c’est unique → continuer
+      this.hebergement = { ...this.hebergementForm.value };
+  
+      this.hebergementService.addHebergement(this.hebergement).subscribe(
+        (response) => {
+          this.toastr.success('✅ Hébergement ajouté avec succès !', 'Succès', {
+            timeOut: 10000,
+            positionClass: 'toast-bottom-left',
+            closeButton: true,
+            progressBar: true,
+          });
+          this.router.navigate(['/dashboard/gethebback']);
+        },
+        (error) => {
+          console.error('Erreur lors de l\'ajout de l\'hébergement:', error);
+          this.toastr.error('❌ Une erreur est survenue, veuillez réessayer.', 'Erreur');
+        }
+      );
+    });
   }
+  
   previewUrl: string | ArrayBuffer | null = null;
   selectedFile!: File;
   
@@ -125,6 +164,12 @@ export class AddhebergementComponent implements OnInit {
     }
   }
   
+
+  tunisianCities = [
+    'Tunis', 'Sfax', 'Sousse', 'Ariana', 'Gabès', 'Kairouan', 'Bizerte', 
+    'Médenine', 'Nabeul', 'Kasserine', 'Jendouba', 'Tataouine', 'Beja', 
+    'Zaghouan', 'Manouba', 'El Kef', 'Gafsa', 'Mahdia', 'Kebili', 'Siliana'
+  ];
   
   
 }

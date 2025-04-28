@@ -1,0 +1,65 @@
+<div class="container mt-4">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+    <!-- Indicateur de chargement -->
+    <div *ngIf="isLoading" class="text-center py-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+      <p class="mt-2">Chargement des détails de guide ..</p>
+    </div>
+ 
+    <!-- Message d'erreur -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Détails de la réservation -->
+    <div *ngIf="Guide && !isLoading" class="card shadow-lg rounded-3 overflow-hidden">
+      <div class="card-header text-white text-center" style="background: linear-gradient(to right, #f7941d, #8e44ad);">
+        <h2 class="mb-0">Détails de guide</h2>
+      </div>
+      
+      <div class="card-body">
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Name:</strong> {{ Guide.name }}</li>
+          <li class="list-group-item"><strong>Languages:</strong> {{ Guide.language }}</li>
+          <li class="list-group-item"><strong>Statut:</strong> {{ Guide.speciality }}</li>
+          <li class="list-group-item"><strong>Experience:</strong> {{ Guide.experience }}</li>
+  
+          <!-- Rating Display with Yellow Stars -->
+          <div class="rating-stars mb-3" *ngIf="Guide.averageRating !== undefined">
+            <strong>Note :</strong>
+            <ng-container *ngFor="let i of ratingStars">
+              <i class="fas fa-star"
+                 [ngClass]="{
+                   'text-warning': i <= (+Guide.averageRating),
+                   'text-muted': i > (+Guide.averageRating)
+                 }">
+              </i>
+            </ng-container>
+            <small class="d-block text-muted mt-1">({{ Guide.averageRating | number:'1.1-1' }}/5)</small>
+          </div>
+          <li class="list-group-item"><strong>Availability:</strong> {{ Guide.availability }}</li>
+          <li class="list-group-item"><strong>Contact:</strong> {{ Guide.contact }}</li>
+          <li class="list-group-item"><strong>Image:</strong> {{ Guide.photo }}</li>
+        </ul>
+  
+        <!-- Contact Button with Email Icon -->
+        <button class="btn mt-3 text-white" style="background: linear-gradient(to right, #f7941d, #8e44ad); border: none;">
+          <i class="fas fa-envelope"></i> Contact the guide now
+        </button>
+        <button 
+        class="btn mt-3 text-white" 
+        style="background: linear-gradient(to right, #f7941d, #8e44ad); border: none;" 
+        (click)="goToPlanning(Guide.id)">
+        <i class="fas fa-calendar"></i> Want to see current planning?
+      </button>
+      
+  
+      
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hebergement } from 'src/app/models/hebergement.model';
-import { ReservationChambre } from 'src/app/models/reservationchambre';
+import { ReservationChambre, TypeChambre } from 'src/app/models/reservationchambre';
 import { HebergementService } from 'src/app/services/hebergement.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class ReservationChambreComponent {
   reservationForm!: FormGroup;
   hebergementId!: number;
   hebergement!: Hebergement;
+  typeChambres = Object.values(TypeChambre);
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +37,8 @@ export class ReservationChambreComponent {
       nombreadulte: [1, [Validators.required, Validators.min(1)]],
       nombrenfant: [0, [Validators.required, Validators.min(0)]],
       nombrePersonnes: [{ value: 1, disabled: true }],
+      typeChambre: ['', Validators.required], // ajout ici
+
     });
 
     // Mettre à jour nombrePersonnes automatiquement
@@ -43,6 +46,7 @@ export class ReservationChambreComponent {
       const total = (+val.nombreadulte || 0) + (+val.nombrenfant || 0);
       this.reservationForm.get('nombrePersonnes')?.setValue(total, { emitEvent: false });
     });
+    
   }
 
   submitReservation(): void {
@@ -58,7 +62,10 @@ export class ReservationChambreComponent {
       nombrenfant: formValue.nombrenfant,
       statut: 'en attente',
       prixTotal: this.hebergement.price * this.calculateNights(formValue.dateDebut, formValue.dateFin),
-      hebergement: this.hebergement
+      hebergement: this.hebergement,
+      nombreChambres: formValue.nombreChambres,
+      typeChambre: formValue.typeChambre as TypeChambre,
+
     };
 
     // Appeler ton ReservationService ici pour l'envoyer au backend

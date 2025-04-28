@@ -391,3 +391,6 @@ body {
     background-color: #45a049;
   }
   
+  select.form-control:not([size]):not([multiple]) {
+    height: calc(2.25rem + 8px);
+  }

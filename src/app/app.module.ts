@@ -6,8 +6,10 @@ import { FrontendModule } from './frontend/frontend.module';  // Import du modul
 import { HttpClientModule } from '@angular/common/http';
 import { BackendModule } from './backend/backend.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Ajout du ReactiveFormsModule
+import { RecaptchaModule } from 'ng-recaptcha'; // Importation du module reCAPTCHA
+import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Importer les animations
-import { ToastrModule } from 'ngx-toastr'; // Importer ngx-toastr
+
 
 @NgModule({
   declarations: [
@@ -23,14 +25,15 @@ import { ToastrModule } from 'ngx-toastr'; // Importer ngx-toastr
     BackendModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,  // Nécessaire pour les animations
+    BrowserAnimationsModule,  // Add this line
+    RecaptchaModule, // Importation du module reCAPTCHA
     ToastrModule.forRoot()     // Configuration de base de ngx-toastr
 
-    
-    
     // Importation du module Frontend
   ],
  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+

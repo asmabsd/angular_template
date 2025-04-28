@@ -608,3 +608,22 @@ body {
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
   }
+  
+  #typeChambre {
+  width: 100%;           /* Prend toute la largeur du conteneur */
+  height: 50px;          /* Augmente la hauteur de la case (ici ajustée à 50px) */
+  font-size: 16px;       /* Taille de la police dans le select */
+  padding: 10px;         /* Espacement intérieur pour rendre le champ plus confortable */
+  border-radius: 5px;    /* Optionnel, pour des bords arrondis */
+  border: 1px solid #ccc; /* Bordure de la case, pour un effet visuel propre */
+}
+
+.form-group label {
+  font-size: 14px;       /* Taille de la police pour le label */
+  margin-bottom: 5px;    /* Espace entre le label et le champ */
+}
+
+select.form-control:not([size]):not([multiple]) {
+  height: calc(2.25rem + 8px);  /* Ici on remplace 2px par 8px */
+}
+

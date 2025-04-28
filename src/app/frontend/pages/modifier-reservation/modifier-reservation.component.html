@@ -1,11 +1,11 @@
 <div *ngIf="reservation" class="reservation-container">
     <div class="card">
       <div class="card-content">
-        <h2 class="title">✏️ Modifier la réservation n°{{ reservation.id_reservation }}</h2>
+        <h2 class="title">✏️ Edit Reservation </h2>
   
         <form (ngSubmit)="modifierReservation()" #reservationForm="ngForm">
           <div class="form-group">
-            <label for="dateDebut">📅 Date début :</label>
+            <label for="dateDebut">📅 Start Date:</label>
             <input 
               type="date" 
               id="dateDebut" 
@@ -17,7 +17,7 @@
           </div>
   
           <div class="form-group">
-            <label for="dateFin">📅 Date fin :</label>
+            <label for="dateFin">📅 End Date:</label>
             <input 
               type="date" 
               id="dateFin" 
@@ -29,7 +29,7 @@
           </div>
   
           <div class="form-group">
-            <label for="nombreadulte">🧑 Adultes :</label>
+            <label for="nombreadulte">🧑 Adults:</label>
             <input 
               type="number" 
               id="nombreadulte" 
@@ -41,7 +41,7 @@
           </div>
   
           <div class="form-group">
-            <label for="nombrenfant">🧒 Enfants :</label>
+            <label for="nombrenfant">🧒 Children:</label>
             <input 
               type="number" 
               id="nombrenfant" 
@@ -51,34 +51,73 @@
               min="0" 
               required />
           </div>
-  
           <div class="form-group">
-            <label for="statut">👤 Statut :</label>
+          <label for="clientEmail">📧 Email:</label>
+          <input 
+            type="email" 
+            id="clientEmail" 
+            name="clientEmail" 
+            [(ngModel)]="reservation.clientEmail" 
+            
+            required
+            placeholder="Votre email pour la confirmation">
+        </div>
+          <div class="form-group">
+            <label for="statut">👤 Status:</label>
             <select id="statut" name="statut" [(ngModel)]="reservation.statut" required>
               <option value="marié">Couple</option>
-              <option value="célibataire">Célibataire</option>
-              <option value="famille">Famille</option>
+              <option value="célibataire">Single</option>
+              <option value="famille">Family</option>
             </select>
           </div>
-  
-          <p><span class="label">💰 Prix total :</span> {{ reservation.prixTotal || 0 }} €</p>
+  <!-- Nombre de chambres -->
+<div class="form-group">
+  <label for="nombreChambres">🛏️ Number of Rooms:</label>
+<input
+  type="number"
+  id="nombreChambres"
+  name="nombreChambres"
+  [(ngModel)]="reservation.nombreChambres"
+  (input)="calculerPrixTotal()"  
+  min="1"
+  required />
+
+</div>
+
+<!-- Type de chambre -->
+<div class="form-group">
+  <label for="typeChambre">🏨 Room Type:</label>
+  <select
+  id="typeChambre"
+  name="typeChambre"
+  [(ngModel)]="reservation.typeChambre"
+  (change)="calculerPrixTotal()"
+  required>
+  <option value="" disabled selected>Select a room type</option>
+  <option value="single">Single</option>
+  <option value="Double">Double</option>
+  <option value="Suite">Suite</option>
+  <option value="Deluxe">Deluxe</option>
+</select>
+
+</div>
+          <p><span class="label">💰 Total Price:</span> {{ reservation.prixTotal || 0 }} dt</p>
           <p style="color: darkorange; font-style: italic;">
-            ⚠️ Un supplément de 20% est appliqué pour les nuits du week-end (vendredi, samedi, dimanche).
+            ⚠️ A 20% surcharge is applied for weekend nights (Friday, Saturday, Sunday).
           </p>
   
           <button 
-          type="submit" 
-          class="reserve-button" 
-          [disabled]="!reservationForm.form.valid" 
-          (click)="modifierReservation()"> 💾 Enregistrer les modifications
-        </button>
-        
+            type="submit" 
+            class="reserve-button" 
+            [disabled]="!reservationForm.form.valid" 
+            (click)="modifierReservation()"> 💾 Save Changes
+          </button>
         </form>
       </div>
     </div>
   </div>
   
   <div *ngIf="!reservation" class="loading">
-    <p>⏳ Chargement des informations de la réservation...</p>
+    <p>⏳ Loading reservation information...</p>
   </div>
   

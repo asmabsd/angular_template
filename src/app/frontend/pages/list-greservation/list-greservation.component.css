@@ -1,0 +1,218 @@
+.text-center {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+  }
+  .star-rating {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+  }
+  
+  .star-rating .fa-star {
+    color: #d3d3d3; /* couleur de base des étoiles */
+    font-size: 30px;
+  }
+  
+  .star-rating .fa-star.filled {
+    color: #ffcc00; /* couleur des étoiles remplies (jaune) */
+  }
+  
+  .table-container {
+    margin-left: 150px;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .table-responsive {
+    width: 95%;
+    overflow-x: auto;
+  }
+
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .custom-table thead th {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #eee;
+  }
+
+  .custom-table tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+  }
+
+  .custom-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.02);
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: rgba(0,0,0,.04);
+  }
+
+
+  .btn-action {
+    padding: 6px 12px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 5px;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .btn-edit {
+    background-color: #3498db;
+  }
+  
+  .btn-edit:hover {
+    background-color: #2980b9;
+  }
+  
+  .btn-delete {
+    background-color: #e74c3c;
+  }
+  
+  .btn-delete:hover {
+    background-color: #c0392b;
+  }
+  
+  .btn-view {
+    background-color: #17a2b8;
+  }
+  
+  .btn-view:hover {
+    background-color: #138496;
+  }
+  
+  .btn-action i {
+    margin-right: 5px;
+  }
+  
+  .add-guide-btn {
+    margin: 20px 0;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .add-guide-btn:hover {
+    background-color: #218838;
+  }
+  
+  .add-guide-btn i {
+    margin-right: 5px;
+  }
+  
+/* Add these styles to your CSS or in a style tag */
+
+/* Pending - Loading icon */
+.pending-icon {
+  color: orange;
+}
+
+/* Completed - Success icon */
+.completed-icon {
+  color: green;
+}
+
+/* Cancelled - Error icon */
+.cancelled-icon {
+  color: red;
+}
+
+/* Confirmed - Verified icon */
+.confirmed-icon {
+  color: blue;
+}
+.btn-cancel{
+    background: white;
+    color: var(--text-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .btn-cancel:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-cancel i {
+    font-size: 18px;
+  }
+  .explore-guides-btn {
+    background: linear-gradient(135deg, #8e44ad, #f7941d);
+    color: white;
+    border: none;
+    border-radius: 1.5rem; /* Reduced border-radius */
+    font-size: 0.9rem; /* Reduced font size */
+    font-weight: 500;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    padding: 8px 16px; /* Reduced padding */
+  }
+  
+  .explore-guides-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, #f7941d, #8e44ad);
+  }
+  /* Style for the email button */
+.email-button {
+  background-color: #f8f9fa; /* Light background color */
+  color: #dc3545; /* Red color for the text (Gmail theme) */
+  border: 1px solid #dc3545; /* Red border */
+  border-radius: 25px; /* Rounded corners */
+  font-size: 14px; /* Font size for text */
+  font-weight: 500; /* Slightly bold */
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth transitions */
+  padding: 8px 16px; /* Padding inside the button */
+  cursor: pointer; /* Pointer cursor on hover */
+  display: inline-flex; /* Flexbox for text and icon alignment */
+  align-items: center; /* Vertically align icon and text */
+  gap: 8px; /* Space between the icon and text */
+}
+
+.email-button:hover {
+  background-color: #dc3545; /* Red background on hover */
+  color: white; /* White text color on hover */
+  border-color: #dc3545; /* Match the border color with background */
+}
+
+.email-button:focus {
+  outline: none; /* Remove the outline on focus */
+}
+
+.email-button i {
+  font-size: 18px; /* Adjust the icon size */
+}
+
+/* Optional: Add a shadow on hover to make it stand out */
+.email-button:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
