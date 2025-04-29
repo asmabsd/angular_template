@@ -17,6 +17,7 @@ import { FooterComponent } from './pages/footer/footer.component';
 import { StatsguideComponent } from './pages/statsguide/statsguide.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FullCalendarModule } from '@fullcalendar/angular';
+
 import dayGridPlugin from '@fullcalendar/daygrid';
 
 import { GuideComponent } from '../frontend/pages/guide/guide.component';
