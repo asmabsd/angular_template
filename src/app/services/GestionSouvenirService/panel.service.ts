@@ -88,6 +88,8 @@ export class PanelService {
     });
   }
 
+  // panel.service.ts
+ 
   // Supprimer un article du panel
   removeFromPanel(index: number): Observable<Panel> {
     return this.http.delete<Panel>(`${this.apiUrl}/remove/${index}`, {

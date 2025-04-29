@@ -1,3 +1,4 @@
+import { User } from '../user.model';
 import { CommandLineDTO } from './CommandLineDTO';
 import { Discount } from './discount';
 
@@ -14,4 +15,5 @@ export interface Panel {
     value: number;
     type: 'percentage' | 'fixed' | 'bundle';
   };
+  user? : {id :number} // Only include the user's ID;
 }
